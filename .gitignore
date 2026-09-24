@@ -2,7 +2,7 @@
 *.vs
 bin/
 resources/
-/svn
+.svn/
 *.obj
 *.ilk
 *.pch
