@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DEFECTS>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Midnight\src\Types\</FILEPATH>
+      <FILENAME>Transform.h</FILENAME>
+      <LINE>15</LINE>
+      <COLUMN>0</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'Transform::model' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>Transform::{ctor}</FUNCTION>
+    <DECORATED>??0Transform@@QEAA@XZ</DECORATED>
+    <FUNCLINE>15</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>Transform::model</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Midnight\src\Types\</FILEPATH>
+      <FILENAME>Transform.h</FILENAME>
+      <LINE>15</LINE>
+      <COLUMN>0</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'Transform::scale' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>Transform::{ctor}</FUNCTION>
+    <DECORATED>??0Transform@@QEAA@XZ</DECORATED>
+    <FUNCLINE>15</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>Transform::scale</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Midnight\src\Types\</FILEPATH>
+      <FILENAME>Transform.h</FILENAME>
+      <LINE>15</LINE>
+      <COLUMN>0</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'Transform::position' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>Transform::{ctor}</FUNCTION>
+    <DECORATED>??0Transform@@QEAA@XZ</DECORATED>
+    <FUNCLINE>15</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>Transform::position</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Midnight\src\Types\</FILEPATH>
+      <FILENAME>Transform.h</FILENAME>
+      <LINE>15</LINE>
+      <COLUMN>0</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'Transform::eulerOrientation' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>Transform::{ctor}</FUNCTION>
+    <DECORATED>??0Transform@@QEAA@XZ</DECORATED>
+    <FUNCLINE>15</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>Transform::eulerOrientation</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+</DEFECTS>

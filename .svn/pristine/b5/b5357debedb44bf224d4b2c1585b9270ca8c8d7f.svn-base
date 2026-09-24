@@ -1,0 +1,46 @@
+#pragma once
+
+#define VULKAN_HPP_NO_CONSTRUCTORS
+#include <vulkan/vulkan_raii.hpp>
+
+#include "Memory.h"
+#include "UniformBufferObjectTypes.h"
+
+#include "../../Types/Mesh.h"
+#include "../../Math/Matrix.h"
+
+
+//====================================================================== 
+// Main Buffer structure, that will be 'shaped' into different types
+//======================================================================
+//
+struct Buffer
+{
+	vk::raii::Buffer	    buffer;
+	vk::raii::DeviceMemory  memory;		// GPU Memory							   <-.
+	void				   *memoryMap;	// CPU Memory associated with the GPU Memory |	
+
+	Buffer() : buffer(nullptr), memory(nullptr), memoryMap(nullptr) {}
+};
+//
+//======================================================================
+
+
+
+namespace fBuffer
+{
+	Buffer Create(vk::raii::PhysicalDevice &physicalDevice, vk::raii::Device &logicalDevice, uint32_t bufferSizeInBytes, vk::BufferUsageFlags usage, vk::MemoryPropertyFlags memoryProperties);
+	Buffer CreateAndMapMemory(vk::raii::PhysicalDevice &physicalDevice, vk::raii::Device &logicalDevice, void *bufferData, uint32_t bufferSizeInBytes, vk::BufferUsageFlags usage, vk::MemoryPropertyFlags memoryProperties);	
+
+	
+	// @note This one is used when there are multiple queues that are used for transfering buffers around and others for showing them up
+	//
+	Buffer Create(const vk::raii::PhysicalDevice &physicalDevice, const vk::raii::Device &logicalDevice, const std::vector<uint32_t> queueFamilyIndices, const uint32_t bufferSizeInBytes, const vk::BufferUsageFlags usage, const vk::MemoryPropertyFlags memoryProperties);
+	Buffer CreateAndMapMemory(const vk::raii::PhysicalDevice &physicalDevice, const vk::raii::Device &logicalDevice, std::vector<uint32_t> queueFamilyIndices, const void *bufferData, const uint32_t bufferSizeInBytes, const vk::BufferUsageFlags usage, const vk::MemoryPropertyFlags memoryProperties);
+	void Copy(const vk::raii::Device &logicalDevice, const vk::raii::CommandPool &commandPool, const vk::raii::Queue &transferQueue, const Buffer &srcBuffer, Buffer &dstBuffer, const uint32_t sizeInBytes);
+	void Delete(Buffer &buffer);	
+
+
+	Buffer CreateVertexBuffer(const vk::raii::PhysicalDevice &physicalDevice, const vk::raii::Device &logicalDevice, const vk::raii::CommandPool &commandPool, const vk::raii::Queue &transferQueue, std::vector<uint32_t> queueFamilyIndices, const void *vertices, const uint32_t total_vertices_byte_size);
+	Buffer CreateIndexBuffer (const vk::raii::PhysicalDevice &physicalDevice, const vk::raii::Device &logicalDevice, const vk::raii::CommandPool &commandPool, const vk::raii::Queue &transferQueue, std::vector<uint32_t> queueFamilyIndices, const int *indices,   const uint32_t index_count);
+}

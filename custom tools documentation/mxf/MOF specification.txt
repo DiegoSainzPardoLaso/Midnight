@@ -1,0 +1,105 @@
+==============================================================================================================================================================================================================================================
+																									Midnight Object Format Specification
+==============================================================================================================================================================================================================================================
+Brief: Binary Format used to store mesh data. Way lighter, faster to load and more memory efficient 
+	   leaving a smaller memory footprint than any other format.
+==============================================================================================================================================================================================================================================
+Note: The Joint ID influences are directly related to the Weights values. 
+So [Weigh0] would be the value of the influence that the [joint0 with ID n] exercices over this vertex.
+#--------------------#
+| JoInf0 ---> Weigh0 |
+| JoInf1 ---> Weigh1 |
+| JoInf2 ---> Weigh2 |
+| JoInf3 ---> Weigh3 |
+#--------------------#
+Note: 0, 1, 2, 3 are NOT the Joint IDs, nor the weight values
+Note: When loading the joints, the root gets placed as the first joint of the list
+Note: If the model is skinned, the mof file will also be responsible for having the skeleton stored inside.
+Note: Quaternion order is X, Y, Z, W
+Note: Multiple Objects per file are currently not supported
+Note: Empty groups or vertex groups corresponding to deleted or removed bones might cause the MOF file to export the 'Wrong' data.
+==============================================================================================================================================================================================================================================
+																											   File Layout
+==============================================================================================================================================================================================================================================
+
+int  { 4Bytes }   			 Date Length
+char { 1Byte * Name Length } Actual Date 	
+
+int  { 4Bytes }   			 Name Length
+char { 1Byte * Name Length } Actual Name 	
+
+int  { 4Bytes }				 Vertex Count --- Number of vertices present in the mesh
+int  { 4Bytes }				 Stride Size  --- Number of components of which a vertex is composed of
+
+Vertex [All of them are floats except for the joint indices]
+{
+	Data present in static and animated meshes													   				  Data present ONLY in animated meshes 
+    #----------------------------------------------[44 Bytes]------------------------------------------------#	  #-------------------------------[32 Bytes]--------------------------------#		# #-----------------------------#
+	#--------------------------# #--------------------------# #--------------------------# #-----------------#    #-----------------------------------# #-----------------------------------#    	| | The stride length for		|
+	| PositX | PositY | PositZ | | VrColR | VrColG | VrColB	| |	NormlX | NormlY | NormlZ | | UCoord | VCoord |    | JoInf0 | JoInf1 | JoInf2 | JoInf3 | | Weigh0 | Weigh1 | Weigh2 | Weigh3 |    	| | static meshes is 44 bytes   |
+	|--------|--------|--------| |--------|--------|--------| |--------|--------|--------| |--------|--------|    |--------|--------|--------|--------| |--------|--------|--------|--------|    	| |   						    |
+	| 4Bytes | 4Bytes | 4Bytes | | 4Bytes | 4Bytes | 4Bytes	| | 4Bytes | 4Bytes | 4Bytes | | 4Bytes | 4Bytes |    | 4bytes | 4bytes | 4bytes | 4bytes | | 4bytes | 4bytes | 4bytes | 4bytes |		| | While for animated meshes   |	
+	| 4Bytes | 4Bytes | 4Bytes | | 4Bytes | 4Bytes | 4Bytes	| | 4Bytes | 4Bytes | 4Bytes | | 4Bytes | 4Bytes |    | 4bytes | 4bytes | 4bytes | 4bytes | | 4bytes | 4bytes | 4bytes | 4bytes |    	| | the stride length is 		|
+	| 4Bytes | 4Bytes | 4Bytes | | 4Bytes | 4Bytes | 4Bytes	| | 4Bytes | 4Bytes | 4Bytes | | 4Bytes | 4Bytes |    | 4bytes | 4bytes | 4bytes | 4bytes | | 4bytes | 4bytes | 4bytes | 4bytes |		| | 76 bytes					|
+	# ...... | ...... | ...... # # ...... | ...... | ......	# # ...... | ...... | ...... # | ...... | ...... #    # ...... | ...... | ...... | ...... # # ...... | ...... | ...... | ...... #    	| #-----------------------------#								
+}																												  ======This ones are of type int======												|							
+																																																	|																						
+																																																	| #-------------------------------------------------------------------------#
+int { 4bytes }			   					 																																				    	| | Index Count --- Number of indices used to connect the mesh triangles    |
+																																																	| | Important since my Maya exporter has a vertex deduplication option.     |
+																																																	| | If the model exported doesn't use the deduplication toggle, the indices | 
+																																																	| | will just be:  0, 1, 2, 3, 4, 5, 6 ... indexCount - 1				    |
+																																																	| *-------------------------------------------------------------------------*
+																																																	|
+																																																	| *-------------------------------------------------------------------------*
+int                        					 																																				    	| | This data needs to just be copied inside the indices int array that     | 
+{                          					 																																				    	| | each mesh has, there's no need to do anything else with it.             |
+	4bytes 4bytes 4bytes   					 																																				    	| | just allocate memory and copy the retrieved values inside the array     |  
+	4bytes 4bytes 4bytes   					 																																				    	| | that's it, plain simple [Indices Array]									|			
+	...... ...... ......   					 																																				    	| *-------------------------------------------------------------------------*
+}						   					 																																				    	|	 
+																																																	| *-------------* 
+int   { 4bytes }		   					 																																				    	| | Bone Count  | 
+Joint Struct Array																																											    	| *-------------* 
+{																																																	|
+	    int     char        int       int         int     int              	    float        				 	  float 							float								           	|
+	#-----------------#  #-----------------#  #-----------------#    #--------------------------# #-----------------------------------# #--------------------------#  								| #-------------------------------------------------------------------------#
+	| JnLnth | JnName |  | BonIdx | ParIdx |  | CldCnt | CldIdA |    | PositX | PositY | PositZ | | OrienX | OrienY | OrienZ | OrienW | | scaleX | scaleY | scaleZ |   								| | Skeleton hierarchy. Bone Index, inside the skeleton and their parent    |
+	#--------|--------#  #--------|--------#  #--------|--------#    #--------|--------|--------# #--------|--------|--------|--------| | -------------------------|								| | index inside the skeleton. Both indices correspond to the same array.   |
+	| 4bytes | 1B*JnL |  | 4Bytes | 4Bytes |  | 4Bytes | 4B*Cnt |    | 4Bytes | 4Bytes | 4bytes | | 4Bytes | 4Bytes | 4Bytes | 4bytes | | 4Bytes | 4Bytes | 4bytes |    							| | 																		|
+	| 4bytes | 1B*JnL |  | 4Bytes | 4Bytes |  | 4Bytes | 4B*Cnt |    | 4bytes | 4bytes | 4bytes | | 4bytes | 4bytes | 4bytes | 4bytes | | 4bytes | 4bytes | 4bytes |  								| | 									    								|	
+	| 4bytes | 1B*JnL |  | 4Bytes | 4Bytes |  | 4Bytes | 4B*Cnt |    | 4bytes | 4bytes | 4bytes | | 4bytes | 4bytes | 4bytes | 4bytes | | 4bytes | 4bytes | 4bytes |  								| *-------------------------------------------------------------------------*
+	# ...... | ...... #  # ...... | ...... #  # ...... | ...... #    # ...... | ...... | ...... # # ...... | ...... | ...... | ...... # # ...... | ...... | ...... # 								| | Example: Root-Joint_0-Joint_1. Joint 0 parent will be 0 (root), joint 1 | 
+                                                                     ====================================JOINT TRANSFORMATION MATRIX================================								| | parent will be 1, and the root parent will be 0, the same as its index  | 
+}																																															    	| | The exporter already makes the skeleton hierarchy work. No need to worry|
+																																																	| | about anything when loading it up  									    |
+																																																	# *-------------------------------------------------------------------------*
+																																																		
+==============================================================================================================================================================================================================================================
+																											    Legend
+==============================================================================================================================================================================================================================================
+
+ - PositX: Vertex or Joint position X
+ - PositY: Vertex or Joint position Y
+ - PositZ: Vertex or Joint position Z
+ 
+ - VrColR: Red channel color assignated to this vertex
+ - VrColG: Green channel color assignated to this vertex
+ - VrColB: Blue channel color assignated to this vertex
+ 
+ - NormlX: Vertex Normal X
+ - NormlY: Vertex Normal Y
+ - NormlZ: Vertex Normal Z
+ 
+ - UCoord: U texture coordinate that this vertex has
+ - VCoord: V texture coordinate that this vertex has
+ 
+ 
+ - JoInfN: Joint N influence ID associated to WeighN. Meaning the Joint ID N that has X weight influence over this vertex while it's being animated
+ - WeighN: Influence value that JoinfN exercises over this vertex
+ 
+ - BonIdx: Bone index inside the skeleton hierarchy. It's related to JoInfn, so for example a skeleton with 1 bone, joint0 will have index 0, and if it has any influence over 
+ - ParIdx: Bone parent index inside the skeleton hierarchy
+ - CldCnt: Child count, number of childs that this joint has
+ - CldIdA: Child Index array, the indices of this joint childs
+ 

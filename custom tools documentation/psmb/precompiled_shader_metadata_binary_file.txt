@@ -1,0 +1,29 @@
+#===========================================================================#
+#              [ Precompiled Shader Metadata Binary ] .psmb                 #
+#===========================================================================#
+Note: This files contain the shader metadata information which will be useful to store to not analyze a shader which has already been compiled and reflected.
+Note: The files are gonna be stored inside the same folder as the .spv files (Same name different extension)
+Note: The slang_last_write_time is used in case the slang file is different than the spirv file
+
+#===========================================================================#
+The data layout of this files is:
+#===========================================================================#
+uint32_t                    { 4Bytes }                         date_length
+char                        { 1Byte * date_length }            date
+ 
+long long		    { 8bytes }		  	       slang_last_write_time 
+ 
+uint32_t                    { 4bytes }                         entry_points_count
+vK::ShaderStageFlagBits     { 4bytes * entry_points_count }    entry_points
+ 
+uint32_t                    { 4Bytes  }                        uniforms_count
+Uniforms                    { 16bytes * uniforms_count  }      uniforms_array
+{                           
+    vk::DescriptorType      { 4Bytes  }			       uniform_type
+    uint32_t 		    { 4Bytes  }			       uniform_size
+    uint32_t                { 4Bytes  }                        uniform_offset
+    vK::ShaderStageFlagBits { 4Bytes  }                        uniform_stage
+}      
+
+uint32_t                    { 4Bytes  }                        uniforms_byte_size
+#===========================================================================#

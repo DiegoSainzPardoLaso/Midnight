@@ -1,0 +1,49 @@
+#pragma once
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <filesystem>
+
+
+struct File
+{
+    char     *buffer;
+    uint32_t  bufferSize;
+};
+
+
+namespace tFile
+{
+    const char *Load(const char *path);    
+    const char *Load(const char *path, std::string regex);  // Same method, but it stops reading and returns the gathered file information when it hits said regex
+    const char *Load(const char *path, std::string regexToStartWriting, std::string regexToStopWriting, char skipLineRegex);
+    const char *GetName(const char *path);
+    const char *GetNameWithoutExtension(const char *path);
+    const char *GetExtension(const char *path);
+    bool        CompareExtension(const char *path, std::string extext);
+    bool        Exists(const char *path);
+    void        Check(const char *data);
+    long long   LastModifiedTime(const char *path);
+}
+
+namespace bFile
+{
+    std::vector<char> LoadSpirVShader(const char *path);    
+    uint32_t          GetBufferSize(const char *path);
+
+
+    int    ReadInt   (std::ifstream& file);             
+    float  ReadFloat (std::ifstream& file);             
+    char  *ReadString(std::ifstream& file);              
+    char  *ReadString(std::ifstream& file, int length); 
+
+    template<typename T>
+    T ReadSizeOf(std::ifstream& file)
+    {
+        T data;
+        file.read(reinterpret_cast<char *>(&data), sizeof(T));
+
+        return data;
+    }
+}

@@ -1,0 +1,102 @@
+#pragma once
+
+#include "Vertex.h"
+
+// vertices = Mesh vertex array
+// indices  = Mesh Indices array
+// dSize    = Size in bytes of the complete array (Vertices, Colors, UV's, Normals...
+// vCount   = Number of vertices inside the array
+// iCount   = Number of indices inside the array
+//
+
+struct DebugMesh
+{
+    dVertex *vertices;
+    int     *indices;
+
+    uint32_t dSize;
+    uint32_t vCount;
+    uint32_t iCount;
+
+    unsigned int VAO;
+    unsigned int VBO;
+    unsigned int EBO;
+};
+
+struct StaticMesh
+{
+    sVertex *vertices;
+    int     *indices;
+
+    uint32_t dSize;
+    uint32_t vCount;
+    uint32_t iCount;
+
+    unsigned int VAO;   // @note The cameras actually work without this. The gizmos doesn't, so I have to port the gizmos to use the new system.
+    unsigned int VBO;   // @note The cameras actually work without this. The gizmos doesn't, so I have to port the gizmos to use the new system.
+    unsigned int EBO;   // @note The cameras actually work without this. The gizmos doesn't, so I have to port the gizmos to use the new system.
+};
+
+struct AnimatedMesh
+{
+    aVertex *vertices;
+    int     *indices;
+
+    uint32_t dSize;   
+    uint32_t vCount;   
+    uint32_t iCount;
+
+    unsigned int VAO;
+    unsigned int VBO;
+    unsigned int EBO;
+};
+
+struct GUIMesh
+{
+    gVertex *vertices;
+    int     *indices;
+
+    uint32_t dSize;
+    uint32_t vCount;
+    uint32_t iCount;
+
+    unsigned int VAO;
+    unsigned int VBO;
+    unsigned int EBO;
+};
+
+struct GUIMeshQuad
+{
+    gVertex vertices[4];
+    int     indices[6];
+
+    uint32_t dSize;
+    uint32_t vCount;
+    uint32_t iCount;
+
+    unsigned int VAO;
+    unsigned int VBO;
+    unsigned int EBO;
+};
+
+
+
+namespace fMesh
+{
+    template<typename M, typename V>
+    M Create(int vCount, int iCount, V *meshVertices, int *indices)
+    {
+        M mesh{};
+        mesh.vCount  = vCount;
+        mesh.iCount  = iCount;
+        mesh.dSize   = sizeof(V) * vCount;
+
+        mesh.vertices  = reinterpret_cast<V*>  (malloc(sizeof(V)   * vCount));
+        mesh.indices = reinterpret_cast<int*>(malloc(sizeof(int) * iCount));
+
+        for (int v = 0; v < vCount; v++) { mesh.vertices[v]  = meshVertices[v]; }
+        for (int i = 0; i < iCount; i++) { mesh.indices[i] = indices[i];      }
+
+        return mesh;
+    }    
+}

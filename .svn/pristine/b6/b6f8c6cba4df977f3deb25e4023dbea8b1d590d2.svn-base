@@ -1,0 +1,74 @@
+#include "VulkanVertex.h"
+
+vk::VertexInputBindingDescription fVertex_VK::GetBindingDescription(VERTEX_TYPE vertexType)
+{	
+	uint32_t stride = 0;
+
+	switch (vertexType)
+	{
+		case VERTEX_TYPE::DEBUG_VERTEX:			   { stride = sizeof(dVertex); } break;
+		case VERTEX_TYPE::GUI_VERTEX:			   { stride = sizeof(gVertex); } break;
+		case VERTEX_TYPE::STATIC_VERTEX:		   { stride = sizeof(sVertex); } break;
+		case VERTEX_TYPE::ANIMATED_VERTEX:		   { stride = sizeof(aVertex); } break;
+		case VERTEX_TYPE::HARDCODED_INSIDE_SHADER: { stride = 0;			   } break;
+	}
+
+
+	return
+	{
+		.binding   = 0,								// @note the vertex will always be the first binding Vertex_Main(Input_Vertex <---, ...)
+		.stride    = stride,
+		.inputRate = vk::VertexInputRate::eVertex
+	};	
+}
+
+std::vector<vk::VertexInputAttributeDescription> fVertex_VK::GetVertexAttributeDescriptions(VERTEX_TYPE vertexType)
+{	
+	switch (vertexType)
+	{
+		case DEBUG_VERTEX:
+		{
+			return
+			{
+				{.location = 0, .binding = 0, .format = vk::Format::eR32G32B32Sfloat, .offset = offsetof(dVertex, position) },
+				{.location = 1, .binding = 0, .format = vk::Format::eR32G32B32Sfloat, .offset = offsetof(dVertex, color)	},
+			};
+		} break;
+
+		case GUI_VERTEX:
+		{
+			return
+			{
+				{ .location = 0, .binding = 0, .format = vk::Format::eR32G32B32Sfloat, .offset = offsetof(gVertex, position) },
+				{ .location = 1, .binding = 0, .format = vk::Format::eR32G32B32Sfloat, .offset = offsetof(gVertex, color)    },			
+				{ .location = 2, .binding = 0, .format = vk::Format::eR32G32Sfloat,    .offset = offsetof(gVertex, uv)		 }
+			};
+		} break;
+
+		case STATIC_VERTEX:
+		{
+			return
+			{
+				{ .location = 0, .binding = 0, .format = vk::Format::eR32G32B32Sfloat, .offset = offsetof(sVertex, position) },
+				{ .location = 1, .binding = 0, .format = vk::Format::eR32G32B32Sfloat, .offset = offsetof(sVertex, color)	 },
+				{ .location = 2, .binding = 0, .format = vk::Format::eR32G32B32Sfloat, .offset = offsetof(sVertex, normal)   },
+				{ .location = 3, .binding = 0, .format = vk::Format::eR32G32Sfloat,    .offset = offsetof(sVertex, uv)	     }
+			};
+		} break;
+
+		case ANIMATED_VERTEX:
+		{
+			return 
+			{
+				{ .location = 0, .binding = 0, .format = vk::Format::eR32G32B32Sfloat,	  .offset = offsetof(aVertex, position)			},
+				{ .location = 1, .binding = 0, .format = vk::Format::eR32G32B32Sfloat,	  .offset = offsetof(aVertex, color)			},
+				{ .location = 2, .binding = 0, .format = vk::Format::eR32G32B32Sfloat,	  .offset = offsetof(aVertex, normal)			},
+				{ .location = 3, .binding = 0, .format = vk::Format::eR32G32Sfloat,       .offset = offsetof(aVertex, uv)				},
+				{ .location = 4, .binding = 0, .format = vk::Format::eR32G32B32A32Sfloat, .offset = offsetof(aVertex, influenceIndices) },
+				{ .location = 5, .binding = 0, .format = vk::Format::eR32G32B32A32Sfloat, .offset = offsetof(aVertex, weights)			},
+			};
+		} break;
+
+		case HARDCODED_INSIDE_SHADER: { return { }; } break;
+	}
+}

@@ -1,0 +1,25 @@
+#pragma once
+
+
+#define VULKAN_HPP_NO_CONSTRUCTORS
+#include <vulkan/vulkan_raii.hpp>
+
+#include "Memory.h"
+
+struct Image_VK
+{
+	vk::raii::ImageView	   imageView = nullptr;
+	vk::raii::Image		   image	 = nullptr;
+	vk::raii::DeviceMemory memory	 = nullptr;
+};
+
+namespace fImage
+{
+	Image_VK Create(vk::raii::PhysicalDevice &physicalDevice, vk::raii::Device &logicalDevice, uint32_t width, uint32_t height, vk::Format format, vk::ImageTiling tiling, vk::ImageUsageFlags usage, vk::MemoryPropertyFlags properties, vk::ImageAspectFlagBits aspectFlags);
+}
+
+namespace fImageView
+{
+	void				Create(vk::raii::Device &logicalDevice, std::vector<vk::raii::ImageView> &imageViews, std::vector<vk::Image> &images, vk::Format &format, vk::ImageAspectFlags aspectFlags);
+	vk::raii::ImageView Create(vk::raii::Device &logicalDevice, vk::Image image, vk::Format &format, vk::ImageAspectFlagBits aspectFlags);
+}

@@ -1,0 +1,75 @@
+#include "Time.h"
+
+std::chrono::time_point<std::chrono::high_resolution_clock> Time::chronoCurrentFrameTime = {};
+std::chrono::time_point<std::chrono::high_resolution_clock> Time::chronoLastFrameTime	 = {};
+
+LARGE_INTEGER Time::cpuClockFrequency		= { 0, 0 };
+LARGE_INTEGER Time::windowsCurrentFrameTime = { 0, 0 };
+LARGE_INTEGER Time::windowsLastFrameTime	= { 0, 0 };
+
+float Time::deltaTime	 = 0;
+float Time::currentDelta = 0;
+float Time::currentFPS   = 0;
+
+void Time::Initialize()
+{	
+	chronoCurrentFrameTime = std::chrono::high_resolution_clock::now();
+	chronoLastFrameTime    = chronoCurrentFrameTime;
+
+
+	QueryPerformanceFrequency(&cpuClockFrequency);		 // Doesn't Change since the system boot up
+	QueryPerformanceCounter  (&windowsCurrentFrameTime);
+	QueryPerformanceCounter  (&windowsLastFrameTime);
+
+	currentDelta = 0;
+	deltaTime	 = 1 / MAX_FPS;
+}
+
+
+bool Time::UpdateDeltaTime()
+{		
+	// Windows Implementation
+	// 	
+	QueryPerformanceCounter(&windowsCurrentFrameTime);											// cpu tick count
+	long long deltaTicks = windowsCurrentFrameTime.QuadPart - windowsLastFrameTime.QuadPart;
+	currentDelta	    += (float)deltaTicks / cpuClockFrequency.QuadPart;
+	windowsLastFrameTime = windowsCurrentFrameTime;
+	
+	if (currentDelta >= MAX_DELTA_TIME_PERIOD)
+	{		
+		deltaTime    = currentDelta;
+		currentDelta = 0;		
+		return true;
+	}
+
+	// CHRONO IMPLEMENTATION
+	//
+	// chronoCurrentFrameTime = std::chrono::high_resolution_clock::now();
+	// currentDelta		     += std::chrono::duration<float, std::chrono::seconds::period>(chronoCurrentFrameTime - chronoLastFrameTime).count();
+	// chronoLastFrameTime	  = chronoCurrentFrameTime;
+	// 
+	// if (currentDelta >= MAX_DELTA_TIME_PERIOD)
+	// {
+	//		deltaTime = currentDelta;
+	//		currentDelta = 0;
+	//		return true;
+	// }
+	
+
+	return false;
+}
+
+void Time::UpdateDeltaTimeVSYNC(float delta)
+{
+	deltaTime = delta;
+}
+
+float Time::DeltaTime()
+{	
+	return deltaTime;
+}
+
+float Time::FPS()
+{
+	return 1 / deltaTime;
+}

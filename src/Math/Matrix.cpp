@@ -1,0 +1,516 @@
+#include "Matrix.h"
+
+// @important // @important // @important 
+// OpenGL/Vulkan store matrices in Column Major, so the Matrices that I pass to glsl must be transposed
+// So instead of writting them as row major and then transposing them, I define the already transposed
+// version of the matrix to skip the transposition step. 
+// @important // @important // @important  
+
+Mat4 Identity()
+{
+	return
+	{
+		1, 0, 0, 0,
+		0, 1, 0, 0,
+		0, 0, 1, 0,
+		0, 0, 0, 1,
+	};
+}
+
+Mat4 Transpose(Mat4& m)
+{
+	return
+	{
+		m[0], m[4], m[8],  m[12],
+		m[1], m[5], m[9],  m[13],
+		m[2], m[6], m[10], m[14],
+		m[3], m[7], m[11], m[15],
+	};
+}
+
+Mat4 Inverse(Mat4& m)
+{
+	Mat4  adjugate = Adjoint(m);
+	float determin = Determinant(m);
+
+	return adjugate * (1.0f / determin);
+}
+
+Mat4 Adjoint(Mat4& m)
+{
+	// ==========================================================================
+	// Cofactor Matrix, The adjacent is the Transposed of the cofactor
+	// ==========================================================================
+	// 
+	//       | 5   6  7 |       | 4   6  7 |       | 4   5  7 |       | 4   5  6 |
+	// |0| = | 9  10 11 | |1| = | 8  10 11 | |2| = | 8   9 11 | |3| = | 8   9 10 |
+	//       | 13 14 15 |       | 12 14 15 |       | 12 13 15 |       | 12 13 14 | 
+	//		  
+	//       | 1   2  3 |       | 0   2  3 |       | 0   1  3 |       | 0   1  2 |
+	// |4| = | 9  10 11 | |5| = | 8  10 11 | |6| = | 8   9 11 | |7| = | 8   9 10 |
+	//       | 13 14 15 |       | 12 14 15 |	   | 12 13 15 |       | 12 13 14 |
+	//
+	//       | 1   2  3 |       | 0   2  3 |       |  0  1  3 |       |  0  1  2 |
+	// |8| = | 5   6  7 | |9| = | 4   6  7 | |10|= |  4  5  7 | |11|= |  4  5  6 |
+	//       | 13 14 15 |       | 12 14 15 |       | 12 13 15 |       | 12 13 14 |
+	//       
+	//       | 1   2  3 |       | 0   2  3 |       | 0  1   3 |       | 0   1  2 |
+	// |12|= | 5   6  7 | |13|= | 4   6  7 | |14|= | 4  5   7 | |15|= | 4   5  6 |
+	//       | 9  10 11 |       | 8  10 11 |	   | 8  9  11 |       | 8   9 10 |
+	//
+	float m0  = m.data[5]*m.data[10]*m.data[15]  +  m.data[6]*m.data[11]*m.data[13]  +  m.data[7]*m.data[9]*m.data[14]  -  m.data[7]*m.data[10]*m.data[13]  -  m.data[6]*m.data[9]*m.data[15]  -  m.data[5]*m.data[11]*m.data[14]; 
+	float m1  = m.data[4]*m.data[10]*m.data[15]  +  m.data[6]*m.data[11]*m.data[12]  +  m.data[7]*m.data[8]*m.data[14]  -  m.data[7]*m.data[10]*m.data[12]  -  m.data[6]*m.data[8]*m.data[15]  -  m.data[4]*m.data[11]*m.data[14]; 
+	float m2  = m.data[4]*m.data[9] *m.data[15]  +  m.data[5]*m.data[11]*m.data[12]  +  m.data[7]*m.data[8]*m.data[13]  -  m.data[7]*m.data[9 ]*m.data[12]  -  m.data[5]*m.data[8]*m.data[15]  -  m.data[4]*m.data[11]*m.data[13]; 
+	float m3  = m.data[4]*m.data[9] *m.data[14]  +  m.data[5]*m.data[10]*m.data[12]  +  m.data[6]*m.data[8]*m.data[13]  -  m.data[6]*m.data[9 ]*m.data[12]  -  m.data[5]*m.data[8]*m.data[14]  -  m.data[4]*m.data[10]*m.data[13]; 
+ 			 											 				 				 
+	float m4  = m.data[1]*m.data[10]*m.data[15]  +  m.data[2]*m.data[11]*m.data[13]  +  m.data[3]*m.data[9]*m.data[14]  -  m.data[3]*m.data[10]*m.data[13]  -  m.data[2]*m.data[9]*m.data[15]  -  m.data[1]*m.data[11]*m.data[14];
+	float m5  = m.data[0]*m.data[10]*m.data[15]  +  m.data[2]*m.data[11]*m.data[12]  +  m.data[3]*m.data[8]*m.data[14]  -  m.data[3]*m.data[10]*m.data[12]  -  m.data[2]*m.data[8]*m.data[15]  -  m.data[0]*m.data[11]*m.data[14];
+	float m6  = m.data[0]*m.data[9] *m.data[15]  +  m.data[1]*m.data[11]*m.data[12]  +  m.data[3]*m.data[8]*m.data[13]  -  m.data[3]*m.data[9 ]*m.data[12]  -  m.data[1]*m.data[8]*m.data[15]  -  m.data[0]*m.data[11]*m.data[13];
+	float m7  = m.data[0]*m.data[9] *m.data[14]  +  m.data[1]*m.data[10]*m.data[12]  +  m.data[2]*m.data[8]*m.data[13]  -  m.data[2]*m.data[9 ]*m.data[12]  -  m.data[1]*m.data[8]*m.data[14]  -  m.data[0]*m.data[10]*m.data[13];
+			  	 
+	float m8  = m.data[1]*m.data[6]*m.data[15]   +  m.data[2]*m.data[7]*m.data[13]   +  m.data[3]*m.data[5]*m.data[14]  -  m.data[3]*m.data[6]*m.data[13]   -  m.data[2]*m.data[5]*m.data[15]  -  m.data[1]*m.data[7]*m.data[14];
+	float m9  = m.data[0]*m.data[6]*m.data[15]   +  m.data[2]*m.data[7]*m.data[12]   +  m.data[3]*m.data[4]*m.data[14]  -  m.data[3]*m.data[6]*m.data[12]   -  m.data[2]*m.data[4]*m.data[15]  -  m.data[0]*m.data[7]*m.data[14];
+	float m10 = m.data[0]*m.data[5]*m.data[15]   +  m.data[1]*m.data[7]*m.data[12]   +  m.data[3]*m.data[4]*m.data[13]  -  m.data[3]*m.data[5]*m.data[12]   -  m.data[1]*m.data[4]*m.data[15]  -  m.data[0]*m.data[7]*m.data[13];
+	float m11 = m.data[0]*m.data[5]*m.data[14]   +  m.data[1]*m.data[6]*m.data[12]   +  m.data[2]*m.data[4]*m.data[13]  -  m.data[2]*m.data[5]*m.data[12]   -  m.data[1]*m.data[4]*m.data[14]  -  m.data[0]*m.data[6]*m.data[13];
+				 								 
+	float m12 = m.data[1]*m.data[6]*m.data[11]   +  m.data[2]*m.data[7]*m.data[9]    +  m.data[3]*m.data[5]*m.data[10]  -  m.data[3]*m.data[6]*m.data[9]    -  m.data[2]*m.data[5]*m.data[11]  -  m.data[1]*m.data[7]*m.data[10];
+	float m13 = m.data[0]*m.data[6]*m.data[11]   +  m.data[2]*m.data[7]*m.data[8]    +  m.data[3]*m.data[4]*m.data[10]  -  m.data[3]*m.data[6]*m.data[8]    -  m.data[2]*m.data[4]*m.data[11]  -  m.data[0]*m.data[7]*m.data[10];
+	float m14 = m.data[0]*m.data[5]*m.data[11]   +  m.data[1]*m.data[7]*m.data[8]    +  m.data[3]*m.data[4]*m.data[9]   -  m.data[3]*m.data[5]*m.data[8]    -  m.data[1]*m.data[4]*m.data[11]  -  m.data[0]*m.data[7]*m.data[9 ];
+	float m15 = m.data[0]*m.data[5]*m.data[10]   +  m.data[1]*m.data[6]*m.data[8]    +  m.data[2]*m.data[4]*m.data[9]   -  m.data[2]*m.data[5]*m.data[8]    -  m.data[1]*m.data[4]*m.data[10]  -  m.data[0]*m.data[6]*m.data[9 ];
+
+
+	return
+	{
+		m0,  -m4,   m8, -m12,
+
+	   -m1,   m5,  -m9,  m13,
+
+		m2,  -m6,  m10, -m14,
+
+	   -m3,   m7, -m11,  m15, 
+	};	
+}
+
+float Determinant(Mat4& m)
+{
+	//		 | a0  a1  a2  a3  |        | a5  a6  a7  |        | a4  a6  a7  |        | a4  a5  a7  |        | a4  a5  a6  |
+	// |M| = | a4  a5  a6  a7  | = a0 * | a9  a10 a11 | - a1 * | a8  a10 a11 | + a2 * | a8  a9  a11 | - a3 * | a8  a9  a10 |
+	//		 | a8  a9  a10 a11 |        | a13 a14 a15 |        | a12 a14 a15 |        | a12 a13 a15 |        | a12 a13 a14 |
+	//		 | a12 a13 a14 a15 |          DETERMINANT			DETERMINANT			    DETERMINANT            DETERMINANT
+	//	
+	return 
+	{
+		+ (m.data[0]*m.data[5]*m.data[10]*m.data[15])  +  (m.data[0]*m.data[6]*m.data[11]*m.data[13])  +  (m.data[0]*m.data[7]*m.data[9 ]*m.data[14])
+		- (m.data[0]*m.data[7]*m.data[10]*m.data[13])  -  (m.data[0]*m.data[6]*m.data[9 ]*m.data[15])  -  (m.data[0]*m.data[5]*m.data[11]*m.data[14])
+		- (m.data[1]*m.data[4]*m.data[10]*m.data[15])  -  (m.data[2]*m.data[4]*m.data[11]*m.data[13])  -  (m.data[3]*m.data[4]*m.data[9 ]*m.data[14])
+		+ (m.data[3]*m.data[4]*m.data[10]*m.data[13])  +  (m.data[2]*m.data[4]*m.data[9 ]*m.data[15])  +  (m.data[1]*m.data[4]*m.data[11]*m.data[14])
+		+ (m.data[1]*m.data[6]*m.data[8] *m.data[15])  +  (m.data[2]*m.data[7]*m.data[8 ]*m.data[13])  +  (m.data[3]*m.data[5]*m.data[8 ]*m.data[14])
+		- (m.data[3]*m.data[6]*m.data[8] *m.data[13])  -  (m.data[2]*m.data[5]*m.data[8 ]*m.data[15])  -  (m.data[1]*m.data[7]*m.data[8 ]*m.data[14])
+	    - (m.data[1]*m.data[6]*m.data[11]*m.data[12])  -  (m.data[2]*m.data[7]*m.data[9 ]*m.data[12])  -  (m.data[3]*m.data[5]*m.data[10]*m.data[12])
+		+ (m.data[3]*m.data[6]*m.data[9] *m.data[12])  +  (m.data[2]*m.data[5]*m.data[11]*m.data[12])  +  (m.data[1]*m.data[7]*m.data[10]*m.data[12])
+	};	
+}
+
+// The scaling in this matrix is a local transformation
+Mat4 ModelMatrixRST(Vec3 &p, Quat &q, Vec3 &s)
+{
+	return
+	{
+		s.x*(1 - 2*q.y*q.y - 2*q.z*q.z),      s.x*(    2*q.x*q.y + 2*q.w*q.z),       s.x*(    2*q.x*q.z - 2*q.w*q.y),          0,
+		s.y*(    2*q.x*q.y - 2*q.w*q.z),      s.y*(1 - 2*q.x*q.x - 2*q.z*q.z),       s.y*(    2*q.y*q.z + 2*q.w*q.x),          0,
+		s.z*(    2*q.x*q.z + 2*q.w*q.y),      s.z*(    2*q.y*q.z - 2*q.w*q.x),       s.z*(1 - 2*q.x*q.x - 2*q.y*q.y),          0,
+					   p.x,									 p.y,									p.z,                       1
+	};
+}
+
+Mat4 ModelMatrixSRT(Vec3 &p, Quat &q, Vec3 &s)
+{
+	return
+	{
+		s.x*(1 - 2*q.y*q.y - 2*q.z*q.z),      s.y*(    2*q.x*q.y + 2*q.w*q.z),       s.z*(    2*q.x*q.z - 2*q.w*q.y),          0,
+		s.x*(    2*q.x*q.y - 2*q.w*q.z),      s.y*(1 - 2*q.x*q.x - 2*q.z*q.z),       s.z*(    2*q.y*q.z + 2*q.w*q.x),          0,
+		s.x*(    2*q.x*q.z + 2*q.w*q.y),      s.y*(    2*q.y*q.z - 2*q.w*q.x),       s.z*(1 - 2*q.x*q.x - 2*q.y*q.y),          0,
+					   p.x,									 p.y,									p.z,                       1
+	};
+}
+
+
+Mat4 TranslationMatrix(Vec3& p)
+{
+	// @important The matrix needs to be transposed when returning it
+	// That's why the positions are mirrored across the identity
+	// 
+	// ===============
+	// | 1  0  0  px |
+	// | 0  1  0  py |
+	// | 0  0  1  pz |
+	// | 0  0  0  1  |
+	// ===============
+	//
+	return
+	{
+		1,   0,   0,   0,
+		0,   1,   0,   0,
+		0,   0,   1,   0,
+		p.x, p.y, p.z, 1
+	};	
+}
+
+Mat4 ScaleMatrix(Vec3& s)
+{	
+	// @important The matrix needs to be transposed when returning it	
+	// // In this case, the scale goes in the identity diagonal, so no problem
+	// ==================
+	// | sx   0   0   0 |
+	// |  0	 sy	  0	  0 |
+	// |  0	  0	 sz	  0 |
+	// |  0	  0	  0	  1 |
+	// ==================
+	//
+	return
+	{
+		s.x,  0,    0,    0,
+		0,    s.y,  0,    0,
+		0,    0,    s.z,  0,
+		0,    0,    0,    1
+	};	
+}
+
+Mat4 ScaleFromPoint(float s, Vec3 &p)
+{
+	// @important The matrix needs to be transposed when returning it	
+	// // In this case, the scale goes in the identity diagonal, so no problem
+	// =========================
+	// |  s   0   0   (1-s)*px |
+	// |  0	  s	  0	  (1-s)*py |
+	// |  0	  0	  s	  (1-s)*pz |
+	// |  0	  0	  0	  1		   |
+	// =========================
+	//
+	return
+	{
+		 s,				 0,			     0,		 	   0,
+		 0,				 s,			     0,		 	   0,
+		 0,				 0,			     s,		 	   0,
+		(1 - s) * p.x,  (1 - s) * p.y,  (1 - s) * p.z, 1,
+	};	
+}
+
+Mat4 ScaleFromPoint(Vec3 &s, Vec3 &p)
+{
+	// @important The matrix needs to be transposed when returning it	
+	// In this case, the scale goes in the identity diagonal, so no problem
+	// ==========================
+	// | sx   0   0   (1-sx)*px |
+	// |  0	 sy	  0	  (1-sy)*py |
+	// |  0	  0	 sz	  (1-sz)*pz |
+	// |  0	  0	  0	  1			|
+	// ==========================
+	//
+
+	return 
+	{
+		 s.x,			   0,			     0,		 	     0,
+		 0,				   s.y,			     0,		 	     0,
+		 0,				   0,			     s.z,		 	 0,
+		(1 - s.x) * p.x,  (1 - s.y) * p.y,  (1 - s.z) * p.z, 1,
+	};
+}
+
+Mat4 ToMat4(Quat &q)
+{
+	// 
+	// ========================================================
+	// | 1 - 2yy - 2zz       2xy - 2wz        2xz + 2wy     0 | 
+	// |     2xy + 2wz	 1 - 2xx - 2zz        2yz - 2wx     0 |
+	// |     2xz - 2wy	     2yz + 2wx    1 - 2xx - 2yy     0 | 
+	// |     0				 0					  0			1 |
+	// ========================================================
+	//  
+	return
+	{
+		1 - 2 * q.y * q.y - 2 * q.z * q.z,          2 * q.x * q.y + 2 * q.w * q.z,           2 * q.x * q.z - 2 * q.w * q.y,          0,
+			2 * q.x * q.y - 2 * q.w * q.z,      1 - 2 * q.x * q.x - 2 * q.z * q.z,           2 * q.y * q.z + 2 * q.w * q.x,          0,
+			2 * q.x * q.z + 2 * q.w * q.y,          2 * q.y * q.z - 2 * q.w * q.x,       1 - 2 * q.x * q.x - 2 * q.y * q.y,          0,
+					0,										0,										 0,								 1
+	};
+}
+
+Mat4 RotateAroundAPoint(Quat q, Vec3 p)
+{
+	Mat4 m;
+
+	double sqw = q.w * q.w;
+	double sqx = q.x * q.x;
+	double sqy = q.y * q.y;
+	double sqz = q.z * q.z;
+	m.data[0] = sqx - sqy - sqz + sqw; // since sqw + sqx + sqy + sqz =1
+	m.data[5] = -sqx + sqy - sqz + sqw;
+	m.data[10] = -sqx - sqy + sqz + sqw;
+
+	double tmp1 = q.x * q.y;
+	double tmp2 = q.z * q.w;
+	m.data[1] = 2.0 * (tmp1 + tmp2);
+	m.data[4] = 2.0 * (tmp1 - tmp2);
+
+	tmp1 = q.x * q.z;
+	tmp2 = q.y * q.w;
+	m.data[2] = 2.0 * (tmp1 - tmp2);
+	m.data[8] = 2.0 * (tmp1 + tmp2);
+	tmp1 = q.y * q.z;
+	tmp2 = q.x * q.w;
+	m.data[6] = 2.0 * (tmp1 + tmp2);
+	m.data[9] = 2.0 * (tmp1 - tmp2);
+
+	double a1, a2, a3;
+	if (p == Vec3{ 0,0,0 }) { a1 = a2 = a3 = 0; }
+	else { a1 = p.x; a2 = p.y; a3 = p.z; }
+
+	m.data[3] = a1 - a1 * m[0] - a2 * m[1] - a3 * m[2];
+	m.data[7] = a2 - a1 * m[4] - a2 * m[5] - a3 * m[6];
+	m.data[11] = a3 - a1 * m[8] - a2 * m[9] - a3 * m[10];
+	m.data[12] = m.data[13] = m.data[14] = 0.0;
+	m.data[15] = 1.0;
+
+	return m;
+}
+
+Mat4 RotateX(float f)
+{
+	// @important The matrix needs to be transposed when returning it
+	// That's why the sines are inverted
+	// 
+	// ==========================
+	// | 1   0        0       0 |
+	// | 0   cos(f)  -sin(f)  0 |
+	// | 0   sin(f)   cos(f)  0 |
+	// | 0   0	      0       1 |
+	// ==========================
+	//
+	float r = f * PI / 180.0f;
+
+	return
+	{
+		1,		0,		   0,		 0,
+		0,		cos(r),    sin(r),	 0,
+		0,     -sin(r),    cos(r),   0,
+		0,      0,         0,        1,
+	};
+}
+
+Mat4 RotateY(float f)
+{
+	// @important The matrix needs to be transposed when returning it
+	// That's why the sines are inverted
+	// 
+	// ===============================
+	// | cos(r)    sin(f)   0      0 |
+	// | 0         1        0      0 |
+	// |-sin(r)    cos(f)   0      0 |
+	// | 0         0	    0      1 |
+	// ===============================
+	//
+	float r = f * PI / 180.0f;
+
+	return
+	{
+		cos(r),	   0,	  -sin(r),	  0,
+		0,		   1,      0,		  0,
+	    sin(r),    0,	   cos(r),    0,
+		0,         0,      0,         1,
+	};
+}
+
+Mat4 RotateZ(float f)
+{
+	// important: The matrix needs to be transposed when returning it
+	// That's why the sines are inverted
+	// 
+	// ================================
+	// | cos(r)   -sin(f)   0	    0 |
+	// | sin(r)    cos(f)   0       0 |
+	// | 0         0        1       0 |
+	// | 0         0	    0	    1 |
+	// ================================
+	//
+	float r = f * PI / 180.0f;
+
+	return
+	{
+		cos(r),	   sin(r),   0,			0,
+	   -sin(r),    cos(r),   0,			0,
+		0,		   0,        1,		    0,
+		0,         0,        0,         1,
+	};
+}
+
+//FIXME:
+Mat4 RotationMatrix(Vec3 v, float angle)
+{
+	// @important The matrix needs to be transposed when returning it
+	// That's why it is mirrored across the identity
+	// 
+	// Allows for any arbitrary rotation ( @him: GIMBAL LOCK STILL POSSIBLE!!!)
+	//						
+	//					  | cos(0) + Rx*Rx(1 - cos(0))       RxRy(1 - cos(0)) - Rz*sin(0)     RxRz*(1 - cos(0)) + Ry*sin(0)   0 |
+	// Arbitrary Rotation | RxRy(1 - cos(0)) + Rz*sin(0)     cos(0) + Ry*Ry(1 - cos(0))       RyRz*(1 - cos(0)) - Rx*sin(0)   0 |
+	//					  | RzRx(1 - cos(0)) - Ry*sin(0)     RzRy(1 - cos(0)) + Rx*sin(0)     cos(0) + Rz*Rz*(1 - cos(0))     0 | 
+	//					  |              0                             0                                   0                  1 | 
+	//	
+	float rA = angle * (PI / 180.0f);
+	
+	return
+	{
+		v.x * v.x * (1 - cos(rA)) +		  cos(rA),	 v.x * v.y * (1 - cos(rA)) - v.z * sin(rA),	  v.x * v.z * (1 - cos(rA)) - v.y * sin(rA),		0,
+		v.x * v.y * (1 - cos(rA)) + v.z * sin(rA),	 v.y * v.y * (1 - cos(rA)) +	   cos(rA),	  v.y * v.z * (1 - cos(rA)) - v.x * sin(rA),		0,
+		v.x * v.z * (1 - cos(rA)) - v.y * sin(rA),	 v.y * v.z * (1 - cos(rA)) + v.x * sin(rA),	  v.z * v.z * (1 - cos(rA)) +       cos(rA),		0,
+		0,											 0,											  0,												1
+	};
+}
+
+Mat4 PerspectiveProjectionMatrix(int width, int height, float fov, float zNear, float zFar)
+{
+	// @important The matrix needs to be transposed when returning it
+	// That's why the -1, and z1 are in [11] and [14] respectively. They are mirrored across the diagonal
+	// 
+	// ==================================================================================================================================
+	// | 1 / ((width / height) * tan(fov / 2))     0				       0							            0				    |
+	// |			        0			 1 / tan(fov / 2)			     0							            0					    |
+	// |                    0					  0		 -(zFar + zNear) / (zFar - zNear)	  -(2 * zFar * zNear) / (zFar - zNear)	    |
+	// |                    0                      0					  -1							            0				    |
+	// ==================================================================================================================================
+	 
+	float radFOV = fov * PI / 180.0f;
+	
+	float f  = tan(radFOV / 2);
+	float a  = (width / (float)height);	
+	float z0 = -(zFar + zNear) / (zFar - zNear);
+	float z1 = -(2 * zFar * zNear) / (zFar - zNear);
+	
+#if CURRENT_RENDERING_API == OPENGL
+	
+	return
+	{
+		1.0f / (f * a), 0,          0,   0,
+		0,              1.0f / f,   0,   0,
+		0,              0,          z0, -1,
+		0,              0,          z1,  0, 
+	};
+
+#elif CURRENT_RENDERING_API == VULKAN
+	//
+	// @note This is cause Vulkan has a different vertical axis direction than OpenGL
+	//
+	return
+	{
+		1.0f / (f * a), 0,          0,   0,
+		0,             -1.0f / f,   0,   0,
+		0,              0,          z0, -1,
+		0,              0,          z1,  0, 
+	};
+
+#endif
+}
+
+
+Mat4 OrthographicMatrix(float left, float right, float top, float bottom, float zNear, float zFar)
+{
+	// @important The matrix needs to be transposed when returning it
+	// That's why the 4th row is switch with the 4th column
+	// 
+	// ======================================================================
+	// | 2 / (r - l)     0			    0				-(r + l) / (r - l)  |
+	// | 0			   2 / (t - b)      0				-(t + b) / (t - b)  |
+	// | 0			   0			   -2 / (f - n) 	-(f + n) / (f - n)  |
+	// | 0			   0				0				 1				    |
+	// ======================================================================
+	//
+	return 
+	{
+		2.0f / (right - left),			 0,								    0,					 			  0,
+		0,								 2.0f / (top - bottom),			    0,					 			  0,
+		0,							 	 0,								   -2.0f / (zFar - zNear),			  0,
+	  -(right + left) / (right - left), -(top + bottom) / (top - bottom), -(zFar + zNear) / (zFar - zNear),	  1,
+	};
+}
+
+Mat4 ViewMatrix(Vec3& position, Vec3& lookAtPosition, Vec3& worldUp)
+{
+	// @important The matrix needs to be transposed when returning it
+	// That's why the Dot's are on the 4th row
+	// 
+	// ========================================================================================
+	// | right.x          right.y		      right.z		    -Dot(right, position)		  |
+	// | localUp.x	      localUp.y	          localUp.z		    -Dot(localUp, position)		  |
+ 	// |-lookDirection.x -lookDirection.x	 -lookDirection.z	 Dot(lookDirection, position) |
+	// | 0				  0					  0					 1						      |
+	// ========================================================================================
+	//
+	// Another option is to do position - lookAtPosition, and skip the -lookDirection at the end, 
+	// But the Dot(lookDirection, position) should Have a - in front
+	//
+	Vec3 lookDirection = Normalize(lookAtPosition - position);
+	Vec3 right		   = Normalize(Cross(lookDirection, worldUp));
+	Vec3 localUp	   = Cross(right, lookDirection);
+	 
+	return
+	{
+		right.x,			   localUp.x,			   -lookDirection.x,			  0,
+		right.y,			   localUp.y,			   -lookDirection.y,			  0,
+	    right.z,			   localUp.z,			   -lookDirection.z,			  0,
+	   -Dot(right, position), -Dot(localUp, position),  Dot(lookDirection, position), 1,
+	};
+ 
+}
+
+Vec3 ExtractPositionFromMat4(Mat4& m)
+{
+	return Vec3(m.data[12], m.data[13], m.data[14]);
+}
+
+Vec3 ExtractScaleFromMatrix(Mat4 &modelMatrix, Quat &orientation) 
+{
+	Mat4 ori = ToMat4(orientation);
+	// Print("Model Matri", modelMatrix);
+	// Print("Orientation", ori);
+
+	float x0 = ori[0] > 1e-6 ? modelMatrix[0] / ori[0] : 0;
+	float x1 = ori[4] > 1e-6 ? modelMatrix[4] / ori[4] : 0;
+	float x2 = ori[8] > 1e-6 ? modelMatrix[8] / ori[8] : 0;
+
+	float y0 = ori[1] > 1e-6 ? modelMatrix[1] / ori[1] : 0;
+	float y1 = ori[5] > 1e-6 ? modelMatrix[5] / ori[5] : 0;
+	float y2 = ori[9] > 1e-6 ? modelMatrix[9] / ori[9] : 0;
+	
+	float z0 = ori[2]  > 1e-6 ? modelMatrix[2]  / ori[2]  : 0;
+	float z1 = ori[6]  > 1e-6 ? modelMatrix[6]  / ori[6]  : 0;
+	float z2 = ori[10] > 1e-6 ? modelMatrix[10] / ori[10] : 0;
+	
+	float x = x0 + x1 + x2;
+	float y = y0 + y1 + y2;
+	float z = z0 + z1 + z2;
+
+	//printf("%f %f %f\n", x, y, z);
+	return { x, y, z };
+}
+
+void Print(const char* name, Mat4& m)
+{
+	printf(" %s \n", name);
+	printf(" %f, %f, %f, %f \n", m[0],  m[1],  m[2],  m[3] );
+	printf(" %f, %f, %f, %f \n", m[4],  m[5],  m[6],  m[7] );
+	printf(" %f, %f, %f, %f \n", m[8],  m[9],  m[10], m[11]);
+	printf(" %f, %f, %f, %f \n", m[12], m[13], m[14], m[15]);
+	printf("\n");
+}
+
+
+
+
+
+
+
+
+
+
+

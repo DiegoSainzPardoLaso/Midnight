@@ -1,0 +1,51 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "MSVC Code Analysis",
+          "version": "14.44.35222.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/math/quaternion.cpp"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "sha-256": "af73b605c8d6cbb73900c504bd72565fb87917cbdb4dd78837d9e7991a65e3e1"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/math/quaternion.h"
+          },
+          "hashes": {
+            "sha-256": "ed11a98a777f3ed7149b88db667814af58ec2ff4407cc6920433e522b8dee125"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/math/mathconstants.h"
+          },
+          "hashes": {
+            "sha-256": "64a82215d09174839fabf9690477618c5be719190301f6fefbe27ac4b49f15c0"
+          }
+        }
+      ]
+    }
+  ]
+}

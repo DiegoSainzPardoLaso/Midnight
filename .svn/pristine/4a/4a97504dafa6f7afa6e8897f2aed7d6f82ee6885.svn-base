@@ -1,0 +1,6 @@
+
+- Note: Right now the MOF and MAF files are only capable of storing one mesh, and one animation per file.
+		I will revisit it to account for multiple objects and animations inside the same file
+		
+- Note: The RenderNodes Geometry Buffers should be stored inside the same buffer, so there's 
+		no need for two of them per mesh.

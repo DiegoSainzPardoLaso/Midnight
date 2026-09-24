@@ -1,0 +1,25 @@
+#include "ValidationLayers.h"
+
+bool fValidationLayers::CheckIfTheDesiredValidationLayersAreAvailable(vk::raii::Context &vulkanContext, std::vector<const char *> validationLayers)
+{	
+	uint32_t foundLayersCount = 0;
+	std::vector<vk::LayerProperties> layerProperties = vulkanContext.enumerateInstanceLayerProperties();
+
+	assert(layerProperties.size() != 0, "Failed to find any layers in your system");
+
+	for (const char *wantedLayer : validationLayers)
+	{
+		for (vk::LayerProperties &lProperties : layerProperties)
+		{
+			if (strcmp(wantedLayer, lProperties.layerName) == 0)
+			{
+				foundLayersCount++;
+			}
+		}
+	}
+
+	if (foundLayersCount == validationLayers.size()) { return true; }
+
+
+	return false;	
+}

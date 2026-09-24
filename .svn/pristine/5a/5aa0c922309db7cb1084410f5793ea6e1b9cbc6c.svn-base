@@ -1,0 +1,73 @@
+#include "GridVK.hpp"
+
+
+
+Grid_VK::Grid_VK(const vk::raii::PhysicalDevice &physicalDevice, const vk::raii::Device &logicalDevice, const std::vector<uint32_t> familyQueueIndices, const vk::raii::CommandPool &commadPool, const vk::raii::DescriptorPool &descriptorPool, vk::Format colorFormat, vk::Format depthFormat)
+{
+	//=======================================
+	// Temp Stuff
+	//=======================================
+	//
+	dVertex tmpVertex[4] =
+	{
+		dVertex{ {-10.0, -10.0, 0}, { 1, 1, 1} }, // Bottom left 
+		dVertex{ { 10.0, -10.0, 0}, { 1, 1, 1} }, // Bottom right
+		dVertex{ { 10.0,  10.0, 0}, { 1, 1, 1} }, // top	right   
+		dVertex{ {-10.0, 10.05, 0}, { 1, 1, 1} }  // top	left    
+	};
+	int tmpIndices[6]   = { 0, 1, 2, 0, 2, 3 };
+	//
+	//=======================================
+	//
+	// this->mesh = Mesh<dVertex>(&tmpVertex[0], &tmpIndices[0], 4, 6);
+
+
+	// vertexBuffer = fBuffer::CreateVertexBuffer_StaticMesh(physicalDevice, logicalDevice, commandPool, ___QUEUEU___, familyQueueIndices)
+
+	// Create Buffer
+	//
+	// this->mvpUBO.emplace_back(fBuffer::Create(physicalDevice, logicalDevice, familyQueueIndices, sizeof(ModelViewProjectionUBO), vk::BufferUsageFlagBits::eUniformBuffer, vk::MemoryPropertyFlagBits::eHostCoherent | vk::MemoryPropertyFlagBits::eHostVisible));
+	
+	// Compile Shader
+	//
+	this->shader = fShader_vk::Load(logicalDevice, "C:/Midnight/shaders/slang/grid.slang");
+	
+	// D-set layout
+	//
+	std::vector<Binding> bindings =
+	{
+		Binding
+		{
+			.binding		 = 0,
+			.descriptorType  = vk::DescriptorType::eUniformBuffer,
+			.descriptorCount = 1,
+			.shaderStage	 = vk::ShaderStageFlagBits::eVertex
+		}
+	};
+	
+	// Descriptor Set
+	//
+	vk::raii::DescriptorSetLayout layout = fDescriptor::CreateDescriptorSetLayout(logicalDevice, bindings);
+	// this->descriptorSet					 = fDescriptor::CreateDescriptorSets(logicalDevice, descriptorPool, MAX_FRAMES_IN_FLIGHT, layout, this->mvpUBO, { sizeof(ModelViewProjectionUBO) });
+	this->pipeline						 = fPipeline_VK::Create(logicalDevice, RENDERING_MODE::FILL_MODE, VERTEX_TYPE::HARDCODED_INSIDE_SHADER, shader, layout, colorFormat, depthFormat);	
+}
+
+void Grid_VK::Update(const Mat4 &view, const Mat4 &projection, const Vec3 &cameraPosition, const uint32_t currentFrameIdx)
+{	
+	ModelViewProjectionUBO mvpubo
+	{
+		.model		= Identity(),
+		.view		= view,
+		.projection = projection
+	};
+
+	// memcpy(this->mvpUBO[currentFrameIdx].memoryMap, &mvpubo, sizeof(mvpubo));
+}
+
+void Grid_VK::Draw(vk::raii::CommandBuffer &commandBuffer, uint32_t currentFrameIdx)
+{
+	// commandBuffer.bindVertexBuffers(0, .vertexBuffer.buffer, { 0 });
+	// commandBuffer.bindIndexBuffer(*node.indexBuffer.buffer, 0, vk::IndexType::eUint32);
+	commandBuffer.bindDescriptorSets(vk::PipelineBindPoint::eGraphics, this->pipeline.layout, 0, *this->descriptorSet[currentFrameIdx], nullptr);
+	commandBuffer.draw(4, 1, 0, 0);
+}

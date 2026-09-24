@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DEFECTS>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Midnight\src\GUI\</FILEPATH>
+      <FILENAME>MGUI.h</FILENAME>
+      <LINE>167</LINE>
+      <COLUMN>0</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'Panel::widgetYOffset' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>Panel::{ctor}</FUNCTION>
+    <DECORATED>??0Panel@@QEAA@XZ</DECORATED>
+    <FUNCLINE>167</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>Panel::widgetYOffset</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Midnight\src\GUI\</FILEPATH>
+      <FILENAME>MGUI.h</FILENAME>
+      <LINE>167</LINE>
+      <COLUMN>0</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'Panel::id' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>Panel::{ctor}</FUNCTION>
+    <DECORATED>??0Panel@@QEAA@XZ</DECORATED>
+    <FUNCLINE>167</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>Panel::id</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Midnight\src\GUI\</FILEPATH>
+      <FILENAME>MGUI.h</FILENAME>
+      <LINE>167</LINE>
+      <COLUMN>0</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'Panel::geometry' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>Panel::{ctor}</FUNCTION>
+    <DECORATED>??0Panel@@QEAA@XZ</DECORATED>
+    <FUNCLINE>167</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>Panel::geometry</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Midnight\src\Console\</FILEPATH>
+      <FILENAME>Console.cpp</FILENAME>
+      <LINE>6</LINE>
+      <COLUMN>23</COLUMN>
+    </SFA>
+    <DEFECTCODE>6011</DEFECTCODE>
+    <DESCRIPTION>Dereferencing NULL pointer 'console'. </DESCRIPTION>
+    <FUNCTION>fConsole::Initialize</FUNCTION>
+    <DECORATED>?Initialize@fConsole@@YAPEAUConsole@@XZ</DECORATED>
+    <FUNCLINE>3</FUNCLINE>
+    <PROBABILITY>1</PROBABILITY>
+    <RANK>4</RANK>
+    <CATEGORY>
+      <RULECATEGORY>mspft</RULECATEGORY>
+    </CATEGORY>
+    <PATH>
+      <SFA>
+        <FILEPATH>C:\Midnight\src\Console\</FILEPATH>
+        <FILENAME>Console.cpp</FILENAME>
+        <LINE>5</LINE>
+        <COLUMN>10</COLUMN>
+        <KEYEVENT>
+          <ID>1</ID>
+          <KIND>declaration</KIND>
+          <IMPORTANCE>Essential</IMPORTANCE>
+          <MESSAGE>'console' may be NULL</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Midnight\src\Console\</FILEPATH>
+        <FILENAME>Console.cpp</FILENAME>
+        <LINE>6</LINE>
+        <COLUMN>23</COLUMN>
+        <KEYEVENT>
+          <ID>2</ID>
+          <KIND>usage</KIND>
+          <IMPORTANCE>Essential</IMPORTANCE>
+          <MESSAGE>'console' is dereferenced, but may still be NULL</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+    </PATH>
+  </DEFECT>
+</DEFECTS>

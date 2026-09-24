@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DEFECTS>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\VulkanSDK\1.4.341.1\Include\vulkan\</FILEPATH>
+      <FILENAME>vulkan.hpp</FILENAME>
+      <LINE>54</LINE>
+      <COLUMN>55</COLUMN>
+    </SFA>
+    <DEFECTCODE>28251</DEFECTCODE>
+    <DESCRIPTION>Inconsistent annotation for 'LoadLibraryA': this instance has no annotations. See c:\program files (x86)\windows kits\10\include\10.0.26100.0\um\libloaderapi.h(601). </DESCRIPTION>
+    <FUNCTION>LoadLibraryA</FUNCTION>
+    <DECORATED>LoadLibraryA</DECORATED>
+    <FUNCLINE>54</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\VulkanSDK\1.4.341.1\Include\vulkan\</FILEPATH>
+      <FILENAME>vulkan.hpp</FILENAME>
+      <LINE>55</LINE>
+      <COLUMN>49</COLUMN>
+    </SFA>
+    <DEFECTCODE>28251</DEFECTCODE>
+    <DESCRIPTION>Inconsistent annotation for 'FreeLibrary': this instance has no annotations. See c:\program files (x86)\windows kits\10\include\10.0.26100.0\um\libloaderapi.h(171). </DESCRIPTION>
+    <FUNCTION>FreeLibrary</FUNCTION>
+    <DECORATED>FreeLibrary</DECORATED>
+    <FUNCLINE>55</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\VulkanSDK\1.4.341.1\Include\vulkan\</FILEPATH>
+      <FILENAME>vulkan.hpp</FILENAME>
+      <LINE>56</LINE>
+      <COLUMN>53</COLUMN>
+    </SFA>
+    <DEFECTCODE>28251</DEFECTCODE>
+    <DESCRIPTION>Inconsistent annotation for 'GetProcAddress': this instance has no annotations. See c:\program files (x86)\windows kits\10\include\10.0.26100.0\um\libloaderapi.h(312). </DESCRIPTION>
+    <FUNCTION>GetProcAddress</FUNCTION>
+    <DECORATED>GetProcAddress</DECORATED>
+    <FUNCLINE>56</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Midnight\src\Rendering\Vulkan\</FILEPATH>
+      <FILENAME>VulkanRenderer.cpp</FILENAME>
+      <LINE>266</LINE>
+      <COLUMN>12</COLUMN>
+    </SFA>
+    <DEFECTCODE>6387</DEFECTCODE>
+    <DESCRIPTION>'vulkanModule' could be '0':  this does not adhere to the specification for the function 'GetProcAddress'. </DESCRIPTION>
+    <FUNCTION>fVulkan::Internal::WIN32_LOAD_VULKAN</FUNCTION>
+    <DECORATED>?WIN32_LOAD_VULKAN@Internal@fVulkan@@YAXXZ</DECORATED>
+    <FUNCLINE>261</FUNCLINE>
+    <PROBABILITY>1</PROBABILITY>
+    <RANK>4</RANK>
+    <CATEGORY>
+      <RULECATEGORY>mspft</RULECATEGORY>
+    </CATEGORY>
+    <PATH>
+      <SFA>
+        <FILEPATH>C:\Midnight\src\Rendering\Vulkan\</FILEPATH>
+        <FILENAME>VulkanRenderer.cpp</FILENAME>
+        <LINE>263</LINE>
+        <COLUMN>9</COLUMN>
+        <KEYEVENT>
+          <ID>1</ID>
+          <KIND>declaration</KIND>
+          <IMPORTANCE>Essential</IMPORTANCE>
+          <MESSAGE>'vulkanModule' may be NULL</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Midnight\src\Rendering\Vulkan\</FILEPATH>
+        <FILENAME>VulkanRenderer.cpp</FILENAME>
+        <LINE>266</LINE>
+        <COLUMN>12</COLUMN>
+        <KEYEVENT>
+          <ID>2</ID>
+          <KIND>declaration</KIND>
+          <IMPORTANCE>Full</IMPORTANCE>
+          <MESSAGE>'vulkanModule' is an In/Out argument to 'GetProcAddress' (declared at c:\program files (x86)\windows kits\10\include\10.0.26100.0\um\libloaderapi.h:312)</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Midnight\src\Rendering\Vulkan\</FILEPATH>
+        <FILENAME>VulkanRenderer.cpp</FILENAME>
+        <LINE>266</LINE>
+        <COLUMN>12</COLUMN>
+        <KEYEVENT>
+          <ID>3</ID>
+          <KIND>usage</KIND>
+          <IMPORTANCE>Essential</IMPORTANCE>
+          <MESSAGE>'vulkanModule' should not be NULL, because this is not consistent with the SAL annotation on 'GetProcAddress'</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+    </PATH>
+  </DEFECT>
+</DEFECTS>

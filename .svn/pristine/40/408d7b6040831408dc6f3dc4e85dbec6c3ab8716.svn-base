@@ -1,0 +1,80 @@
+#include "AABB.h"
+
+AABB fAABB::Create(Vec3 minCooridnates, Vec3 maxCoordinates, Vec3 color)
+{
+	AABB bBox{};
+
+	bBox.min = minCooridnates;
+	bBox.max = maxCoordinates;
+
+	int vStride		  = 6;
+					  
+	bBox.mesh.vertex_count  = 8;
+	bBox.mesh.index_count  = 36;
+	bBox.mesh.total_vertices_byte_size  = bBox.mesh.vertex_count * vStride;
+					  
+	bBox.mesh.vertices  = (dVertex *)(malloc(sizeof(dVertex) * bBox.mesh.vertex_count));
+	bBox.mesh.indices = (int     *)(malloc(sizeof(int)     * bBox.mesh.index_count));
+	bBox.material     = fMaterial_OGL::Create("C:/Midnight/shaders/glsl/Debug/debug.shader");
+	
+
+	bBox.mesh.vertices[0].position = maxCoordinates;
+	bBox.mesh.vertices[0].color    = color;
+
+	bBox.mesh.vertices[1].position = { minCooridnates.x, maxCoordinates.y, maxCoordinates.z };
+	bBox.mesh.vertices[1].color    = color;
+
+	bBox.mesh.vertices[2].position = { minCooridnates.x, minCooridnates.y, maxCoordinates.z };
+	bBox.mesh.vertices[2].color    = color;
+
+	bBox.mesh.vertices[3].position = { maxCoordinates.x, minCooridnates.y, maxCoordinates.z };
+	bBox.mesh.vertices[3].color    = color;
+
+	bBox.mesh.vertices[4].position = { maxCoordinates.x, minCooridnates.y, minCooridnates.z };
+	bBox.mesh.vertices[4].color    = color;																  
+
+	bBox.mesh.vertices[5].position = minCooridnates;													  
+	bBox.mesh.vertices[5].color    = color;																  
+
+	bBox.mesh.vertices[6].position = { minCooridnates.x, maxCoordinates.y, minCooridnates.z };
+	bBox.mesh.vertices[6].color    = color;
+			
+	bBox.mesh.vertices[7].position = { maxCoordinates.x, maxCoordinates.y, minCooridnates.z };
+	bBox.mesh.vertices[7].color    = color;
+
+
+	bBox.mesh.indices[0]  = 0; bBox.mesh.indices[1]  = 1; bBox.mesh.indices[2]  = 2;
+	bBox.mesh.indices[3]  = 0; bBox.mesh.indices[4]  = 2; bBox.mesh.indices[5]  = 3;
+	bBox.mesh.indices[6]  = 4; bBox.mesh.indices[7]  = 3; bBox.mesh.indices[8]  = 2;
+	
+	bBox.mesh.indices[9]  = 4; bBox.mesh.indices[10] = 2; bBox.mesh.indices[11] = 5;
+	bBox.mesh.indices[12] = 5; bBox.mesh.indices[13] = 2; bBox.mesh.indices[14] = 1;
+	bBox.mesh.indices[15] = 5; bBox.mesh.indices[16] = 1; bBox.mesh.indices[17] = 6;
+	
+	bBox.mesh.indices[18] = 6; bBox.mesh.indices[19] = 7; bBox.mesh.indices[20] = 4;
+	bBox.mesh.indices[21] = 6; bBox.mesh.indices[22] = 4; bBox.mesh.indices[23] = 5;
+	bBox.mesh.indices[24] = 7; bBox.mesh.indices[25] = 0; bBox.mesh.indices[26] = 3;
+
+	bBox.mesh.indices[27] = 7; bBox.mesh.indices[28] = 3; bBox.mesh.indices[29] = 4;
+	bBox.mesh.indices[30] = 6; bBox.mesh.indices[31] = 1; bBox.mesh.indices[32] = 0;
+	bBox.mesh.indices[33] = 6; bBox.mesh.indices[34] = 0; bBox.mesh.indices[35] = 7;
+
+	int index = 0;
+	OGL_Util::CreateDebugObject_VAO_VBO_EBO
+	(
+		index,
+		bBox.mesh.VAO,
+		bBox.mesh.VBO,
+		bBox.mesh.EBO,
+		bBox.mesh.vertices,
+		bBox.mesh.total_vertices_byte_size,
+		bBox.mesh.indices,
+		bBox.mesh.index_count,
+		GL_DYNAMIC_DRAW
+	);
+									   
+
+	return bBox;
+}
+
+Vec3 fAABB::CalculateCentroid(AABB &aabb) { return (aabb.max - aabb.min) * 0.5f; }

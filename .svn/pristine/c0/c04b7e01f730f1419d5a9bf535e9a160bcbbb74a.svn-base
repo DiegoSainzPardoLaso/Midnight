@@ -1,0 +1,217 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [
+        {
+          "ruleId": "C6001",
+          "message": {
+            "text": "Using uninitialized memory '*exts_i'."
+          },
+          "analysisTarget": {
+            "uri": "file:///c:/midnight/dependencies/glad/src/gl.c"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Midnight/dependencies/glad/src/gl.c"
+                },
+                "region": {
+                  "startLine": 1431,
+                  "startColumn": 24,
+                  "endLine": 1431,
+                  "endColumn": 31
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "glad_gl_free_extensions",
+                  "decoratedName": "glad_gl_free_extensions",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/dependencies/glad/src/gl.c"
+                          },
+                          "region": {
+                            "startLine": 1429,
+                            "startColumn": 16
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/dependencies/glad/src/gl.c"
+                          },
+                          "region": {
+                            "startLine": 1430,
+                            "startColumn": 22
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/dependencies/glad/src/gl.c"
+                          },
+                          "region": {
+                            "startLine": 1431,
+                            "startColumn": 19
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/dependencies/glad/src/gl.c"
+                          },
+                          "region": {
+                            "startLine": 1431,
+                            "startColumn": 30
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/dependencies/glad/src/gl.c"
+                          },
+                          "region": {
+                            "startLine": 1432,
+                            "startColumn": 13
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/dependencies/glad/src/gl.c"
+                          },
+                          "region": {
+                            "startLine": 1431,
+                            "startColumn": 44
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/dependencies/glad/src/gl.c"
+                          },
+                          "region": {
+                            "startLine": 1431,
+                            "startColumn": 30
+                          }
+                        },
+                        "message": {
+                          "text": "'*exts_i' may be NULL (Enter this loop)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ]
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/dependencies/glad/src/gl.c"
+                          },
+                          "region": {
+                            "startLine": 1431,
+                            "startColumn": 30
+                          }
+                        },
+                        "message": {
+                          "text": "'*exts_i' is used, but may not have been initialized"
+                        }
+                      },
+                      "kinds": [
+                        "usage"
+                      ],
+                      "importance": "essential"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "MSVC Code Analysis",
+          "version": "14.44.35227.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///c:/midnight/dependencies/glad/src/gl.c"
+          },
+          "roles": [
+            "analysisTarget",
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "fc530b8ce4056efd4a9831a432464ce0079ed427ae40e5a08ae380113234fc2b"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/dependencies/glad/include/glad/gl.h"
+          },
+          "hashes": {
+            "sha-256": "cc1a5a5ed2aac1a6b5192a9632d4251c648ebba0d865f75514f4f25d959d87d7"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/dependencies/glad/include/khr/khrplatform.h"
+          },
+          "hashes": {
+            "sha-256": "7b1e01aaa7ad8f6fc34b5c7bdf79ebf5189bb09e2c4d2e79fc5d350623d11e83"
+          }
+        }
+      ]
+    }
+  ]
+}

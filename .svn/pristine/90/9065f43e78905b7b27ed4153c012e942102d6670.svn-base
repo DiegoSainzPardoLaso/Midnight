@@ -1,0 +1,51 @@
+I need to write an system to rewrite 
+slang shaders, so my format would be 
+something like file.shader
+and the engine should output file.slang
+and then continue as it does now.
+
+But having to type the offsets that a push/definition
+constant should have manually is prone to errors.
+
+// =====================================================
+// Reference Types for The Examples
+// =====================================================
+//
+struct Foo{};
+
+
+Each shader has a global push constants struct, which will be shared
+between all the shader stages, 'cause I can't make the fucking 
+push constant ranges to work. So I will do that instead
+
+
+# ========================================================== # 
+| CPU ---> GPU Push constant                                 | 
+# ========================================================== #
+|                                                            |
+| [push] float foo;                                          |          
+|         |                                                  | 
+|         V                                                  |  
+| [push_constant][offset(bytes)]                             |
+| ConstantBuffer<float, DefaultPushConstantDataLayout> foo;  |
+|                                                            |
+# ========================================================== #
+
+
+# ========================================================== #
+| Main Shader Stages Function                                |
+# ========================================================== #
+|                                                            |
+| [vertex]                                                   |  
+|    |                                                       |
+|    V                                                       |
+| [shader("Vertex")]                                         |  
+|                                                            |
+# ========================================================== #
+
+
+variable Name > Hidden Inizialization()
+{
+    
+}
+

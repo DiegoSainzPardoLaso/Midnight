@@ -1,0 +1,465 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Panel::id' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "analysisTarget": {
+            "uri": "file:///c:/midnight/src/console/console.cpp"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Midnight/src/GUI/MGUI.h"
+                },
+                "region": {
+                  "startLine": 167,
+                  "startColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Panel::{ctor}",
+                  "decoratedName": "??0Panel@@QEAA@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Panel::id"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Panel::widgetYOffset' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "analysisTarget": {
+            "uri": "file:///c:/midnight/src/console/console.cpp"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Midnight/src/GUI/MGUI.h"
+                },
+                "region": {
+                  "startLine": 167,
+                  "startColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Panel::{ctor}",
+                  "decoratedName": "??0Panel@@QEAA@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Panel::widgetYOffset"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Panel::geometry' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "analysisTarget": {
+            "uri": "file:///c:/midnight/src/console/console.cpp"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Midnight/src/GUI/MGUI.h"
+                },
+                "region": {
+                  "startLine": 167,
+                  "startColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Panel::{ctor}",
+                  "decoratedName": "??0Panel@@QEAA@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Panel::geometry"
+          }
+        },
+        {
+          "ruleId": "C6011",
+          "message": {
+            "text": "Dereferencing NULL pointer 'console'. "
+          },
+          "analysisTarget": {
+            "uri": "file:///c:/midnight/src/console/console.cpp"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Midnight/src/Console/Console.cpp"
+                },
+                "region": {
+                  "startLine": 6,
+                  "startColumn": 2,
+                  "endLine": 6,
+                  "endColumn": 26
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "fConsole::Initialize",
+                  "decoratedName": "?Initialize@fConsole@@YAPEAUConsole@@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/Console/Console.cpp"
+                          },
+                          "region": {
+                            "startLine": 5,
+                            "startColumn": 11
+                          }
+                        },
+                        "message": {
+                          "text": "'console' may be NULL"
+                        }
+                      },
+                      "kinds": [
+                        "declaration"
+                      ],
+                      "importance": "essential"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/Console/Console.cpp"
+                          },
+                          "region": {
+                            "startLine": 6,
+                            "startColumn": 24
+                          }
+                        },
+                        "message": {
+                          "text": "'console' is dereferenced, but may still be NULL"
+                        }
+                      },
+                      "kinds": [
+                        "usage"
+                      ],
+                      "importance": "essential"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "MSVC Code Analysis",
+          "version": "14.44.35227.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/console/console.cpp"
+          },
+          "roles": [
+            "analysisTarget",
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "bdcf28918f914de514fa0b8650e9d8c356a5701da2657b1915af1eb86519bda4"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///C:/Midnight/src/GUI/MGUI.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "df5736c69d5bcab0ec69426dc6c4ae0276ce5b67f5e702e4e92d97a3295de5a0"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/console/console.h"
+          },
+          "hashes": {
+            "sha-256": "bcb7e02e689efdfaee6ca86bc10549d92dd641a19f0333f7439dc40175a09fc1"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/gui/text/font.h"
+          },
+          "hashes": {
+            "sha-256": "f9cad84bcd6fe494be47725d776ee9ac790933f9a4f1c4cc6bf53ebadb301c32"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/gui/text/character.h"
+          },
+          "hashes": {
+            "sha-256": "3654e0524aba3a2386365b6693a456f08e187ea6c1a48cff7ef6972aaa14cfc9"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/rendering/opengl/material.h"
+          },
+          "hashes": {
+            "sha-256": "4fbb81db9a4d213b0e2e5ccadf24eacd1c6a55d9f236804d0f1e9a41d56dbeb9"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/rendering/opengl/shader.h"
+          },
+          "hashes": {
+            "sha-256": "b3dddcd563d8ba9813c0d47eca7187a9d1e0f00833eee22dee7a4cb0e6506f9c"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/dependencies/glad/include/glad/gl.h"
+          },
+          "hashes": {
+            "sha-256": "cc1a5a5ed2aac1a6b5192a9632d4251c648ebba0d865f75514f4f25d959d87d7"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/dependencies/glad/include/khr/khrplatform.h"
+          },
+          "hashes": {
+            "sha-256": "7b1e01aaa7ad8f6fc34b5c7bdf79ebf5189bb09e2c4d2e79fc5d350623d11e83"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/file/file.h"
+          },
+          "hashes": {
+            "sha-256": "2aba1c332bdc0998247b12ce12eba2ac5984b1241b2952e8034e35335dd1c7c5"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/utilities/message/messageutils.h"
+          },
+          "hashes": {
+            "sha-256": "90579c520dd0bd5acc631e6a3c1cb844b3594cbd89f52fbad2300bf64f8e32be"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/rendering/opengl/texture.h"
+          },
+          "hashes": {
+            "sha-256": "194d1e47e6d4ae94ec73c78f86d1871aff44168c0b887c78b4866ba3b539b0a4"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/rendering/sharedstructures/texturestructure.h"
+          },
+          "hashes": {
+            "sha-256": "12b27aeed18224906db2963cf3dab5776e0bb099aa01f65823996a11e8abe114"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/utilities/definitions.hpp"
+          },
+          "hashes": {
+            "sha-256": "f492dea7f45f1c5a134a56288cf76543db16b8c9170be14c90c7e4123b471643"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/utilities/utilities.hpp"
+          },
+          "hashes": {
+            "sha-256": "4e0440cf7ea29b2a5addce8a3fba67bcbf78b94f69a4ed8c84372a896879e510"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/math/vector.h"
+          },
+          "hashes": {
+            "sha-256": "8e4bf78f0de38e8009e4ba3be5676de91d5bf06f3f3ac28021d2dac7baf1f189"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/math/vector/vector2.h"
+          },
+          "hashes": {
+            "sha-256": "4f4247fa4b87ad4a9758110f82799d5f711e762d3115c24fd797e4384766633f"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/math/vector/vector3.h"
+          },
+          "hashes": {
+            "sha-256": "674be2bcf54ce5783424188f38193e91e7d21cd9138d034cfed6978cf5b14198"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/math/mathconstants.h"
+          },
+          "hashes": {
+            "sha-256": "64a82215d09174839fabf9690477618c5be719190301f6fefbe27ac4b49f15c0"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/math/vector/vector4.h"
+          },
+          "hashes": {
+            "sha-256": "ed24b17beb3e33b94927db9c68eaeb4682a83961d80fb43173833f7ba8e54fc4"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/math/vector/intvector2.h"
+          },
+          "hashes": {
+            "sha-256": "e386e82ae9143a15d1a23139f364ab4bec10f18e65c9a75d727046d575d46046"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/math/vector/intvector3.h"
+          },
+          "hashes": {
+            "sha-256": "6a8d840ae6cde3f8bf40d4ca57a8572d3f65b06a3f2f630909b873181b381401"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/math/vector/intvector4.h"
+          },
+          "hashes": {
+            "sha-256": "7a7c10551c4bbbb36c52ba7453b6d2fbcd77aeed32fea192403f4a8ca15f6d4f"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/math/matrix.h"
+          },
+          "hashes": {
+            "sha-256": "8da30bd0e6a2fe443fd917ee91876e780db533e2d144c57ebaca59a720afa529"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/rendering/material.h"
+          },
+          "hashes": {
+            "sha-256": "0b97da6989c6074dc061629a8264724b9a404be2df6a40c9d3e8f71965ca8b40"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/types/mesh.h"
+          },
+          "hashes": {
+            "sha-256": "05ded074af8cbd9665870f5de2115c3ad101fecfe458efaa962e50caa54065b6"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/types/vertex.h"
+          },
+          "hashes": {
+            "sha-256": "9bb93ec25b30d0b81420b1302aec1c663688c72abde401210b0998314859bc2f"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/types/sstransform.h"
+          },
+          "hashes": {
+            "sha-256": "457172d5a11a835e5a47323c2416e43ee29977119d122a29118d5445bc79aa68"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/inputs/inputs.h"
+          },
+          "hashes": {
+            "sha-256": "fc6d5c8584ddff368d23adeeabe9aa895983662db8e443decd9c2455ff285e2d"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/geometry/geometryfunctions.h"
+          },
+          "hashes": {
+            "sha-256": "82d5019c422ebda8ffb6deabea489f4dedad1680cb76a1cc3b10aba7e85a0923"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/rendering/opengl/oglutilities.hpp"
+          },
+          "hashes": {
+            "sha-256": "695eae674c8945d6dc2a89cce084ba53391ab6b6a3ce6224f6b992ac3fec3b51"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/time/time.h"
+          },
+          "hashes": {
+            "sha-256": "23059c96d9ffc628a6afb41f799c470853e54603eaf031961ea02a532dcc04f8"
+          }
+        }
+      ]
+    }
+  ]
+}

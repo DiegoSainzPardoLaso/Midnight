@@ -1,0 +1,77 @@
+#include "Entity.h"
+
+// - Loads the mesh used by the entity      
+// - Loads the shader used by the entity    
+// - Loads the textures used by the shader  
+// - Creates a VAO, VBO and EBO             
+Entity::Animated* Entity::Create(const char* meshPath, const char* shaderPath, std::vector<const char*>& textures, int id)
+{
+    MOFLoader::Data loadedData    = MOFLoader::LoadMesh(meshPath);
+    Animated* entity              = reinterpret_cast<Animated*>(malloc(sizeof(Animated)));
+    entity->mesh                  = loadedData.mesh;
+    entity->skeleton              = loadedData.skeleton;
+    entity->animator              = Animator();
+    entity->material              = fMaterial_OGL::Create(shaderPath, textures);    
+    entity->lastMeshUpdatedTime   = std::filesystem::last_write_time((meshPath)).time_since_epoch().count();
+    strcpy(entity->meshFilePath, meshPath);
+
+    fTransform::Initialize(entity->transform);
+   
+    OGL_Util::Create_VAO_VBO_EBO
+    (
+        id, 
+        entity->mesh.VAO,
+        entity->mesh.VBO,
+        entity->mesh.EBO,
+        entity->mesh.vertices,
+        entity->mesh.total_vertices_byte_size,
+        entity->mesh.indices,
+        entity->mesh.index_count,
+        OGL_Util::Integrants::POSITION_COLOR_NORMALS_UV_JOINTIDX_WEIGHTS,
+        GL_DYNAMIC_DRAW
+    );
+ 
+    return entity;
+}   
+
+void Entity::UpdateComponents(Animated*& entity)
+{
+    fTransform::UpdateModelMatrix(entity->transform);
+    // fShader::Update(entity->material.shader); 
+    // UpdateMesh(entity);
+    UpdateAnimator(entity->skeleton, entity->animator);
+}
+
+// Clunky Mesh Reloading
+// I think it doesn't happend what I described below
+// @warning When reexporting the mesh, this can sometimes reads the file before
+// the file has even finish exporting, so it will crash trying to read data that hasn't been written yet.
+// 
+void Entity::UpdateMesh(Animated*& entity)
+{
+    long long  newTime = std::filesystem::last_write_time((entity->meshFilePath)).time_since_epoch().count();
+    if (entity->lastMeshUpdatedTime != newTime)
+    {        
+        free(entity->skeleton.joints);
+
+        entity->lastMeshUpdatedTime = newTime;
+        MOFLoader::Data loadedData  = MOFLoader::LoadMesh(entity->meshFilePath);
+        entity->mesh                = loadedData.mesh;
+        entity->skeleton            = loadedData.skeleton;
+                
+        int id = 0;
+        OGL_Util::Create_VAO_VBO_EBO
+        (
+            id,
+            entity->mesh.VAO,
+            entity->mesh.VBO,
+            entity->mesh.EBO,
+            entity->mesh.vertices,
+            entity->mesh.total_vertices_byte_size,
+            entity->mesh.indices,
+            entity->mesh.index_count,
+            OGL_Util::Integrants::POSITION_COLOR_NORMALS_UV_JOINTIDX_WEIGHTS,
+            GL_DYNAMIC_DRAW
+        );
+    }
+}

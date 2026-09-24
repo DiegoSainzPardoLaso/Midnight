@@ -1,0 +1,1148 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [
+        {
+          "ruleId": "C28251",
+          "message": {
+            "text": "Inconsistent annotation for 'LoadLibraryA': this instance has no annotations. See c:\\program files (x86)\\windows kits\\10\\include\\10.0.26100.0\\um\\libloaderapi.h(601). "
+          },
+          "analysisTarget": {
+            "uri": "file:///c:/midnight/src/main.cpp"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/VulkanSDK/1.4.341.1/Include/vulkan/vulkan.hpp"
+                },
+                "region": {
+                  "startLine": 54,
+                  "startColumn": 56
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "LoadLibraryA",
+                  "decoratedName": "LoadLibraryA",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C28251",
+          "message": {
+            "text": "Inconsistent annotation for 'FreeLibrary': this instance has no annotations. See c:\\program files (x86)\\windows kits\\10\\include\\10.0.26100.0\\um\\libloaderapi.h(171). "
+          },
+          "analysisTarget": {
+            "uri": "file:///c:/midnight/src/main.cpp"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/VulkanSDK/1.4.341.1/Include/vulkan/vulkan.hpp"
+                },
+                "region": {
+                  "startLine": 55,
+                  "startColumn": 50
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "FreeLibrary",
+                  "decoratedName": "FreeLibrary",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C28251",
+          "message": {
+            "text": "Inconsistent annotation for 'GetProcAddress': this instance has no annotations. See c:\\program files (x86)\\windows kits\\10\\include\\10.0.26100.0\\um\\libloaderapi.h(312). "
+          },
+          "analysisTarget": {
+            "uri": "file:///c:/midnight/src/main.cpp"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/VulkanSDK/1.4.341.1/Include/vulkan/vulkan.hpp"
+                },
+                "region": {
+                  "startLine": 56,
+                  "startColumn": 54
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "GetProcAddress",
+                  "decoratedName": "GetProcAddress",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Transform::scale' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "analysisTarget": {
+            "uri": "file:///c:/midnight/src/main.cpp"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Midnight/src/Types/Transform.h"
+                },
+                "region": {
+                  "startLine": 15,
+                  "startColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Transform::{ctor}",
+                  "decoratedName": "??0Transform@@QEAA@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Transform::scale"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Transform::eulerOrientation' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "analysisTarget": {
+            "uri": "file:///c:/midnight/src/main.cpp"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Midnight/src/Types/Transform.h"
+                },
+                "region": {
+                  "startLine": 15,
+                  "startColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Transform::{ctor}",
+                  "decoratedName": "??0Transform@@QEAA@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Transform::eulerOrientation"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Transform::model' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "analysisTarget": {
+            "uri": "file:///c:/midnight/src/main.cpp"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Midnight/src/Types/Transform.h"
+                },
+                "region": {
+                  "startLine": 15,
+                  "startColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Transform::{ctor}",
+                  "decoratedName": "??0Transform@@QEAA@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Transform::model"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Transform::position' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "analysisTarget": {
+            "uri": "file:///c:/midnight/src/main.cpp"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Midnight/src/Types/Transform.h"
+                },
+                "region": {
+                  "startLine": 15,
+                  "startColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Transform::{ctor}",
+                  "decoratedName": "??0Transform@@QEAA@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Transform::position"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Panel::id' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "analysisTarget": {
+            "uri": "file:///c:/midnight/src/main.cpp"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Midnight/src/GUI/MGUI.h"
+                },
+                "region": {
+                  "startLine": 167,
+                  "startColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Panel::{ctor}",
+                  "decoratedName": "??0Panel@@QEAA@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Panel::id"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Panel::widgetYOffset' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "analysisTarget": {
+            "uri": "file:///c:/midnight/src/main.cpp"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Midnight/src/GUI/MGUI.h"
+                },
+                "region": {
+                  "startLine": 167,
+                  "startColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Panel::{ctor}",
+                  "decoratedName": "??0Panel@@QEAA@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Panel::widgetYOffset"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Panel::geometry' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "analysisTarget": {
+            "uri": "file:///c:/midnight/src/main.cpp"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Midnight/src/GUI/MGUI.h"
+                },
+                "region": {
+                  "startLine": 167,
+                  "startColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Panel::{ctor}",
+                  "decoratedName": "??0Panel@@QEAA@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Panel::geometry"
+          }
+        }
+      ],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "MSVC Code Analysis",
+          "version": "14.44.35222.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/main.cpp"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "sha-256": "ec14cd6771e50f30c7ebf4632961b2c956548d7065131fa5ba2c517a0b48efa7"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///C:/VulkanSDK/1.4.341.1/Include/vulkan/vulkan.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "ae2a51371f3c12dde3ec55a3e243bc9439bef732a007aaa54cafc84ab9537b6d"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///C:/Midnight/src/Types/Transform.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "ccd5e170276539244781fb74680923a12ea8f2ca3dc6d7c2fee65a3c60658e14"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///C:/Midnight/src/GUI/MGUI.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "692a4697bf5a7e68e03a4b2b1266851e60c496e50c78b35f28e9ead906e67e81"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/application/application.h"
+          },
+          "hashes": {
+            "sha-256": "079cf1bfe200d4acb28c0051a262ee227ddaccfc7fede71eb36b63f2c64b22bf"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/rendering/renderer.h"
+          },
+          "hashes": {
+            "sha-256": "df6199ffcd2ac8d731ad568e4c9f53e2e337299d8950c28d0c8851bcb7490af0"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/utilities/definitions.hpp"
+          },
+          "hashes": {
+            "sha-256": "4869c4bf38f68b8ccd9064ef410764aa4a9845d05e624c5437eabbbbb5fddf4e"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/rendering/vulkan/vulkanrenderer.h"
+          },
+          "hashes": {
+            "sha-256": "782aa20f532334a5b8db4fb24e9c8d0832d2d441a8e8b9b7078a00965e15570d"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/vulkansdk/1.4.341.1/include/vulkan/vulkan_raii.hpp"
+          },
+          "hashes": {
+            "sha-256": "751ece952759f5bad068eb93debff9e5843bb4ba79d2641ee97ecdb6f246f267"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/vulkansdk/1.4.341.1/include/vulkan/vulkan.h"
+          },
+          "hashes": {
+            "sha-256": "dfb52fde20c963f4d74829a7a07aef1e822e6fa0df4ea45a26c7effb7c286802"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/vulkansdk/1.4.341.1/include/vulkan/vk_platform.h"
+          },
+          "hashes": {
+            "sha-256": "23417b1203d8e1d6900d576dc01099346d8523a179390f5209de08e6e439ebc5"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/vulkansdk/1.4.341.1/include/vulkan/vulkan_core.h"
+          },
+          "hashes": {
+            "sha-256": "dc340d0561e1eb333af35b4766d36f96445e451479839276f3412fb275f4623a"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/vulkansdk/1.4.341.1/include/vk_video/vulkan_video_codec_h264std.h"
+          },
+          "hashes": {
+            "sha-256": "b37b96706863769376f0279961344d5cb505f1481ace7342bea428df6bb45136"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/vulkansdk/1.4.341.1/include/vk_video/vulkan_video_codecs_common.h"
+          },
+          "hashes": {
+            "sha-256": "8da2219805fb7f2f0a08a2bd6b9e881bc60eee1d1247f4d5a4cdf34fd27fd2ac"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/vulkansdk/1.4.341.1/include/vk_video/vulkan_video_codec_h264std_encode.h"
+          },
+          "hashes": {
+            "sha-256": "be516b4b8b97dd57dd4628240a11daf5da6bdf248b48dd264a6e9aa152d77e10"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/vulkansdk/1.4.341.1/include/vk_video/vulkan_video_codec_h265std.h"
+          },
+          "hashes": {
+            "sha-256": "40618f6d7e27dfb4ce98537d585276a7308914a892a667f27e39bb5d36c7eb8d"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/vulkansdk/1.4.341.1/include/vk_video/vulkan_video_codec_h265std_encode.h"
+          },
+          "hashes": {
+            "sha-256": "de03085ce0d704b2dab0149b097fd504b5159ae147d8577012bf234a29433793"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/vulkansdk/1.4.341.1/include/vk_video/vulkan_video_codec_h264std_decode.h"
+          },
+          "hashes": {
+            "sha-256": "f0a9beae6a4a4655556d566f7df1f65cd63d3882822114f8d489a0bfb03f7b5a"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/vulkansdk/1.4.341.1/include/vk_video/vulkan_video_codec_h265std_decode.h"
+          },
+          "hashes": {
+            "sha-256": "deb0dca982d61e445b261068ea4e26b8c8501f6bbe0a25a6b40a8c5bc020a83a"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/vulkansdk/1.4.341.1/include/vk_video/vulkan_video_codec_av1std.h"
+          },
+          "hashes": {
+            "sha-256": "4507d6630d60cd54bc27bd5fd25ef496589153b0e1cbe39d7b0fb787fb496116"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/vulkansdk/1.4.341.1/include/vk_video/vulkan_video_codec_av1std_decode.h"
+          },
+          "hashes": {
+            "sha-256": "501c8e5a35877a25c0dd75a980f874bb8249daacad69b2ca298c3102cfbeb5f1"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/vulkansdk/1.4.341.1/include/vk_video/vulkan_video_codec_av1std_encode.h"
+          },
+          "hashes": {
+            "sha-256": "0fe434b225676b7668287136d1da620182c04809756c1bf5f323ead00f869d4b"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/vulkansdk/1.4.341.1/include/vk_video/vulkan_video_codec_vp9std.h"
+          },
+          "hashes": {
+            "sha-256": "3e233ddb1eee787ff663a29e7449a191f2cc7381cf078011ece6f69dfb70aec2"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/vulkansdk/1.4.341.1/include/vk_video/vulkan_video_codec_vp9std_decode.h"
+          },
+          "hashes": {
+            "sha-256": "f079ed20e8e88fadc89f82572deefbd30dad2ede7569c0ced95f8c1f18cb4d27"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/vulkansdk/1.4.341.1/include/vulkan/vulkan_win32.h"
+          },
+          "hashes": {
+            "sha-256": "44b000b0ed817cd82b8242f317a7db7e841dcc352103cc86ef48a13af63fe070"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/vulkansdk/1.4.341.1/include/vulkan/vulkan_hpp_macros.hpp"
+          },
+          "hashes": {
+            "sha-256": "675c474caade2372c485cf9ad12b8f93b11a8540ed54268cd051450609351e43"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/vulkansdk/1.4.341.1/include/vulkan/vulkan_enums.hpp"
+          },
+          "hashes": {
+            "sha-256": "da750b337dde779759a1b9ac2cc3df93e1d67d2a41cfbc90ac66e369f89c5236"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/vulkansdk/1.4.341.1/include/vulkan/vulkan_to_string.hpp"
+          },
+          "hashes": {
+            "sha-256": "d1a106f864582f41fa3ec20f54fff8db60407d26096de352e0b87b87891e8d8c"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/vulkansdk/1.4.341.1/include/vulkan/vulkan_handles.hpp"
+          },
+          "hashes": {
+            "sha-256": "a211352a04cd9724c44170135ea04f530da26fdd087846d28d3e3703f1432f4c"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/vulkansdk/1.4.341.1/include/vulkan/vulkan_structs.hpp"
+          },
+          "hashes": {
+            "sha-256": "5036eb0172b138f834b02fed5a8a7cb2504b395ef6771dc858c20ea3f97c4622"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/vulkansdk/1.4.341.1/include/vulkan/vulkan_funcs.hpp"
+          },
+          "hashes": {
+            "sha-256": "ee288255d1aa134ba07393a63cbc3127c9d3176b2ab58084b7d93e498361df9f"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/rendering/vulkan/memory.h"
+          },
+          "hashes": {
+            "sha-256": "cf6e5e8edb54f75421e5dd4160cea61352653ec89a51d6abac571dbb7c213c76"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/rendering/vulkan/buffer.h"
+          },
+          "hashes": {
+            "sha-256": "d23c2e4239b6a6b91eef0e1dc950d6ea646635c9c1e4c8ae0d6f56e70b37173b"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/rendering/vulkan/swapchain.h"
+          },
+          "hashes": {
+            "sha-256": "3cbae1d84940a1867f9bbcf3095dd0d91fee4acb5f23cbe0407d9ed07f2ebfe5"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/math/vector/vector2.h"
+          },
+          "hashes": {
+            "sha-256": "4f4247fa4b87ad4a9758110f82799d5f711e762d3115c24fd797e4384766633f"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/rendering/vulkan/vulkanshader.h"
+          },
+          "hashes": {
+            "sha-256": "4cdff87c3f6b5319ae44ff8705075b06a56ba5ae648979a6484097f6d9e435cf"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/file/file.h"
+          },
+          "hashes": {
+            "sha-256": "fc97a255ff5ffe2fab0a79fb31ee108754919cdf952394d288e98c197c49cedd"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/rendering/vulkan/windowsurface.h"
+          },
+          "hashes": {
+            "sha-256": "b2339b0e449858e0d1d0290812c3473de33f622b1bd340b8cfac42da1a015696"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/rendering/vulkan/commandbuffers.h"
+          },
+          "hashes": {
+            "sha-256": "f98b1f07676c580ccebb5ed1cc7c969f5287be8c5ee9d948e09f681997d2067a"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/rendering/vulkan/extensions.h"
+          },
+          "hashes": {
+            "sha-256": "2b654056040de6a5252710faad98459f73796bb307108fef67cafe1ea4df0f61"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/rendering/vulkan/debugmessenger.h"
+          },
+          "hashes": {
+            "sha-256": "44c754bae35d99ac1ad359ee1ab0bd58268f63da8429646105d5aa10a751d364"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/rendering/vulkan/validationlayers.h"
+          },
+          "hashes": {
+            "sha-256": "9df9d3dee1cb9541cfe5a2fbce4ebd76c599414c016912c9d8320cb2a2873648"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/rendering/vulkan/descriptors.h"
+          },
+          "hashes": {
+            "sha-256": "1636c5989eb192331621bbc20b51100877618a282cbfba9bbd8c422a8dfddf2e"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/inputs/inputs.h"
+          },
+          "hashes": {
+            "sha-256": "fc6d5c8584ddff368d23adeeabe9aa895983662db8e443decd9c2455ff285e2d"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/math/matrix.h"
+          },
+          "hashes": {
+            "sha-256": "8da30bd0e6a2fe443fd917ee91876e780db533e2d144c57ebaca59a720afa529"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/math/vector.h"
+          },
+          "hashes": {
+            "sha-256": "8e4bf78f0de38e8009e4ba3be5676de91d5bf06f3f3ac28021d2dac7baf1f189"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/math/vector/vector3.h"
+          },
+          "hashes": {
+            "sha-256": "674be2bcf54ce5783424188f38193e91e7d21cd9138d034cfed6978cf5b14198"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/math/mathconstants.h"
+          },
+          "hashes": {
+            "sha-256": "64a82215d09174839fabf9690477618c5be719190301f6fefbe27ac4b49f15c0"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/math/vector/vector4.h"
+          },
+          "hashes": {
+            "sha-256": "ed24b17beb3e33b94927db9c68eaeb4682a83961d80fb43173833f7ba8e54fc4"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/math/vector/intvector2.h"
+          },
+          "hashes": {
+            "sha-256": "e386e82ae9143a15d1a23139f364ab4bec10f18e65c9a75d727046d575d46046"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/math/vector/intvector3.h"
+          },
+          "hashes": {
+            "sha-256": "6a8d840ae6cde3f8bf40d4ca57a8572d3f65b06a3f2f630909b873181b381401"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/math/vector/intvector4.h"
+          },
+          "hashes": {
+            "sha-256": "7a7c10551c4bbbb36c52ba7453b6d2fbcd77aeed32fea192403f4a8ca15f6d4f"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/rendering/opengl/renderableobjectsmanager.h"
+          },
+          "hashes": {
+            "sha-256": "e1a4e9b9096034ec971503f3e95c8c41582d81e0fff697d3bfda3949a0b12b80"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/rendering/opengl/renderableobject.h"
+          },
+          "hashes": {
+            "sha-256": "026e4aae4630618057384e534642cc38c0dc2e84c81e19785ba775b2841ee8a2"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/rendering/opengl/material.h"
+          },
+          "hashes": {
+            "sha-256": "4fbb81db9a4d213b0e2e5ccadf24eacd1c6a55d9f236804d0f1e9a41d56dbeb9"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/rendering/opengl/shader.h"
+          },
+          "hashes": {
+            "sha-256": "70bae5746ea9d489b2737bcd9b48784d779337c430eb19c8c1c953da28c350f4"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/dependencies/glad/include/glad/gl.h"
+          },
+          "hashes": {
+            "sha-256": "cc1a5a5ed2aac1a6b5192a9632d4251c648ebba0d865f75514f4f25d959d87d7"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/dependencies/glad/include/khr/khrplatform.h"
+          },
+          "hashes": {
+            "sha-256": "7b1e01aaa7ad8f6fc34b5c7bdf79ebf5189bb09e2c4d2e79fc5d350623d11e83"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/utilities/message/messageutils.h"
+          },
+          "hashes": {
+            "sha-256": "90579c520dd0bd5acc631e6a3c1cb844b3594cbd89f52fbad2300bf64f8e32be"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/rendering/opengl/texture.h"
+          },
+          "hashes": {
+            "sha-256": "194d1e47e6d4ae94ec73c78f86d1871aff44168c0b887c78b4866ba3b539b0a4"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/rendering/sharedstructures/texturestructure.h"
+          },
+          "hashes": {
+            "sha-256": "12b27aeed18224906db2963cf3dab5776e0bb099aa01f65823996a11e8abe114"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/types/mesh.h"
+          },
+          "hashes": {
+            "sha-256": "05ded074af8cbd9665870f5de2115c3ad101fecfe458efaa962e50caa54065b6"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/types/vertex.h"
+          },
+          "hashes": {
+            "sha-256": "9bb93ec25b30d0b81420b1302aec1c663688c72abde401210b0998314859bc2f"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/utilities/oglutilities.hpp"
+          },
+          "hashes": {
+            "sha-256": "e960e46d0f9042a4b111b40a84fdd79da8a8dc3ac8ad062ce563d74cc51bb52b"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/camera/camerasystem.h"
+          },
+          "hashes": {
+            "sha-256": "77e62c7fa484d989430f956ba8ea18b18d5ab13e548a7bbe5d26762ee54edd22"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/camera/camera.h"
+          },
+          "hashes": {
+            "sha-256": "93e844c3d09b4b1b2ec7c6912b301a389b2bbcf3861cad82c9323ba4d6871393"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/time/time.h"
+          },
+          "hashes": {
+            "sha-256": "23059c96d9ffc628a6afb41f799c470853e54603eaf031961ea02a532dcc04f8"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/math/quaternion.h"
+          },
+          "hashes": {
+            "sha-256": "ed11a98a777f3ed7149b88db667814af58ec2ff4407cc6920433e522b8dee125"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/rendering/material.h"
+          },
+          "hashes": {
+            "sha-256": "0b97da6989c6074dc061629a8264724b9a404be2df6a40c9d3e8f71965ca8b40"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/physics/types/aabb.h"
+          },
+          "hashes": {
+            "sha-256": "b2e3c77038b5a31fe67f36391e9124620ac4ea99b8d7927237fb9f157a23edd1"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/math/linearalgebra.h"
+          },
+          "hashes": {
+            "sha-256": "79e72b68b9350faabee2083801d3f89bd9b14aad6fba02d31e0b95e5e3d5fb99"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/resourcehandling/mofloader.h"
+          },
+          "hashes": {
+            "sha-256": "ff943de62cb0ccb2c050a67f8de640bd03f3d5a9b0d101d15c91c1c0f864c7ec"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/utilities/utilities.hpp"
+          },
+          "hashes": {
+            "sha-256": "50d2fdbfb226762d711ab766c1072185c8dfed61acf77aa5931f1f6dfcda527d"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/animation/types/joint.h"
+          },
+          "hashes": {
+            "sha-256": "9cf2e0ed25f6eb8a2177bdcd6777abc807b938b9d568cf2884bb2f973aab04e8"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/animation/types/skeleton.h"
+          },
+          "hashes": {
+            "sha-256": "b93395f905c69c55c99d853ae3e1e391b964f70bbd691fb8a67dae59aa43b18c"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/osmiddleware/os_middleware.h"
+          },
+          "hashes": {
+            "sha-256": "8a0ab27b76eb000eacb57f38a2c542e335512b0d2cbf99d98f102347213dd1ff"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/dependencies/glad/include/glad/wgl.h"
+          },
+          "hashes": {
+            "sha-256": "bac0873f64145686080310b4112fa38c79b2786c568a5f7bf19ee8e90d5bd58d"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/grid/grid.h"
+          },
+          "hashes": {
+            "sha-256": "2ca591e07a4049873ebdd910c3f2888573c0d42376862a93ad7096920f9c594e"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/geometry/debugshapes.h"
+          },
+          "hashes": {
+            "sha-256": "6cabfb6f7fdd3cb5b3bdeef7d96bbe0c8b7c9dbaeea9f8f08fe97e4e1a121417"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/rendering/shader.h"
+          },
+          "hashes": {
+            "sha-256": "d37eb2f496b94541005cb34c717b82f37f6814a426f8b09ec7f7200711f701e9"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/scene/scene.h"
+          },
+          "hashes": {
+            "sha-256": "4ee8881a5687d08bdd867516dbf76c1da920ed1871a48c703d93a0a7a8c74e69"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/serializer/serializer.h"
+          },
+          "hashes": {
+            "sha-256": "0d963e74cc2ffd5c3f05f56eb70e86e559cf5842a56435a5cdafdc01031cfe59"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/resourcehandling/mafloader.h"
+          },
+          "hashes": {
+            "sha-256": "afe61167adc250c5c671c37f2ea394cb7626f94357e56f031d0e832b2b9c257e"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/animation/animation.h"
+          },
+          "hashes": {
+            "sha-256": "458aea6592378711110a751be7a6ee00da98da321d2eebe514a1bb290836b789"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/animation/types/keyframe.h"
+          },
+          "hashes": {
+            "sha-256": "2969c57e112839bf2620a4ce9cfb87fe44cb4fe95750625fb65baaff1cc073ab"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/console/console.h"
+          },
+          "hashes": {
+            "sha-256": "96fa320f81e25b9baebb208e5ca2fca167d7ca3248c4c3699511dcf3426f40ca"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/gui/text/font.h"
+          },
+          "hashes": {
+            "sha-256": "47f910b851f470e45be58e0668d24de2f7c511353a944e8dabc0183b0f3e6497"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/gui/text/character.h"
+          },
+          "hashes": {
+            "sha-256": "3654e0524aba3a2386365b6693a456f08e187ea6c1a48cff7ef6972aaa14cfc9"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/types/sstransform.h"
+          },
+          "hashes": {
+            "sha-256": "457172d5a11a835e5a47323c2416e43ee29977119d122a29118d5445bc79aa68"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/geometry/geometryfunctions.h"
+          },
+          "hashes": {
+            "sha-256": "82d5019c422ebda8ffb6deabea489f4dedad1680cb76a1cc3b10aba7e85a0923"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/entity/entitymanager.h"
+          },
+          "hashes": {
+            "sha-256": "6a11422f5d826afb6de3592ddd3b4e6d9ae4d2620d9807803db0e1531e5dae1a"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/entity/entity.h"
+          },
+          "hashes": {
+            "sha-256": "a064a41327a474e5acd847940234c5bf6663aba97fd289d40baf2f013b2ea66b"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/animation/animator.h"
+          },
+          "hashes": {
+            "sha-256": "c814a55995e165c9c14124ae96c026f6bc31fd2c5444a2f1ebcf69d5435f4b4e"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/enginetools/picker.h"
+          },
+          "hashes": {
+            "sha-256": "14e703f2f3ccf5824a83a7abaa60a93d7e6ab77ff1c7959527fa9be2a83364f8"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/enginetools/gizmos.h"
+          },
+          "hashes": {
+            "sha-256": "b67223f047034b69c9dacd185a176cef65782d395afd2cd74ed8ce49e5bf4dff"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/physics/physics.h"
+          },
+          "hashes": {
+            "sha-256": "7bdbc4a56b3e07fe2fc01d557ca736881656c340f5db4aab0a018ebd74192937"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/physics/types/ray.h"
+          },
+          "hashes": {
+            "sha-256": "9e02240f3b4b09a70060c52c16ff141ff39dba3d9c1168393848fddf7e5ddcd5"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/physics/types/plane.h"
+          },
+          "hashes": {
+            "sha-256": "50ab1edb8d921ebc3351cb5ca3fb5b403946dcaf686b781ee41e67e7e9a67d64"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/viewport/viewport.h"
+          },
+          "hashes": {
+            "sha-256": "7dfedc978a6eb5493831b1b7e762673ecc243040feed788000f9cdfb59972a06"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/midnightenginecore/midnightenginecore.h"
+          },
+          "hashes": {
+            "sha-256": "ac9b9f8cf45d954a039e00854b0e2dfebdb866dd5a877fcc0dcbf9659e272b56"
+          }
+        }
+      ]
+    }
+  ]
+}

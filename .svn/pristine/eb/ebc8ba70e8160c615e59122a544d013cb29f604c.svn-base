@@ -1,0 +1,120 @@
+#include "SwapChain.h"
+
+
+void fSwapChain::Create(vk::raii::PhysicalDevice &physicalDevice, vk::raii::Device &logicalDevice, vk::raii::SwapchainKHR &swapChain, std::vector<vk::raii::ImageView> &swapChainImageViews, std::vector<vk::Image> &swapChainImages, vk::SurfaceFormatKHR &swapChainSurfaceFormat, vk::Extent2D &extent, vk::raii::SurfaceKHR &windowSurface, vk::PresentModeKHR presentMode, Vec2 &dimensions)
+{
+	uint32_t						  minImageCount			= 0;
+	vk::PresentModeKHR				  presentationMode		= vk::PresentModeKHR::eFifo;
+	auto							  surfaceCapabilities   = physicalDevice.getSurfaceCapabilitiesKHR(*windowSurface);
+	std::vector<vk::SurfaceFormatKHR> availableFormats      = physicalDevice.getSurfaceFormatsKHR(windowSurface);
+	std::vector<vk::PresentModeKHR>   availablePresentModes = physicalDevice.getSurfacePresentModesKHR(windowSurface);
+
+	// ================================================================================ // 
+	// Surface Format
+	// ================================================================================ // 
+	if (availableFormats.empty())
+	{
+		std::cerr << "[ERROR] - Function Name: CREATE_SWAP_CHAIN - [Your graphics Card doesn't support any Surface Formats (Color Depth)]\n";
+		abort();
+	}
+
+	for (auto format : availableFormats)
+	{
+		if (format.format == vk::Format::eB8G8R8A8Srgb && format.colorSpace == vk::ColorSpaceKHR::eSrgbNonlinear)
+		{
+			swapChainSurfaceFormat = format;
+			break;
+		}
+	}
+
+	// ================================================================================ // 
+	// Presentation Mode
+	// ================================================================================ // 	
+
+	for (vk::PresentModeKHR &pMode : availablePresentModes)
+	{
+		if (pMode == presentMode)
+		{
+			presentationMode = presentMode;
+			break;
+		}
+	}
+
+	if (presentationMode != presentMode)
+	{
+		std::cout << "[INFO] - Function Name: <CREATE_SWAP_CHAIN> - [This GPU doesn't support the desired present mode. Setting eFifo mode to default]\n"; 
+	}
+
+	// ================================================================================ // 
+	// Surface Capabilities (Extent/Swap chain images dimensions)
+	// ================================================================================ // 	
+	if (surfaceCapabilities.currentExtent.width != UINT32_MAX)
+	{
+		extent = surfaceCapabilities.currentExtent;
+	}
+	else
+	{
+		extent.width  = std::clamp<uint32_t>((uint32_t)dimensions.width,  surfaceCapabilities.minImageExtent.width,  surfaceCapabilities.maxImageExtent.width);
+		extent.height = std::clamp<uint32_t>((uint32_t)dimensions.height, surfaceCapabilities.minImageExtent.height, surfaceCapabilities.maxImageExtent.height);
+	}
+
+
+	// ================================================================================ // 
+	// Min Images
+	// ================================================================================ // 	
+
+	minImageCount = max(MAX_FRAMES_IN_FLIGHT, surfaceCapabilities.minImageCount);
+
+	if ((0 < surfaceCapabilities.maxImageCount) && surfaceCapabilities.maxImageCount < minImageCount)
+	{
+		minImageCount = surfaceCapabilities.minImageCount;
+	}
+
+	// ================================================================================ // 	
+	// Creation
+	// ================================================================================ // 	
+		
+	vk::SwapchainCreateInfoKHR createInfo =
+	{	
+		.surface	      = windowSurface,
+		.minImageCount    = minImageCount,
+		.imageFormat      = swapChainSurfaceFormat.format,
+		.imageColorSpace  = swapChainSurfaceFormat.colorSpace,
+		.imageExtent	  = extent,
+		.imageArrayLayers = 1,
+		.imageUsage		  = vk::ImageUsageFlagBits::eColorAttachment,
+		.imageSharingMode = vk::SharingMode::eExclusive,
+		.preTransform	  = surfaceCapabilities.currentTransform,
+		.compositeAlpha   = vk::CompositeAlphaFlagBitsKHR::eOpaque,
+		.presentMode	  = presentationMode,
+		.clipped		  = true,
+		
+	};
+
+
+	swapChain		= vk::raii::SwapchainKHR(logicalDevice, createInfo);
+	swapChainImages	= swapChain.getImages();
+
+	fImageView::Create(logicalDevice, swapChainImageViews, swapChainImages, swapChainSurfaceFormat.format, vk::ImageAspectFlagBits::eColor);
+}
+
+
+
+
+
+void fSwapChain::Recreate(vk::raii::PhysicalDevice &physicalDevice, vk::raii::Device &logicalDevice, vk::raii::SwapchainKHR &swapChain, std::vector<vk::raii::ImageView> &swapChainImageViews, std::vector<vk::Image> &swapChainImages, vk::SurfaceFormatKHR &swapChainSurfaceFormat, vk::Extent2D &swapChainExtent, vk::raii::SurfaceKHR &windowSurface, vk::PresentModeKHR presentMode, Vec2 &windowDimensions)
+{
+	logicalDevice.waitIdle();
+
+	Clear(swapChain, swapChainImageViews);
+	
+	Create(physicalDevice, logicalDevice, swapChain, swapChainImageViews, swapChainImages, swapChainSurfaceFormat, swapChainExtent, windowSurface, presentMode, windowDimensions);
+}
+
+
+void fSwapChain::Clear(vk::raii::SwapchainKHR &swapChain, std::vector<vk::raii::ImageView> &imageViews)
+{
+	for (vk::raii::ImageView &imageView : imageViews) { imageView.clear(); }
+	imageViews.clear();
+	swapChain.clear();
+}

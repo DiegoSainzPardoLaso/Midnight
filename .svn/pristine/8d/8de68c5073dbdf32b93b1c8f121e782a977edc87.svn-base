@@ -1,0 +1,28 @@
+#pragma once
+
+#include <vulkan/vulkan_raii.hpp>
+
+#include "../Rendering/Vulkan/Buffer.h"
+#include "../Rendering/Vulkan/Descriptors.h"
+#include "../Rendering/Vulkan/VulkanShader.h"
+#include "../Rendering/Vulkan/VulkanPipeline.h"
+
+
+
+class Grid_VK
+{
+	Shader_VK							 shader;
+	vk::raii::DescriptorSetLayout		 layout;
+	std::vector<vk::raii::DescriptorSet> descriptorSet; // This way of doing things accounts for VSYNC and Uncapped mode rendering
+	Pipeline_VK							 pipeline;
+
+
+
+public:
+	std::vector<Buffer>					 mvpUBO;
+	
+	void Initialize(const vk::raii::PhysicalDevice &physicalDevice, const vk::raii::Device &logicalDevice, const std::vector<uint32_t> familyQueueIndices, const vk::raii::DescriptorPool &descriptorPool, vk::Format colorFormat, vk::Format depthFormat);
+	void Draw(vk::raii::CommandBuffer &commandBuffer, uint32_t currentFrameIdx);
+
+
+};

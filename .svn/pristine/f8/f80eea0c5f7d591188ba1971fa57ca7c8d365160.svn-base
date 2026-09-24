@@ -1,0 +1,74 @@
+#include "GridVK.hpp"
+
+
+
+Grid_VK::Grid_VK(const vk::raii::PhysicalDevice &physicalDevice, const vk::raii::Device &logicalDevice, const std::vector<uint32_t> familyQueueIndices, const vk::raii::CommandPool &commandPool, const vk::raii::DescriptorPool &descriptorPool, const vk::raii::Queue &transferQueue, vk::Format colorFormat, vk::Format depthFormat)
+{	
+	// #=====================================#
+	// | Temp Stuff						     |
+	// #=====================================#
+	//
+	dVertex tmpVertex[4] =
+	{
+		dVertex{ {-10.0, -10.0, 0}, { 1, 1, 1} }, // Bottom left 
+		dVertex{ { 10.0, -10.0, 0}, { 1, 1, 1} }, // Bottom right
+		dVertex{ { 10.0,  10.0, 0}, { 1, 1, 1} }, // top	right
+		dVertex{ {-10.0,  10.0, 0}, { 1, 1, 1} }  // top	left 
+	};
+
+	int tmpIndices[6]   = { 0, 1, 2, 0, 2, 3 };
+	//
+	//=======================================			
+	this->mesh	= Mesh<dVertex>(&tmpVertex[0], &tmpIndices[0], 4, 6);
+	this->vertexBuffer = std::move(fBuffer::CreateVertexBuffer(physicalDevice, logicalDevice, commandPool, transferQueue, familyQueueIndices, mesh.vertices, mesh.total_vertices_byte_size ));
+	this->indexBuffer  = std::move(fBuffer::CreateIndexBuffer (physicalDevice, logicalDevice, commandPool, transferQueue, familyQueueIndices, mesh.indices,  mesh.index_count));
+	this->mvpUBO.emplace_back(fBuffer::Create(physicalDevice, logicalDevice, familyQueueIndices, sizeof(ViewProjectionCamUBO), vk::BufferUsageFlagBits::eUniformBuffer, vk::MemoryPropertyFlagBits::eHostCoherent | vk::MemoryPropertyFlagBits::eHostVisible));
+
+	// Compile Shader
+	//  
+	Shader_Metadata metadata;
+	this->shader = Shader_VK(logicalDevice, "C:/Midnight/shaders/slang/grid.slang", metadata);
+			
+	// D-set layout
+	//
+	std::vector<Binding> bindings =
+	{
+		Binding
+		{
+			.binding		 = 0,
+			.descriptorType  = vk::DescriptorType::eUniformBuffer,
+			.descriptorCount = 1,
+			.shaderStage	 = vk::ShaderStageFlagBits::eVertex
+		}
+	};
+	
+	// Descriptor Set
+	//
+	vk::raii::DescriptorSetLayout layout = fDescriptor::CreateDescriptorSetLayout(logicalDevice, bindings);
+	this->descriptorSet                  = fDescriptor::CreateDescriptorSets(logicalDevice, descriptorPool, MAX_FRAMES_IN_FLIGHT, layout, this->mvpUBO, { sizeof(ViewProjectionCamUBO) });
+	this->pipeline	                     = fPipeline_VK::Create(logicalDevice, RENDERING_MODE::FILL_MODE, VERTEX_TYPE::DEBUG_VERTEX, this->shader.module, metadata.entry_points, metadata.entry_points_count, layout, colorFormat, depthFormat);	
+}
+
+void Grid_VK::Update(const Mat4 &view, const Mat4 &projection, const Vec3 &cameraPosition, const uint32_t currentFrameIdx)
+{	
+	ViewProjectionCamUBO mvc
+	{
+		.view		    = view,
+		.projection	    = projection,
+		.cameraPosition	= cameraPosition,
+	};
+
+	memcpy(this->mvpUBO[currentFrameIdx].memoryMap, &mvc, sizeof(mvc));
+}
+
+void Grid_VK::Draw(vk::raii::CommandBuffer &commandBuffer, uint32_t currentFrameIdx)
+{
+	commandBuffer.bindPipeline(vk::PipelineBindPoint::eGraphics, this->pipeline.pipeline);
+
+
+	commandBuffer.bindVertexBuffers(0, *this->vertexBuffer.buffer, { 0 });
+	commandBuffer.bindIndexBuffer(*this->indexBuffer.buffer, 0, vk::IndexType::eUint32);
+	commandBuffer.bindDescriptorSets(vk::PipelineBindPoint::eGraphics, this->pipeline.layout, 0, *this->descriptorSet[currentFrameIdx], nullptr);
+
+	commandBuffer.drawIndexed(this->mesh.index_count, 1, 0, 0, 0);
+}

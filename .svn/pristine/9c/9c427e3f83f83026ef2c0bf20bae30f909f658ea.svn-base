@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DEFECTS>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Midnight\dependencies\glad\src\</FILEPATH>
+      <FILENAME>wgl.c</FILENAME>
+      <LINE>62</LINE>
+      <COLUMN>19</COLUMN>
+    </SFA>
+    <DEFECTCODE>6011</DEFECTCODE>
+    <DESCRIPTION>Dereferencing NULL pointer 'glad_wglGetExtensionsStringEXT'. </DESCRIPTION>
+    <FUNCTION>glad_wgl_has_extension</FUNCTION>
+    <DECORATED>glad_wgl_has_extension</DECORATED>
+    <FUNCLINE>53</FUNCLINE>
+    <PROBABILITY>1</PROBABILITY>
+    <RANK>4</RANK>
+    <CATEGORY>
+      <RULECATEGORY>mspft</RULECATEGORY>
+    </CATEGORY>
+    <PATH>
+      <SFA>
+        <FILEPATH>C:\Midnight\dependencies\glad\src\</FILEPATH>
+        <FILENAME>wgl.c</FILENAME>
+        <LINE>54</LINE>
+        <COLUMN>16</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Midnight\dependencies\glad\src\</FILEPATH>
+        <FILENAME>wgl.c</FILENAME>
+        <LINE>55</LINE>
+        <COLUMN>16</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Midnight\dependencies\glad\src\</FILEPATH>
+        <FILENAME>wgl.c</FILENAME>
+        <LINE>56</LINE>
+        <COLUMN>16</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Midnight\dependencies\glad\src\</FILEPATH>
+        <FILENAME>wgl.c</FILENAME>
+        <LINE>58</LINE>
+        <COLUMN>41</COLUMN>
+        <KEYEVENT>
+          <ID>1</ID>
+          <KIND>branch</KIND>
+          <IMPORTANCE>Full</IMPORTANCE>
+          <MESSAGE>'glad_wglGetExtensionsStringEXT' may be NULL (Skip this branch)</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Midnight\dependencies\glad\src\</FILEPATH>
+        <FILENAME>wgl.c</FILENAME>
+        <LINE>61</LINE>
+        <COLUMN>41</COLUMN>
+        <KEYEVENT>
+          <ID>2</ID>
+          <KIND>branch</KIND>
+          <IMPORTANCE>Full</IMPORTANCE>
+          <MESSAGE>Enter this branch, (assume '&lt;branch condition&gt;')</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Midnight\dependencies\glad\src\</FILEPATH>
+        <FILENAME>wgl.c</FILENAME>
+        <LINE>62</LINE>
+        <COLUMN>19</COLUMN>
+        <KEYEVENT>
+          <ID>3</ID>
+          <KIND>usage</KIND>
+          <IMPORTANCE>Essential</IMPORTANCE>
+          <MESSAGE>'glad_wglGetExtensionsStringEXT' is dereferenced, but may still be NULL</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+    </PATH>
+  </DEFECT>
+</DEFECTS>

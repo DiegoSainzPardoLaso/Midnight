@@ -1,0 +1,26 @@
+#pragma once
+
+struct Window;
+struct Console;
+struct EDitorGUI;
+struct Grid;
+struct CameraSystem;
+struct Gizmos;
+struct RenderNodeSystem_OGL;
+struct RenderNodeSystem_VK;
+
+struct MidnightEngineCore
+{
+	Window 				 *mainWindow;
+
+	Console				 *console;
+	
+	EDitorGUI			 *gui;
+	Grid 				 *grid;
+	
+	CameraSystem		 *cameraSystem;
+	Gizmos				 *gizmos;
+
+	RenderNodeSystem_OGL *renderNodesOGL;
+	RenderNodeSystem_VK	 *renderNodesVulkan;
+};

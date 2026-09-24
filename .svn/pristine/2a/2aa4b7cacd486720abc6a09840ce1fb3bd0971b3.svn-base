@@ -1,0 +1,287 @@
+#include "Camera.h"
+
+
+void fCameraViewport::Update(Camera &camera)
+{
+	UpdateDirection(camera);
+
+	Move(camera);
+	Pan(camera); 
+
+	camera.transform.position = Lerp(camera.transform.position, camera.lerpingPosition, camera.lerpingAlpha);
+	
+	if (camera.transform.position == camera.lerpingPosition)
+	{
+		camera.state = Still;
+	}
+}
+
+void fCameraViewport::Move(Camera &camera)
+{		
+	float defAlphaWhenMoving = 0.15f;
+
+	//===================================================================
+	// Controller
+	//===================================================================
+
+	if (Controller::CONNECTED)
+	{
+		if (abs(Controller::JOYSTICK_LEFT.y) >= Controller::LEFT_JOYSTICK_DEAD_ZONE) 
+		{
+			camera.lerpingPosition += camera.direction * Controller::JOYSTICK_LEFT.y * camera.movementSpeed * Time::DeltaTime(); 
+			camera.lerpingAlpha		= defAlphaWhenMoving;
+			camera.state			= Moving;
+		}
+		if (abs(Controller::JOYSTICK_LEFT.x) >= Controller::LEFT_JOYSTICK_DEAD_ZONE) 
+		{
+			camera.lerpingPosition += camera.right * Controller::JOYSTICK_LEFT.x * camera.movementSpeed * Time::DeltaTime(); 
+			camera.lerpingAlpha		= defAlphaWhenMoving;
+			camera.state			= Moving;
+		}
+		
+		if (Controller::DPAD_UP)							       
+		{
+			camera.lerpingPosition += camera.direction * camera.movementSpeed * Time::DeltaTime(); 
+			camera.lerpingAlpha		= defAlphaWhenMoving;
+			camera.state			= Moving;
+		}
+		if (Controller::DPAD_DOWN)							       
+		{
+			camera.lerpingPosition -= camera.direction * camera.movementSpeed * Time::DeltaTime(); 
+			camera.lerpingAlpha		= defAlphaWhenMoving;
+			camera.state			= Moving;
+		}
+		if (Controller::DPAD_LEFT)						
+		{
+			camera.lerpingPosition -= camera.right     * camera.movementSpeed * Time::DeltaTime(); 
+			camera.lerpingAlpha		= defAlphaWhenMoving;
+			camera.state			= Moving;
+		}
+		if (Controller::DPAD_RIGHT)						
+		{
+			camera.lerpingPosition += camera.right * camera.movementSpeed * Time::DeltaTime(); 
+			camera.lerpingAlpha		= defAlphaWhenMoving;
+			camera.state			= Moving;
+		}
+																        		        											        
+		if (Controller::BUTTON_EX)					
+		{
+			camera.lerpingPosition += camera.worldUp * camera.movementSpeed * Time::DeltaTime(); 
+			camera.lerpingAlpha		= defAlphaWhenMoving;
+			camera.state			= Moving;
+		}
+		if (Controller::BUTTON_SQUARE)						       
+		{
+			camera.lerpingPosition -= camera.worldUp * camera.movementSpeed * Time::DeltaTime(); 
+			camera.lerpingAlpha		= defAlphaWhenMoving;
+			camera.state			= Moving;
+		}
+		
+		if		(Controller::BUTTON_R1)						       { camera.movementSpeed = camera.newMovementSpeed;	  }
+		else if (!Controller::BUTTON_R1 && !Input::Key_Left_Shift) { camera.movementSpeed = camera.originalMovementSpeed; }
+	}
+
+	//===================================================================
+	// Keyboard 
+	//===================================================================
+	
+	
+	if (Input::Key_W)					  
+	{
+		camera.lerpingPosition += camera.direction * camera.movementSpeed * Time::DeltaTime(); 
+		camera.lerpingAlpha		= defAlphaWhenMoving;
+		camera.state			= Moving;
+	}
+	if (Input::Key_S)					  
+	{
+		camera.lerpingPosition -= camera.direction * camera.movementSpeed * Time::DeltaTime(); 
+		camera.lerpingAlpha		= defAlphaWhenMoving;
+		camera.state			= Moving;
+	}
+	if (Input::Key_A)					  
+	{
+		camera.lerpingPosition -= camera.right * camera.movementSpeed * Time::DeltaTime(); 
+		camera.lerpingAlpha		= defAlphaWhenMoving;
+		camera.state			= Moving;
+	}
+	if (Input::Key_D)					  
+	{
+		camera.lerpingPosition += camera.right * camera.movementSpeed * Time::DeltaTime(); 
+		camera.lerpingAlpha		= defAlphaWhenMoving;
+		camera.state			= Moving;
+	}
+	if (Input::Key_Space || Input::Key_E) 
+	{
+		camera.lerpingPosition += camera.worldUp * camera.movementSpeed * Time::DeltaTime(); 
+		camera.lerpingAlpha		= defAlphaWhenMoving;
+		camera.state			= Moving;
+	}
+	if (Input::Key_Q)					  
+	{
+		camera.lerpingPosition -= camera.worldUp * camera.movementSpeed * Time::DeltaTime(); 
+		camera.lerpingAlpha		= defAlphaWhenMoving;
+		camera.state			= Moving;
+	}
+
+	if      ( Input::Key_Left_Shift)						   { camera.movementSpeed = camera.newMovementSpeed;	  }
+	else if (!Input::Key_Left_Shift && !Controller::BUTTON_R1) { camera.movementSpeed = camera.originalMovementSpeed; }
+
+
+	// This affects the panning interpolation but whatever
+	// 
+	// If There's no key beign pressed finish the lerping
+	//
+	if (!Input::Key_W && !Input::Key_A && !Input::Key_S && !Input::Key_D && !Input::Key_Q && !Input::Key_E && !Input::Key_Space &&
+		abs(Controller::JOYSTICK_LEFT.y) <= Controller::LEFT_JOYSTICK_DEAD_ZONE && abs(Controller::JOYSTICK_LEFT.x) <= Controller::LEFT_JOYSTICK_DEAD_ZONE && 
+		!Controller::DPAD_UP && !Controller::DPAD_DOWN && !Controller::DPAD_LEFT && !Controller::DPAD_RIGHT && !Controller::BUTTON_EX && !Controller::BUTTON_SQUARE)
+	{
+		camera.lerpingAlpha += defAlphaWhenMoving * Time::DeltaTime();
+		camera.lerpingAlpha  = camera.lerpingAlpha >= 1 ? 1 : camera.lerpingAlpha;
+	}	
+}
+
+
+
+inline Vec2  startingPosition;
+inline Vec2  startingMousePos;
+inline IVec2 previousMousePos;
+void fCameraViewport::UpdateDirection(Camera &camera)
+{		
+	camera.right   = Normalize(Cross(camera.direction, camera.worldUp));
+	camera.localUp = Normalize(Cross(camera.direction, camera.right));
+	float lerpMul  = 0.7f;
+
+	if (Mouse::BUTTON_RIGHT)
+	{				
+		IVec2 mousePosition = { (int)Mouse::X, (int)Mouse::Y };
+		if (mousePosition == previousMousePos)
+		{
+			camera.lerpingDirectionAlpha += lerpMul * Time::DeltaTime();
+			camera.lerpingDirectionAlpha = camera.lerpingDirectionAlpha >= 1 ? 1 : camera.lerpingDirectionAlpha;				
+		}
+		else
+		{
+			camera.lerpingDirectionAlpha = lerpMul;
+		}
+		 
+		if (fMouse::FirstPress(RIGHT_BUTTON))
+		{
+			startingMousePos			 = { Mouse::GLOBAL_X * Mouse::SENSITIVITY_X, Mouse::GLOBAL_Y * Mouse::SENSITIVITY_Y };
+			startingPosition			 = { camera.yaw,		 camera.pitch};			
+			camera.lerpingDirectionAlpha = lerpMul;
+		}
+
+		Vec2 currentMousePos	  = { Mouse::GLOBAL_X * Mouse::SENSITIVITY_X, Mouse::GLOBAL_Y * Mouse::SENSITIVITY_Y};
+		Vec2 newYawAndPitch		  = currentMousePos - startingMousePos + startingPosition;		
+				
+		camera.yaw				  = newYawAndPitch.x;
+		camera.pitch			  = newYawAndPitch.y;
+		camera.pitch			  = std::clamp(camera.pitch, -89.0f, 89.0f);
+								  
+		float y					  = -MILA::DegToRad(camera.yaw);
+		float p					  = -MILA::DegToRad(camera.pitch);
+
+		camera.direction.x = cos(y) * cos(p);
+		camera.direction.y = sin(y) * cos(p);
+		camera.direction.z = sin(p);
+
+		camera.direction		= Normalize(camera.direction);				  
+		camera.lerpingDirectionUsedForViewMatrix = Slerp(camera.lerpingDirectionUsedForViewMatrix, camera.direction, camera.lerpingDirectionAlpha);
+		previousMousePos		= mousePosition;
+	}
+	else
+	{
+		camera.lerpingDirectionAlpha            += lerpMul * Time::DeltaTime();
+		camera.lerpingDirectionAlpha             = camera.lerpingDirectionAlpha >= 1 ? 1 : camera.lerpingDirectionAlpha;
+		camera.lerpingDirectionUsedForViewMatrix = Slerp(camera.lerpingDirectionUsedForViewMatrix, camera.direction, camera.lerpingDirectionAlpha);
+	}
+
+	if (Controller::CONNECTED)
+	{		
+		if (abs(Controller::JOYSTICK_RIGHT.x) >= Controller::LEFT_JOYSTICK_DEAD_ZONE || abs(Controller::JOYSTICK_RIGHT.y) >= Controller::RIGHT_JOYSTICK_DEAD_ZONE)
+		{
+			camera.yaw        += Controller::JOYSTICK_RIGHT.x * Controller::RIGHT_JOYSTICK_SENSITIVITY;
+			camera.pitch      -= Controller::JOYSTICK_RIGHT.y * Controller::RIGHT_JOYSTICK_SENSITIVITY;
+			camera.pitch	   = std::clamp(camera.pitch, -89.0f, 89.0f);
+		
+			float rYaw         = -MILA::DegToRad(camera.yaw);
+			float rPitch       = -MILA::DegToRad(camera.pitch);
+		
+			camera.direction.x = cos(rPitch) * cos(rYaw);
+			camera.direction.y = cos(rPitch) * sin(rYaw);
+			camera.direction.z = sin(rPitch);
+		
+			
+			Normalize(camera.direction * Time::DeltaTime());
+			camera.lerpingDirectionUsedForViewMatrix = camera.direction;
+		}
+	}	
+}
+
+
+
+inline Vec2 startingMousePosPan;
+void fCameraViewport::Pan(Camera &camera)
+{
+	float lerpMul = 0.1f;
+
+	if (Mouse::BUTTON_SCROLL_WHEEL)
+	{
+		camera.state = Panning;
+
+		if (fMouse::FirstPress(SCROLL_WHEEL_BUTTON))
+		{
+			startingMousePosPan = { Mouse::GLOBAL_X * Mouse::PAN_SENSITIVITY, Mouse::GLOBAL_Y * Mouse::PAN_SENSITIVITY };
+			camera.lerpingAlpha = lerpMul;
+		}
+
+		Vec2 currentMousePos = { Mouse::GLOBAL_X * Mouse::PAN_SENSITIVITY, Mouse::GLOBAL_Y * Mouse::PAN_SENSITIVITY };
+		Vec2 delta			 = startingMousePosPan - currentMousePos;
+					
+		camera.lerpingPosition -= camera.right   * delta.x * camera.panSensitivity * Time::DeltaTime();
+		camera.lerpingPosition -= camera.localUp * delta.y * camera.panSensitivity * Time::DeltaTime();		
+	}
+	else if (!Mouse::BUTTON_SCROLL_WHEEL && camera.state != Moving)
+	{
+		camera.lerpingAlpha += lerpMul * Time::DeltaTime();
+		camera.lerpingAlpha = camera.lerpingAlpha >= 1 ? 1 : camera.lerpingAlpha;
+		
+	}
+}
+
+inline float alpha = 0;
+inline Vec3  startPosition;
+inline bool  movingCamToPoint = false;
+void fCameraViewport::MoveToPoint(Camera &camera, Vec3 &p, float mSpeed)
+{
+	if ((Input::Key_Left_Shift && Input::Key_C) || movingCamToPoint)
+	{		
+		movingCamToPoint = true;
+		alpha += mSpeed * Time::DeltaTime();
+		camera.transform.position = Lerp(camera.transform.position, p, alpha);
+	}
+}
+
+
+
+
+void fCameraViewport::DebugCamera(Camera &camera)
+{		
+	printf("Mate_Path %s \n", camera.material.shaderPath);
+
+	printf("Position    %f, %f, %f \n", camera.transform.position.x, camera.transform.position.y, camera.transform.position.z);
+	printf("Orientation %f, %f, %f \n", camera.transform.orientation.x, camera.transform.orientation.y, camera.transform.orientation.z);
+	printf("scale       %f, %f, %f \n", camera.transform.scale.x, camera.transform.scale.y, camera.transform.scale.z);
+
+	printf("direction %f, %f, %f \n", camera.direction.x, camera.direction.y, camera.direction.z);
+
+	printf("Yaw %f \n", camera.yaw);
+	printf("Pit %f \n", camera.pitch);
+
+	printf("Fov %f \n", camera.fov);
+
+	printf("Movement Speed %f \n", camera.movementSpeed);
+	printf("Pan S %f \n", camera.panSensitivity);
+
+	printf("Kind %d \n", camera.kind);
+}

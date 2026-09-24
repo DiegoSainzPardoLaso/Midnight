@@ -1,0 +1,10 @@
+#include "Material_VK.h"
+
+
+Material_VK fMaterial_vk::Create(vk::raii::Device &logicalDevice, const char *slangPath)
+{
+	return Material_VK
+	{
+		.shader = fShader_vk::Load(logicalDevice, slangPath),
+	};	
+}

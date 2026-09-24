@@ -1,0 +1,13 @@
+#pragma once
+
+#include "VulkanShader.h"
+
+struct Material_VK
+{
+	Shader_VK shader;
+};
+
+namespace fMaterial_vk
+{
+	Material_VK Create(vk::raii::Device &logicalDevice, const char *slangPath);
+}

@@ -1,0 +1,35 @@
+#pragma once
+
+#ifdef _WIN32
+#include "Platform_Win32.h"
+namespace fPlatform
+{
+    void    initialize();
+    void    update(Window *&window);
+    void    end_of_the_frame_update();
+
+    Window *create_window(int x, int y, int width, int height, const char *window_name);
+    bool    is_open(Window *&window);
+    bool    destroy(Window *&window);
+    void    change_window_title(Window *&window, const char *new_window_name);
+}
+
+#elif __linux__
+#include "Platform_Linux.h"
+namespace fPlatform
+{
+    void initialize();
+    void update();
+    void end_of_the_frame_update();
+}
+
+#elif __APPLE__
+#include "Platform_Apple.h"
+namespace fPlatform
+{
+    void initialize();
+    void update();
+    void end_of_the_frame_update();
+}
+#endif
+ 

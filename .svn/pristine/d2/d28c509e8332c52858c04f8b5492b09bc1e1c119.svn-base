@@ -1,0 +1,51 @@
+#pragma once
+
+#include <chrono>
+#include <string>
+
+#include "../Camera/CameraSystem.h"
+#include "../Camera/Camera.h"
+#include "../Math/Vector.h"
+
+#include "../Serializer/Serializer.h"
+#include "../Utilities/Utilities.hpp"
+
+#include "../ResourceHandling/MOFLoader.h"
+#include "../ResourceHandling/MAFLoader.h"
+
+
+enum SceneSerializationType
+{
+	BINARY,
+	ASCII,
+};
+
+// @note Helper struct, just to populate all the other systems
+//
+struct SceneData
+{
+	char  *date;
+	char  *name;
+
+	CameraSystem *cameraSystem;	
+};
+
+
+namespace fScene
+{
+	void Update(const char *sceneSavePath, bool &save, const char *loadPath, bool &load, CameraSystem *&cameraSystem);
+
+	void default_scene(CameraSystem *&camaraSystem);
+
+	void SerializeScene(const char *sceneSavePath, CameraSystem *&cameraSystem);
+	SceneData LoadScene(const char *scenePath);
+
+	namespace Internal
+	{
+		SceneData LoadASCIIScene(const char *scenePath);
+		void LoadBinaryScene(const char* scenePath);
+
+		void SerializeASCIIScene(const char *scenePath, CameraSystem *&cameraSystem);
+		void SerializeBinaryScene(const char *scenePath, CameraSystem *&cameraSystem);
+	}
+}

@@ -1,0 +1,71 @@
+#include "Descriptors.h"
+
+Descriptor fDescriptor::Create(vk::raii::Device &logicalDevice, vk::raii::DescriptorPool &descriptorPool, const std::vector<vk::DescriptorSetLayoutBinding> &bindings)
+{
+	Descriptor descriptor
+	{
+		.pool   = &descriptorPool,
+		.layout = CreateDescriptorSetLayout(logicalDevice, bindings),
+		.set    = nullptr,//CreateDescriptorSet(logicalDevice, descriptorPool, descriptor.layout, 2)
+	};
+
+	return descriptor;
+}
+
+vk::raii::DescriptorSetLayout fDescriptor::CreateDescriptorSetLayout(const vk::raii::Device &logicalDevice, const std::vector<vk::DescriptorSetLayoutBinding> &bindings)
+{			
+	vk::DescriptorSetLayoutCreateInfo createInfo{};
+	createInfo.bindingCount = 1;
+	createInfo.pBindings	= bindings.data();
+	
+	return vk::raii::DescriptorSetLayout(logicalDevice, createInfo);
+
+	// @important Go to the pipeline creaion
+}
+
+// @note Really for FIFO swapchain's the max frames will be set to 1, so this is just an array of 1
+//
+std::vector<vk::raii::DescriptorSet> fDescriptor::CreateDescriptorSets(const vk::raii::Device &logicalDevice, const vk::raii::DescriptorPool &descriptorPool, const uint32_t descriptorSetCount, const vk::raii::DescriptorSetLayout &inLayout, const std::vector<Buffer> &buffers, const std::vector<uint32_t> buffersSizeOfUBOInBytes)
+{		
+	std::vector<vk::raii::DescriptorSet> outDescriptorSets{};
+	std::vector<vk::DescriptorSetLayout> layouts(descriptorSetCount, inLayout);
+	
+
+	vk::DescriptorSetAllocateInfo allocInfo{};
+	allocInfo.descriptorPool	 = descriptorPool;
+	allocInfo.descriptorSetCount = static_cast<uint32_t>(MAX_FRAMES_IN_FLIGHT);
+	allocInfo.pSetLayouts		 = layouts.data();
+	
+	outDescriptorSets = logicalDevice.allocateDescriptorSets(allocInfo);
+	
+	// @warning FIX this. This will just work if there's just one UBO
+	//
+	std::vector<vk::DescriptorBufferInfo> descriptorInfos{};
+	for (size_t infoIdx = 0; infoIdx < buffersSizeOfUBOInBytes.size(); infoIdx++)
+	{
+		vk::DescriptorBufferInfo info{};
+		info.range  = buffersSizeOfUBOInBytes[infoIdx];
+		info.buffer = buffers[infoIdx].buffer;
+		info.offset = 0;
+
+		descriptorInfos.emplace_back(info); 
+	}
+
+	// Binding
+	//
+	for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++)
+	{		
+		vk::WriteDescriptorSet descriptorWrite{};
+		descriptorWrite.dstSet			= outDescriptorSets[i];
+		descriptorWrite.dstBinding		= 0;
+		descriptorWrite.dstArrayElement = 0;
+		descriptorWrite.descriptorCount = 1;
+		descriptorWrite.descriptorType	= vk::DescriptorType::eUniformBuffer;
+		descriptorWrite.pBufferInfo		= descriptorInfos.data();
+		
+
+		logicalDevice.updateDescriptorSets(descriptorWrite, {});
+	}	
+
+	return outDescriptorSets;
+}

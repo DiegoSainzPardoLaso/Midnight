@@ -1,0 +1,127 @@
+#language slang 2026
+// =========================================================================== //
+// VERTEX SHADER
+// =========================================================================== //
+
+struct model_view_projection_ubo
+{
+    float4x4 model;
+    float4x4 view;
+    float4x4 proj;
+};
+
+struct VertexInput
+{
+    float3 position;
+    float3 color;
+    float3 normal;
+    float2 uv;
+}; 
+
+
+
+struct vertex_shader_push_constants
+{
+    float value0;
+    float value1;
+};
+
+// =========================================================================== //
+// Output
+// =========================================================================== //
+struct VertexOutput
+{
+    float4 sv_position : SV_Position;
+    float3 wc_position;
+    float3 color;
+    float3 normal;
+    float2 uv;
+    float test;
+};
+
+// =========================================================================== //
+// Bindings
+// =========================================================================== //
+// The order is specified in the Create Descriptor set layout
+//
+//
+ConstantBuffer<model_view_projection_ubo> ubo;    // 0  s
+
+[push_constant]
+vertex_shader_push_constants pusTest;
+// [push_constant]
+// ConstantBuffer<float, DefaultPushConstantDataLayout> pusTest4;
+
+
+// =========================================================================== //
+// uint vid : SV_VertexID
+
+[shader("vertex")]
+VertexOutput Vertex_Main(VertexInput input_vertex)
+{
+    VertexOutput output_vertex;        
+    output_vertex.sv_position = mul(ubo.proj, mul(ubo.view, mul(ubo.model, float4(input_vertex.position, 1.0))));
+    output_vertex.wc_position = input_vertex.position;
+    output_vertex.color       = input_vertex.color;
+    output_vertex.normal      = mul(float4(input_vertex.normal, 1.0), ubo.model).xyz;
+    output_vertex.uv          = input_vertex.uv;
+    output_vertex.test        = 1; 
+    
+    return output_vertex;
+}
+  
+ 
+// =========================================================================== //
+// FRAGMENT SHADER
+// =========================================================================== //
+//
+// =========================================================================== //
+// Structs
+// =========================================================================== //
+
+// struct pbr_config
+// {
+//     float  normal_strength;
+//     float  roughness_strength;
+//     float4 color_tint;
+// };
+
+struct fragment_shader_push_constants
+{
+    float value0;
+    float value1;
+};
+
+// =========================================================================== //
+// Bindings
+// =========================================================================== //
+
+[push_constant][offset(8)]
+ConstantBuffer<fragment_shader_push_constants, DefaultPushConstantDataLayout> pusTestF;
+// [push_constant]
+// ConstantBuffer<float, DefaultPushConstantDataLayout> pusTestF2;
+// [push_constant]
+// ConstantBuffer<float, DefaultPushConstantDataLayout> pusTestF4;
+
+// =========================================================================== //
+
+float3 SimpleLighting(float3 position, float3 normal)
+{
+	float3 lightPos    = float3(-1, -2, 6);
+	float3 L           = lightPos - position;
+	float3 N           = normalize(normal);
+	float ambientValue = 0.0;
+	return float3(dot(L, N));
+}
+
+
+[shader("fragment")]
+float4 Fragment_Main(VertexOutput in_vertex) : SV_Target
+{ 
+    float3 col = SimpleLighting(in_vertex.wc_position, in_vertex.normal) ;
+    float rgb  = pusTestF.value0;
+    // return normalize(float4(col, 1.0) + 1.05) * float4(col, 1.0) + (float4(-in_vertex.normal, 1) * 0.25);
+	return normalize(float4(rgb, rgb, rgb, 1.0));	
+}
+
+// =========================================================================== // 

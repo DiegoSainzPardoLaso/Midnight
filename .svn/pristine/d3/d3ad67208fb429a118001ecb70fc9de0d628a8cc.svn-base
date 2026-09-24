@@ -1,0 +1,1237 @@
+#include "Gizmos.h"
+
+// @important // @note Make it render api agnostic
+//
+Gizmos *fGizmos::Initialize(Vec2 &windowDimensions)
+{	
+	Gizmos *g = new Gizmos();
+	g->pickerBuffer = fPicker::InitializePicker(windowDimensions);
+	//================================================================================================================================================================//
+	
+	MOFLoader::Data vTX = MOFLoader::LoadMesh("C:/Midnight/resources/Engine/gizmos/translation/visual_translation_axis_x.mof");
+	MOFLoader::Data vTY = MOFLoader::LoadMesh("C:/Midnight/resources/Engine/gizmos/translation/visual_translation_axis_y.mof");
+	MOFLoader::Data vTZ = MOFLoader::LoadMesh("C:/Midnight/resources/Engine/gizmos/translation/visual_translation_axis_z.mof");
+
+	MOFLoader::Data vRX = MOFLoader::LoadMesh("C:/Midnight/resources/Engine/gizmos/rotation/visual_rotation_axis_x.mof");
+	MOFLoader::Data vRY = MOFLoader::LoadMesh("C:/Midnight/resources/Engine/gizmos/rotation/visual_rotation_axis_y.mof");
+	MOFLoader::Data vRZ = MOFLoader::LoadMesh("C:/Midnight/resources/Engine/gizmos/rotation/visual_rotation_axis_z.mof");
+	
+	MOFLoader::Data vSX = MOFLoader::LoadMesh("C:/Midnight/resources/Engine/gizmos/scale/visual_scaling_axis_x.mof");
+	MOFLoader::Data vSY = MOFLoader::LoadMesh("C:/Midnight/resources/Engine/gizmos/scale/visual_scaling_axis_y.mof");
+	MOFLoader::Data vSZ = MOFLoader::LoadMesh("C:/Midnight/resources/Engine/gizmos/scale/visual_scaling_axis_z.mof");
+
+	//================================================================================================================================================================//
+
+	MOFLoader::Data sTX = MOFLoader::LoadMesh("C:/Midnight/resources/Engine/gizmos/translation/selectable_translation_axis_x.mof");
+	MOFLoader::Data sTY = MOFLoader::LoadMesh("C:/Midnight/resources/Engine/gizmos/translation/selectable_translation_axis_y.mof");
+	MOFLoader::Data sTZ = MOFLoader::LoadMesh("C:/Midnight/resources/Engine/gizmos/translation/selectable_translation_axis_z.mof");
+
+	MOFLoader::Data sRX = MOFLoader::LoadMesh("C:/Midnight/resources/Engine/gizmos/rotation/selectable_rotation_axis_x.mof");
+	MOFLoader::Data sRY = MOFLoader::LoadMesh("C:/Midnight/resources/Engine/gizmos/rotation/selectable_rotation_axis_y.mof");
+	MOFLoader::Data sRZ = MOFLoader::LoadMesh("C:/Midnight/resources/Engine/gizmos/rotation/selectable_rotation_axis_z.mof");
+
+	MOFLoader::Data sSX = MOFLoader::LoadMesh("C:/Midnight/resources/Engine/gizmos/scale/selectable_scaling_axis_x.mof");
+	MOFLoader::Data sSY = MOFLoader::LoadMesh("C:/Midnight/resources/Engine/gizmos/scale/selectable_scaling_axis_y.mof");
+	MOFLoader::Data sSZ = MOFLoader::LoadMesh("C:/Midnight/resources/Engine/gizmos/scale/selectable_scaling_axis_z.mof");
+
+
+	MOFLoader::Data sSpXY = MOFLoader::LoadMesh("C:/Midnight/resources/Engine/gizmos/planes/selectable_xy_plane.mof");
+	MOFLoader::Data sSpXZ = MOFLoader::LoadMesh("C:/Midnight/resources/Engine/gizmos/planes/selectable_xz_plane.mof");
+	MOFLoader::Data sSpYZ = MOFLoader::LoadMesh("C:/Midnight/resources/Engine/gizmos/planes/selectable_yz_plane.mof");
+
+	MOFLoader::Data sVpXY = MOFLoader::LoadMesh("C:/Midnight/resources/Engine/gizmos/planes/visual_xy_plane.mof");
+	MOFLoader::Data sVpXZ = MOFLoader::LoadMesh("C:/Midnight/resources/Engine/gizmos/planes/visual_xz_plane.mof");
+	MOFLoader::Data sVpYZ = MOFLoader::LoadMesh("C:/Midnight/resources/Engine/gizmos/planes/visual_yz_plane.mof");
+
+
+	g->pivotPoint		= MOFLoader::LoadMesh("C:/Midnight/resources/Engine/gizmos/pivot_point/pivot_point.mof").staticMesh;
+
+
+
+
+	//================================================================================================================================================================//
+
+	g->visualTranslationX	  = vTX.staticMesh;
+	g->visualTranslationY	  = vTY.staticMesh;
+	g->visualTranslationZ	  = vTZ.staticMesh;
+							  	 
+	g->visualRotationX		  = vRX.staticMesh;
+	g->visualRotationY		  = vRY.staticMesh;
+	g->visualRotationZ		  = vRZ.staticMesh;
+							  	 
+	g->visualScalingX		  = vSX.staticMesh;
+	g->visualScalingY		  = vSY.staticMesh;
+	g->visualScalingZ		  = vSZ.staticMesh;
+
+
+	//g->visualPlaneXY		  = sVpXY.staticMesh;
+	//g->visualPlaneXZ		  = sVpXZ.staticMesh;
+	//g->visualPlaneYZ		  = sVpYZ.staticMesh;
+
+
+	//================================================================================================================================================================//
+
+	g->selectableTranslationX = sTX.staticMesh;
+	g->selectableTranslationY = sTY.staticMesh;
+	g->selectableTranslationZ = sTZ.staticMesh;
+
+	g->selectableRotationX    = sRX.staticMesh;
+	g->selectableRotationY    = sRY.staticMesh;
+	g->selectableRotationZ    = sRZ.staticMesh;
+						      
+	g->selectableScalingX     = sSX.staticMesh;
+	g->selectableScalingY     = sSY.staticMesh;
+	g->selectableScalingZ     = sSZ.staticMesh;
+
+	//g->selectablePlaneXY      = sSpXY.staticMesh;
+	//g->selectablePlaneXZ      = sSpXZ.staticMesh;
+	//g->selectablePlaneYZ      = sSpYZ.staticMesh;
+
+
+	//================================================================================================================================================================//
+
+	g->xLine			  = fDebugShape::CreateLine({ 0,0,0 }, { 0,0,0 }, { 1.0f,  0.39f, 0.41f });
+	g->yLine			  = fDebugShape::CreateLine({ 0,0,0 }, { 0,0,0 }, { 0.67f, 1.0f,  0.38f });
+	g->zLine			  = fDebugShape::CreateLine({ 0,0,0 }, { 0,0,0 }, { 0.37f, 0.72f, 1.0f  });	
+
+	int id = 0;
+	OGL_Util::Create_VAO_VBO_EBO(id, g->visualTranslationX.VAO, g->visualTranslationX.VBO, g->visualTranslationX.EBO, g->visualTranslationX.vertices, g->visualTranslationX.dSize, g->visualTranslationX.indices, g->visualTranslationX.iCount, OGL_Util::Integrants::POSITION_COLOR_NORMALS_UV, GL_DYNAMIC_DRAW );
+	OGL_Util::Create_VAO_VBO_EBO(id, g->visualTranslationY.VAO, g->visualTranslationY.VBO, g->visualTranslationY.EBO, g->visualTranslationY.vertices, g->visualTranslationY.dSize, g->visualTranslationY.indices, g->visualTranslationY.iCount, OGL_Util::Integrants::POSITION_COLOR_NORMALS_UV, GL_DYNAMIC_DRAW);
+	OGL_Util::Create_VAO_VBO_EBO(id, g->visualTranslationZ.VAO, g->visualTranslationZ.VBO, g->visualTranslationZ.EBO, g->visualTranslationZ.vertices, g->visualTranslationZ.dSize, g->visualTranslationZ.indices, g->visualTranslationZ.iCount, OGL_Util::Integrants::POSITION_COLOR_NORMALS_UV, GL_DYNAMIC_DRAW );
+		
+	OGL_Util::Create_VAO_VBO_EBO(id, g->visualRotationX.VAO, g->visualRotationX.VBO, g->visualRotationX.EBO, g->visualRotationX.vertices, g->visualRotationX.dSize, g->visualRotationX.indices, g->visualRotationX.iCount, OGL_Util::Integrants::POSITION_COLOR_NORMALS_UV, GL_DYNAMIC_DRAW);
+	OGL_Util::Create_VAO_VBO_EBO(id, g->visualRotationY.VAO, g->visualRotationY.VBO, g->visualRotationY.EBO, g->visualRotationY.vertices, g->visualRotationY.dSize, g->visualRotationY.indices, g->visualRotationY.iCount, OGL_Util::Integrants::POSITION_COLOR_NORMALS_UV, GL_DYNAMIC_DRAW);
+	OGL_Util::Create_VAO_VBO_EBO(id, g->visualRotationZ.VAO, g->visualRotationZ.VBO, g->visualRotationZ.EBO, g->visualRotationZ.vertices, g->visualRotationZ.dSize, g->visualRotationZ.indices, g->visualRotationZ.iCount, OGL_Util::Integrants::POSITION_COLOR_NORMALS_UV, GL_DYNAMIC_DRAW);
+	
+	OGL_Util::Create_VAO_VBO_EBO(id, g->visualScalingX.VAO, g->visualScalingX.VBO, g->visualScalingX.EBO, g->visualScalingX.vertices, g->visualScalingX.dSize, g->visualScalingX.indices, g->visualScalingX.iCount, OGL_Util::Integrants::POSITION_COLOR_NORMALS_UV, GL_DYNAMIC_DRAW);
+	OGL_Util::Create_VAO_VBO_EBO(id, g->visualScalingY.VAO, g->visualScalingY.VBO, g->visualScalingY.EBO, g->visualScalingY.vertices, g->visualScalingY.dSize, g->visualScalingY.indices, g->visualScalingY.iCount, OGL_Util::Integrants::POSITION_COLOR_NORMALS_UV, GL_DYNAMIC_DRAW);
+	OGL_Util::Create_VAO_VBO_EBO(id, g->visualScalingZ.VAO, g->visualScalingZ.VBO, g->visualScalingZ.EBO, g->visualScalingZ.vertices, g->visualScalingZ.dSize, g->visualScalingZ.indices, g->visualScalingZ.iCount, OGL_Util::Integrants::POSITION_COLOR_NORMALS_UV, GL_DYNAMIC_DRAW);
+
+	//OGL_Util::Create_VAO_VBO_EBO(id, g->visualPlaneXY.VAO, g->visualPlaneXY.VBO, g->visualPlaneXY.EBO, g->visualPlaneXY.vertices, g->visualPlaneXY.dSize, g->visualPlaneXY.indices, g->visualPlaneXY.iCount, OGL_Util::Integrants::POSITION_COLOR_NORMALS_UV, GL_DYNAMIC_DRAW);
+	//OGL_Util::Create_VAO_VBO_EBO(id, g->visualPlaneXZ.VAO, g->visualPlaneXZ.VBO, g->visualPlaneXZ.EBO, g->visualPlaneXZ.vertices, g->visualPlaneXZ.dSize, g->visualPlaneXZ.indices, g->visualPlaneXZ.iCount, OGL_Util::Integrants::POSITION_COLOR_NORMALS_UV, GL_DYNAMIC_DRAW);
+	//OGL_Util::Create_VAO_VBO_EBO(id, g->visualPlaneYZ.VAO, g->visualPlaneYZ.VBO, g->visualPlaneYZ.EBO, g->visualPlaneYZ.vertices, g->visualPlaneYZ.dSize, g->visualPlaneYZ.indices, g->visualPlaneYZ.iCount, OGL_Util::Integrants::POSITION_COLOR_NORMALS_UV, GL_DYNAMIC_DRAW);
+
+
+	OGL_Util::Create_VAO_VBO_EBO(id, g->selectableTranslationX.VAO, g->selectableTranslationX.VBO, g->selectableTranslationX.EBO, g->selectableTranslationX.vertices, g->selectableTranslationX.dSize, g->selectableTranslationX.indices, g->selectableTranslationX.iCount, OGL_Util::Integrants::POSITION_COLOR_NORMALS_UV, GL_DYNAMIC_DRAW);
+	OGL_Util::Create_VAO_VBO_EBO(id, g->selectableTranslationY.VAO, g->selectableTranslationY.VBO, g->selectableTranslationY.EBO, g->selectableTranslationY.vertices, g->selectableTranslationY.dSize, g->selectableTranslationY.indices, g->selectableTranslationY.iCount, OGL_Util::Integrants::POSITION_COLOR_NORMALS_UV, GL_DYNAMIC_DRAW);
+	OGL_Util::Create_VAO_VBO_EBO(id, g->selectableTranslationZ.VAO, g->selectableTranslationZ.VBO, g->selectableTranslationZ.EBO, g->selectableTranslationZ.vertices, g->selectableTranslationZ.dSize, g->selectableTranslationZ.indices, g->selectableTranslationZ.iCount, OGL_Util::Integrants::POSITION_COLOR_NORMALS_UV, GL_DYNAMIC_DRAW);
+
+	OGL_Util::Create_VAO_VBO_EBO(id, g->selectableRotationX.VAO, g->selectableRotationX.VBO, g->selectableRotationX.EBO, g->selectableRotationX.vertices, g->selectableRotationX.dSize, g->selectableRotationX.indices, g->selectableRotationX.iCount, OGL_Util::Integrants::POSITION_COLOR_NORMALS_UV, GL_DYNAMIC_DRAW);
+	OGL_Util::Create_VAO_VBO_EBO(id, g->selectableRotationY.VAO, g->selectableRotationY.VBO, g->selectableRotationY.EBO, g->selectableRotationY.vertices, g->selectableRotationY.dSize, g->selectableRotationY.indices, g->selectableRotationY.iCount, OGL_Util::Integrants::POSITION_COLOR_NORMALS_UV, GL_DYNAMIC_DRAW);
+	OGL_Util::Create_VAO_VBO_EBO(id, g->selectableRotationZ.VAO, g->selectableRotationZ.VBO, g->selectableRotationZ.EBO, g->selectableRotationZ.vertices, g->selectableRotationZ.dSize, g->selectableRotationZ.indices, g->selectableRotationZ.iCount, OGL_Util::Integrants::POSITION_COLOR_NORMALS_UV, GL_DYNAMIC_DRAW);
+
+	OGL_Util::Create_VAO_VBO_EBO(id, g->selectableScalingX.VAO, g->selectableScalingX.VBO, g->selectableScalingX.EBO, g->selectableScalingX.vertices, g->selectableScalingX.dSize, g->selectableScalingX.indices, g->selectableScalingX.iCount, OGL_Util::Integrants::POSITION_COLOR_NORMALS_UV, GL_DYNAMIC_DRAW);
+	OGL_Util::Create_VAO_VBO_EBO(id, g->selectableScalingY.VAO, g->selectableScalingY.VBO, g->selectableScalingY.EBO, g->selectableScalingY.vertices, g->selectableScalingY.dSize, g->selectableScalingY.indices, g->selectableScalingY.iCount, OGL_Util::Integrants::POSITION_COLOR_NORMALS_UV, GL_DYNAMIC_DRAW);
+	OGL_Util::Create_VAO_VBO_EBO(id, g->selectableScalingZ.VAO, g->selectableScalingZ.VBO, g->selectableScalingZ.EBO, g->selectableScalingZ.vertices, g->selectableScalingZ.dSize, g->selectableScalingZ.indices, g->selectableScalingZ.iCount, OGL_Util::Integrants::POSITION_COLOR_NORMALS_UV, GL_DYNAMIC_DRAW);
+
+	//OGL_Util::Create_VAO_VBO_EBO(id, g->selectablePlaneXY.VAO, g->selectablePlaneXY.VBO, g->selectablePlaneXY.EBO, g->selectablePlaneXY.vertices, g->selectablePlaneXY.dSize, g->selectablePlaneXY.indices, g->selectablePlaneXY.iCount, OGL_Util::Integrants::POSITION_COLOR_NORMALS_UV, GL_DYNAMIC_DRAW);
+	//OGL_Util::Create_VAO_VBO_EBO(id, g->selectablePlaneXZ.VAO, g->selectablePlaneXZ.VBO, g->selectablePlaneXZ.EBO, g->selectablePlaneXZ.vertices, g->selectablePlaneXZ.dSize, g->selectablePlaneXZ.indices, g->selectablePlaneXZ.iCount, OGL_Util::Integrants::POSITION_COLOR_NORMALS_UV, GL_DYNAMIC_DRAW);
+	//OGL_Util::Create_VAO_VBO_EBO(id, g->selectablePlaneYZ.VAO, g->selectablePlaneYZ.VBO, g->selectablePlaneYZ.EBO, g->selectablePlaneYZ.vertices, g->selectablePlaneYZ.dSize, g->selectablePlaneYZ.indices, g->selectablePlaneYZ.iCount, OGL_Util::Integrants::POSITION_COLOR_NORMALS_UV, GL_DYNAMIC_DRAW);
+
+	OGL_Util::Create_VAO_VBO_EBO(id, g->pivotPoint.VAO, g->pivotPoint.VBO, g->pivotPoint.EBO, g->pivotPoint.vertices, g->pivotPoint.dSize, g->pivotPoint.indices, g->pivotPoint.iCount, OGL_Util::Integrants::POSITION_COLOR_NORMALS_UV, GL_DYNAMIC_DRAW);
+
+
+
+	g->material  = fMaterial_OGL::Create("C:/Midnight/shaders/glsl/engine/gizmos.shader");
+	g->transform = fTransform::Initialize({ 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 });
+		
+	g->retrievedDataInformation  = { NONE };
+	g->currentTransformation	 = NO_TRANSFORMATION;
+	g->transformationOrientation = WORLD;
+	
+	g->transformByInputStr   = ""; 
+	g->transformByInputValue = 0;
+
+	g->r = {};
+	g->p = fPlane::Create({ 0, 0, 0 }, 10, ENGINE_AXIS::XY);	
+
+	return g;
+}
+
+void fGizmos::Update(Gizmos *&gizmos, RenderNodeSystem_OGL *&renderNodes, CameraSystem *&cameraSystem, Vec2 &clientAreaDimensions)
+{   	
+	fGizmos::Helpers::UpdateGizmosTransformationAndAxisByInput(gizmos);	
+	fPicker::Update(gizmos, cameraSystem, renderNodes, clientAreaDimensions); 	
+
+	// Get the selected Object
+	//
+	if (Mouse::BUTTON_LEFT																				   && 
+		gizmos->pickerBuffer.retrievedPixelInformation.objectType != ENGINE_TYPE::GIZMOS_TRANSLATION	   &&
+		gizmos->pickerBuffer.retrievedPixelInformation.objectType != ENGINE_TYPE::GIZMOS_ROTATION		   &&
+		gizmos->pickerBuffer.retrievedPixelInformation.objectType != ENGINE_TYPE::GIZMOS_SCALING		   &&		
+		gizmos->pickerBuffer.retrievedPixelInformation.objectType >= 0									   &&
+	   !gizmos->performingTransformation)
+	{
+		gizmos->retrievedDataInformation = gizmos->pickerBuffer.retrievedPixelInformation;
+	}
+
+	// Hovering Axis
+	//
+	if ((gizmos->pickerBuffer.retrievedPixelInformation.objectType == ENGINE_TYPE::GIZMOS_TRANSLATION		||
+		 gizmos->pickerBuffer.retrievedPixelInformation.objectType == ENGINE_TYPE::GIZMOS_ROTATION			||
+		 gizmos->pickerBuffer.retrievedPixelInformation.objectType == ENGINE_TYPE::GIZMOS_SCALING			||
+		 gizmos->pickerBuffer.retrievedPixelInformation.objectType == ENGINE_TYPE::NONE)					&& 
+		!gizmos->performingTransformation)	
+	{
+		gizmos->hoveringAxis = (ENGINE_AXIS)gizmos->pickerBuffer.retrievedPixelInformation.objectIndex;
+	}
+	
+	if (gizmos->retrievedDataInformation.objectType != NONE)
+	{						
+		Transform *t = Helpers::GetSelectedObjectTransform(gizmos->retrievedDataInformation, cameraSystem);			
+		
+		ResetTransformationsByInput(gizmos, t);
+
+		// Get selected Gizmos Axis
+		//
+		if (!gizmos->performingTransformation																	&& 
+			(gizmos->pickerBuffer.retrievedPixelInformation.objectType == ENGINE_TYPE::GIZMOS_TRANSLATION		|| 
+			 gizmos->pickerBuffer.retrievedPixelInformation.objectType == ENGINE_TYPE::GIZMOS_ROTATION			|| 
+			 gizmos->pickerBuffer.retrievedPixelInformation.objectType == ENGINE_TYPE::GIZMOS_SCALING					  	 
+			))
+		{		
+			gizmos->currentTransformationAxis = (ENGINE_AXIS)gizmos->pickerBuffer.retrievedPixelInformation.objectIndex;
+		}
+
+				
+		if (Mouse::BUTTON_LEFT || gizmos->currentTransformation == GIZMOS_TRANSFORMATION::CONTEXTUAL_TRANSLATION || gizmos->currentTransformation == GIZMOS_TRANSFORMATION::CONTEXTUAL_ROTATION || gizmos->currentTransformation == GIZMOS_TRANSFORMATION::CONTEXTUAL_SCALING)
+		{			
+			if (!gizmos->performingTransformation)
+			{
+				gizmos->ogObjectPositionForReseting    = t->position;
+				gizmos->ogObjectScaleForReseting	   = t->scale;
+				gizmos->ogObjectOrientationForReseting = t->orientation;				
+			}
+
+			gizmos->performingTransformation = true;			
+
+			Helpers::StopTransformationsFromBleedIntoEachOther(gizmos, t);												
+			Helpers::UpdateGizmosPlane(gizmos, t->position, cameraSystem->activeCamera->direction);
+
+			Camera *&c = cameraSystem->activeCamera;
+			gizmos->r  = fRay::CastRayFromCamera(c->transform.position, c->direction, c->right, clientAreaDimensions, ZFAR);
+
+			Vec3 intersectionPoint;
+			if (fPhysics::Intersects(gizmos->r, gizmos->p, intersectionPoint))
+			{						
+				// bool changeAxisWhileContextRotation = gizmos->lastTransformation == CONTEXTUAL_ROTATION && ((Input::Key_X && gizmos->previousTransformationAxis != X) || (Input::Key_Y && gizmos->previousTransformationAxis != Y) || (Input::Key_Z && gizmos->previousTransformationAxis != Z));
+
+				// @note I do the third comprobation just to transition from shifted transformation to regular transformation and viceversa. If not it snaps back to another place
+				//																									
+				if (!gizmos->storeRelevantDataOnce || gizmos->p.normal != gizmos->previousPlaneNormal || gizmos->previousModKey != fInput::GetCurrentModKey() || gizmos->currentTransformationAxis != gizmos->previousTransformationAxis)
+				{												 
+					gizmos->startingActiveObjectPosition	= t->position;					
+					gizmos->startingActiveObjectOrientation = t->orientation;
+					gizmos->startingActiveObjectScale		= t->scale;									 
+					gizmos->startingIntersectionPoint		= intersectionPoint;					
+
+					// @note this one prevents the rotation to snap back to another angle when using the mdf keys.
+					// I need to reset it only when the axes are the same. If the previous axis is different to the current one
+					// I want the rotation angle to transfer to the new axis
+					//
+					if (gizmos->currentTransformationAxis == gizmos->previousTransformationAxis) { gizmos->rotationAngle = 0; }
+
+					fTransform::UpdateScale(gizmos->transform, { 1, 1, 1 });
+					gizmos->storeRelevantDataOnce = true;
+				}
+
+
+				switch (gizmos->currentTransformation)
+				{
+					case TRANSLATION:			 { MoveSelectedObject  (gizmos, t, intersectionPoint);						  } break;
+					case ROTATION:				 { RotateSelectedObject(gizmos, t, c->transform.position, intersectionPoint); } break;
+					case SCALING:				 { ScaleSelectedObject (gizmos, t, intersectionPoint);						  } break;
+		
+					case CONTEXTUAL_TRANSLATION: { MoveSelectedObjectContextually  (gizmos, t, intersectionPoint);						  } break;
+					case CONTEXTUAL_ROTATION:	 { RotateSelectedObjectContextually(gizmos, t, c->transform.position, intersectionPoint); } break;
+					case CONTEXTUAL_SCALING:     { ScaleSelectedObjectContextually (gizmos, t, intersectionPoint);						  } break;
+						
+				}
+				
+				gizmos->previousModKey			   = fInput::GetCurrentModKey();
+				gizmos->previousPlaneNormal		   = gizmos->p.normal;
+				gizmos->previousTransformationAxis = gizmos->currentTransformationAxis;
+				gizmos->lastTransformation		   = gizmos->currentTransformation;
+
+			}
+
+		}		
+		else 
+		{			
+			gizmos->currentTransformationAxis = NO_AXIS;
+			gizmos->performingTransformation  = false;
+			gizmos->storeRelevantDataOnce	  = false;
+			gizmos->rotationAngle			  = 0;
+			
+			Helpers::ClearGizmosLines(gizmos);
+		}
+
+		SwitchBetweenWorldAndLocalTransformationsAndUpdateGizmosTransform(gizmos, t->position, t->orientation);
+	}
+	else
+	{
+		fTransform::UpdateScale(gizmos->transform, { 0,0,0 });
+	}
+}
+
+
+
+void fGizmos::MoveSelectedObject(Gizmos *&gizmos, Transform *&t, Vec3 &intersectionPoint)
+{		
+	Vec3 position		  = gizmos->startingActiveObjectPosition;
+	Vec3 selectedAxis	  = Helpers::GetSelectedAxisVector(gizmos);
+	float distanceToPlane = 1;
+
+	if (gizmos->transformationOrientation == WORLD && gizmos->currentTransformationAxis != NO_AXIS)
+	{
+		Vec3 delta = intersectionPoint - gizmos->startingIntersectionPoint;
+		position   = gizmos->startingActiveObjectPosition + Vec3{ delta.x * selectedAxis.x, delta.y * selectedAxis.y, delta.z * selectedAxis.z };
+		position   = Helpers::GetWorldTranslationBasedOnTheCurrentModKeys(gizmos, selectedAxis, intersectionPoint, position);
+	}	
+	else if (gizmos->transformationOrientation == LOCAL && gizmos->currentTransformationAxis != NO_AXIS)
+	{						
+		selectedAxis    = MILA::RotateVectorByQuaternion(selectedAxis, t->orientation);		
+		distanceToPlane = fPlane::PointPositionInReferenceToPlane(gizmos->startingIntersectionPoint, selectedAxis, intersectionPoint).distanceToPlane;
+		
+		position = gizmos->startingActiveObjectPosition + selectedAxis * distanceToPlane;
+		position = Helpers::GetLocalTranslationBasedOnTheCurrentModKeys(gizmos, selectedAxis, distanceToPlane, position);
+	}
+
+
+	fTransform::UpdatePosition(t, position);
+	Helpers::SetGizmosLines(gizmos, gizmos->currentTransformationAxis, t->position, selectedAxis);
+}
+
+void fGizmos::RotateSelectedObject(Gizmos *&gizmos, Transform *&t, Vec3 &cameraPosition, Vec3 &intersectionPoint)
+{				
+	// @note The angle for the rotation is calculated in a plane which normal is the oposite direction of the camera direction
+	// calculate the intersection position of each ray on the plane
+	//	
+	Vec3  originToStart	   = Normalize(gizmos->startingIntersectionPoint - t->position);
+	Vec3  originToEnd	   = Normalize(intersectionPoint                 - t->position);
+	Vec3  rotationAxis	   = gizmos->p.normal;
+	float rotationAngleDeg = SignedAngle(originToStart, originToEnd, rotationAxis);
+	
+	gizmos->rotationAngle = Helpers::GetRotationAngleBasedOnTheCurrentModKeys(gizmos, rotationAngleDeg, intersectionPoint);
+		
+	rotationAxis  = Helpers::GetSelectedAxisVector(gizmos, gizmos->p.normal);	
+	Quat rotation = t->orientation;
+
+	if (gizmos->transformationOrientation == WORLD) 
+	{		
+		float aboveOrBelowPlane = fPlane::PointPositionInReferenceToPlane(t->position, rotationAxis, cameraPosition).distanceToPlane;
+		rotationAxis		   *= aboveOrBelowPlane < 0 ? -1 : 1;
+		
+		rotation = CreateQuaternionFromAxisAndAngle(gizmos->rotationAngle, rotationAxis.x, rotationAxis.y, rotationAxis.z) * gizmos->startingActiveObjectOrientation;		
+	}
+	else if (gizmos->transformationOrientation == LOCAL)
+	{	
+		Vec3  newPlaneNormal	= MILA::RotateVectorByQuaternion(rotationAxis, gizmos->startingActiveObjectOrientation);
+		float aboveOrBelowPlane = fPlane::PointPositionInReferenceToPlane(t->position, newPlaneNormal, cameraPosition).distanceToPlane;		
+		rotationAxis		   *= aboveOrBelowPlane < 0 ? -1 : 1;
+		
+		rotation = gizmos->startingActiveObjectOrientation * CreateQuaternionFromAxisAndAngle(gizmos->rotationAngle, rotationAxis.x, rotationAxis.y, rotationAxis.z);
+
+		rotationAxis = newPlaneNormal;
+	}
+
+	fTransform::UpdateOrientation(t, rotation);
+	Helpers::SetGizmosLines(gizmos, gizmos->currentTransformationAxis, t->position, rotationAxis);
+
+}
+
+void fGizmos::ScaleSelectedObject(Gizmos *&gizmos, Transform *&t, Vec3 &intersectionPoint)
+{		
+	Vec3 selectedAxis = Helpers::GetSelectedAxisVector(gizmos);
+	Vec3 rotatedAxis;
+	
+	if (selectedAxis == Vec3{ 1, 1, 1 }) { rotatedAxis = { 0, 0, 1 };												   }
+	else								 { rotatedAxis = MILA::RotateVectorByQuaternion(selectedAxis, t->orientation); }
+	
+	// @note For the global scaling, because if not the plane's normal would be 1, 1, 1 which isn't ideal, but I also need the selectedAxis to be 1, 1, 1 to scale in al axes
+	// so this would be a nice fix
+	//
+	float distToPlane = fPlane::PointPositionInReferenceToPlane(gizmos->startingIntersectionPoint, rotatedAxis, intersectionPoint).distanceToPlane;
+
+	Vec3 scale = gizmos->startingActiveObjectScale + selectedAxis * distToPlane;
+	scale      = Helpers::GetScalingBasedOnTheCurrentModKeys(gizmos, selectedAxis, distToPlane, scale);
+	
+	fTransform::UpdateScale(t, scale);
+	Helpers::SetGizmosLines(gizmos, gizmos->currentTransformationAxis, t->position, rotatedAxis);
+}
+
+
+
+void fGizmos::MoveSelectedObjectContextually(Gizmos *&gizmos, Transform *&t, Vec3 &intersectionPoint)
+{				
+	Helpers::NASTY_TransformContextuallyByInput(gizmos);		
+	Vec3 position	  = gizmos->startingActiveObjectPosition;
+	Vec3 selectedAxis = Helpers::GetSelectedAxisVector(gizmos);
+	
+
+	// @note The second condition is 'cause the contextual version of no axis should work the same in both transformation orientations 
+	//
+	if (gizmos->transformationOrientation == WORLD || (gizmos->transformationOrientation == LOCAL && gizmos->currentTransformationAxis == NO_AXIS))	
+	{		
+		Vec3 delta = gizmos->transformByInputValue == 0 ? intersectionPoint - gizmos->startingIntersectionPoint : Vec3{ 1, 1, 1 } * gizmos->transformByInputValue;
+		delta      = Vec3{ delta.x * selectedAxis.x, delta.y * selectedAxis.y, delta.z * selectedAxis.z };						
+		
+		position   = gizmos->startingActiveObjectPosition + delta;
+		position   = Helpers::GetWorldTranslationBasedOnTheCurrentModKeys(gizmos, selectedAxis, intersectionPoint, position);
+	}
+	else if (gizmos->transformationOrientation == LOCAL && gizmos->currentTransformationAxis != NO_AXIS)
+	{		
+		selectedAxis	  = MILA::RotateVectorByQuaternion(selectedAxis, t->orientation);
+		float distToPlane = fPlane::PointPositionInReferenceToPlane(gizmos->startingIntersectionPoint, selectedAxis, intersectionPoint).distanceToPlane;
+		distToPlane		  = gizmos->transformByInputValue == 0 ? distToPlane : gizmos->transformByInputValue;						
+
+		position		  = gizmos->startingActiveObjectPosition + selectedAxis * distToPlane;
+		position		  = Helpers::GetLocalTranslationBasedOnTheCurrentModKeys(gizmos, selectedAxis, distToPlane, position);
+	}	
+
+	
+	
+	fTransform::UpdatePosition(t, position);
+	Helpers::SetGizmosLines(gizmos, gizmos->currentTransformationAxis, t->position, selectedAxis);
+	
+
+	if (Mouse::BUTTON_LEFT || Input::Key_Enter) { Helpers::ClearGizmosState(gizmos); }
+
+	if (Mouse::BUTTON_RIGHT)
+	{			
+		Helpers::ClearGizmosState(gizmos);
+		fTransform::UpdatePosition(t, gizmos->ogObjectPositionForReseting);
+	}
+}
+
+void fGizmos::RotateSelectedObjectContextually(Gizmos *&gizmos, Transform *&t, Vec3 &cameraPosition, Vec3 &intersectionPoint)
+{	
+	Helpers::NASTY_TransformContextuallyByInput(gizmos);
+	// @note The angle for the rotation is calculated in a plane which normal is the oposite direction of the camera direction
+	// calculate the intersection position of each ray on the plane
+	//	
+	Vec3  originToStart	   = Normalize(gizmos->startingIntersectionPoint - t->position);
+	Vec3  originToEnd	   = Normalize(intersectionPoint                 - t->position);
+	Vec3  rotationAxis	   = gizmos->p.normal;
+	float rotationAngleDeg = SignedAngle(originToStart, originToEnd, rotationAxis);	
+
+	gizmos->rotationAngle  = Helpers::GetRotationAngleBasedOnTheCurrentModKeys(gizmos, rotationAngleDeg, intersectionPoint);	
+
+	rotationAxis  = Helpers::GetSelectedAxisVector(gizmos, gizmos->p.normal);	
+	Quat rotation = t->orientation;
+
+	if (gizmos->transformationOrientation == WORLD)
+	{
+		float aboveOrBelowPlane = fPlane::PointPositionInReferenceToPlane(t->position, rotationAxis, cameraPosition).distanceToPlane;
+		int sign				= aboveOrBelowPlane < 0 ? -1 : 1;
+		rotationAxis		   *= sign;
+		gizmos->rotationAngle   = gizmos->transformByInputStr == "" ? gizmos->rotationAngle : gizmos->transformByInputValue * sign;			// Switch by the Numerical Input if the string is valid
+		
+		
+
+		rotation = CreateQuaternionFromAxisAndAngle(gizmos->rotationAngle, rotationAxis.x, rotationAxis.y, rotationAxis.z) * gizmos->startingActiveObjectOrientation;		
+	}
+	else if (gizmos->transformationOrientation == LOCAL) 
+	{
+		// @note The way this works is that I rotate a plane normal corresponding to each axis by the objects starting orientation when 
+		// I start performing the rotation and then I check if the camera is above or below the plane, that way I change the axis of rotation
+		// to the inverse so the mouse movement needed maintains consistency no matter what side of the local plane axis the camera is.
+		// Quite simple yet super cool to see it working!
+		//
+		Vec3  newPlaneNormal	= MILA::RotateVectorByQuaternion(rotationAxis, gizmos->startingActiveObjectOrientation);
+		float aboveOrBelowPlane = fPlane::PointPositionInReferenceToPlane(t->position, newPlaneNormal, cameraPosition).distanceToPlane;		
+		int sign				= aboveOrBelowPlane < 0 ? -1 : 1;
+		rotationAxis		   *= sign;
+		gizmos->rotationAngle   = gizmos->transformByInputStr == "" ? gizmos->rotationAngle : gizmos->transformByInputValue * sign;			// Switch by the Numerical Input if the string is valid				
+		rotation = gizmos->startingActiveObjectOrientation * CreateQuaternionFromAxisAndAngle(gizmos->rotationAngle, rotationAxis.x, rotationAxis.y, rotationAxis.z);	
+
+		// This one is just for the lines to match
+		//
+		rotationAxis = newPlaneNormal;
+	}
+
+	fTransform::UpdateOrientation(t, rotation);
+	Helpers::SetGizmosLines(gizmos, gizmos->currentTransformationAxis, t->position, rotationAxis);;
+
+
+	if (Mouse::BUTTON_LEFT || Input::Key_Enter) { Helpers::ClearGizmosState(gizmos); }
+
+	if (Mouse::BUTTON_RIGHT)
+	{		
+		Helpers::ClearGizmosState(gizmos);
+		fTransform::UpdateOrientation(t, gizmos->ogObjectOrientationForReseting);
+	}
+}
+
+void fGizmos::ScaleSelectedObjectContextually(Gizmos *&gizmos, Transform *&t, Vec3 &intersectionPoint)
+{			
+	Vec3 scale = gizmos->startingActiveObjectScale;
+
+	Helpers::NASTY_TransformContextuallyByInput(gizmos);
+	Vec3 selectedAxis = Helpers::GetSelectedAxisVector(gizmos);
+	Vec3 rotatedAxis;
+
+	// @note For the global scaling, because if not the plane's normal would be 1, 1, 1 which isn't ideal, but I also need the selectedAxis to be 1, 1, 1 to scale in al axes
+	// so this would be a nice fix
+	//
+	if (selectedAxis == Vec3{ 1, 1, 1 }) { rotatedAxis = { 0, 0, 1 };												   } 
+	else								 { rotatedAxis = MILA::RotateVectorByQuaternion(selectedAxis, t->orientation); }
+
+	float distToPlane = fPlane::PointPositionInReferenceToPlane(gizmos->startingIntersectionPoint, rotatedAxis, intersectionPoint).distanceToPlane;
+
+	if (gizmos->transformByInputStr == "") 
+	{				
+		scale = gizmos->startingActiveObjectScale + selectedAxis * distToPlane;
+	    scale = Helpers::GetScalingBasedOnTheCurrentModKeys(gizmos, selectedAxis, distToPlane, scale);
+	}
+	else									
+	{
+		scale = {selectedAxis.x * gizmos->startingActiveObjectScale.x * gizmos->transformByInputValue + gizmos->startingActiveObjectScale.x * !(int)selectedAxis.x,
+				 selectedAxis.y * gizmos->startingActiveObjectScale.y * gizmos->transformByInputValue + gizmos->startingActiveObjectScale.y * !(int)selectedAxis.y,
+				 selectedAxis.z * gizmos->startingActiveObjectScale.z * gizmos->transformByInputValue + gizmos->startingActiveObjectScale.z * !(int)selectedAxis.z };
+	}
+
+	
+	fTransform::UpdateScale(t, scale);
+	Helpers::SetGizmosLines(gizmos, gizmos->currentTransformationAxis, t->position, rotatedAxis);
+
+
+	if (Mouse::BUTTON_LEFT || Input::Key_Enter) { Helpers::ClearGizmosState(gizmos); }
+
+	if (Mouse::BUTTON_RIGHT)
+	{		
+		Helpers::ClearGizmosState(gizmos);
+		fTransform::UpdateScale(t, gizmos->ogObjectScaleForReseting);
+	}
+}
+
+
+
+void fGizmos::SwitchBetweenWorldAndLocalTransformationsAndUpdateGizmosTransform(Gizmos *&gizmos, Vec3 &selectedObjectPosition, Quat &selectedObjectOrientation)
+{
+	static bool notPressed = false;
+	if (Input::Key_L && gizmos->transformationOrientation == WORLD && !notPressed)
+	{
+		gizmos->transformationOrientation = LOCAL;
+		notPressed						  = true;
+	}
+	else if (Input::Key_L && gizmos->transformationOrientation == LOCAL && !notPressed)
+	{
+		gizmos->transformationOrientation = WORLD;
+		notPressed						  = true;
+	}
+
+	if (gizmos->transformationOrientation == WORLD && gizmos->currentTransformation != SCALING)
+	{
+		fTransform::Update(gizmos->transform, selectedObjectPosition, { 0, 0, 0 }, { 1, 1, 1 });
+	}
+	else if (gizmos->transformationOrientation == LOCAL || gizmos->currentTransformation == SCALING)
+	{
+		fTransform::UpdateOrientation(gizmos->transform, selectedObjectOrientation);
+		fTransform::UpdatePosition   (gizmos->transform, selectedObjectPosition);
+	}
+
+	if (!Input::Key_L) { notPressed = false; }
+}
+
+void fGizmos::ResetTransformationsByInput(Gizmos *&gizmos, Transform *t)
+{
+	if (!gizmos->performingTransformation)
+	{
+		if (Input::Key_Alt_G) 
+		{
+			fTransform::UpdatePosition(gizmos->transform, { 0, 0, 0 });
+			fTransform::UpdatePosition(t, { 0, 0, 0 }); 
+		}
+		else if (Input::Key_Alt_S) 
+		{
+			fTransform::UpdateScale(gizmos->transform, { 1, 1, 1 });
+			fTransform::UpdateScale(t, { 1, 1, 1 }); 
+		}
+		else if (Input::Key_Alt_R) 
+		{		 
+			fTransform::UpdateOrientation(gizmos->transform, { 0, 0, 0, 1 });
+			fTransform::UpdateOrientation(t, { 0, 0, 0, 1 }); 
+		}
+	}
+}
+
+void fGizmos::Helpers::UpdateGizmosTransformationAndAxisByInput(Gizmos *&gizmos)
+{
+	bool traditionalTransformations = (gizmos->currentTransformation == TRANSLATION || gizmos->currentTransformation == ROTATION || gizmos->currentTransformation == SCALING) * gizmos->performingTransformation;
+	bool contextualTransformations  = (gizmos->currentTransformation == CONTEXTUAL_TRANSLATION || gizmos->currentTransformation == CONTEXTUAL_ROTATION || gizmos->currentTransformation == CONTEXTUAL_SCALING) * gizmos->performingTransformation;
+
+	if      (Input::Key_T && !gizmos->performingTransformation) { gizmos->currentTransformation = GIZMOS_TRANSFORMATION::TRANSLATION; }
+	else if (Input::Key_V && !gizmos->performingTransformation) { gizmos->currentTransformation = GIZMOS_TRANSFORMATION::ROTATION;    }
+	else if (Input::Key_F && !gizmos->performingTransformation) { gizmos->currentTransformation = GIZMOS_TRANSFORMATION::SCALING;     }
+
+	else if (Input::Key_G && !traditionalTransformations || Input::Key_G && contextualTransformations) { gizmos->currentTransformation = GIZMOS_TRANSFORMATION::CONTEXTUAL_TRANSLATION; }
+	else if (Input::Key_R && !traditionalTransformations || Input::Key_R && contextualTransformations) { gizmos->currentTransformation = GIZMOS_TRANSFORMATION::CONTEXTUAL_ROTATION;    }
+	else if (Input::Key_C && !traditionalTransformations || Input::Key_C && contextualTransformations) { gizmos->currentTransformation = GIZMOS_TRANSFORMATION::CONTEXTUAL_SCALING;     }
+
+	else if (Input::Key_B && !gizmos->performingTransformation) { gizmos->currentTransformation = GIZMOS_TRANSFORMATION::NO_TRANSFORMATION;      }
+
+
+	if (gizmos->currentTransformation == CONTEXTUAL_TRANSLATION || gizmos->currentTransformation == CONTEXTUAL_ROTATION || gizmos->currentTransformation == CONTEXTUAL_SCALING)
+	{
+		if		(Input::Key_X) { gizmos->currentTransformationAxis = X; }
+		else if (Input::Key_Y) { gizmos->currentTransformationAxis = Y; }
+		else if (Input::Key_Z) { gizmos->currentTransformationAxis = Z; }
+	}
+}
+
+void fGizmos::Helpers::UpdateGizmosPlane(Gizmos *&gizmos, Vec3 &newPosition, Vec3 &cameraDirection)
+{		
+	gizmos->p.position = newPosition;		
+
+	if ((gizmos->currentTransformation == GIZMOS_TRANSFORMATION::TRANSLATION			&& gizmos->currentTransformationAxis != NO_AXIS) ||		
+		(gizmos->currentTransformation == GIZMOS_TRANSFORMATION::SCALING				&& gizmos->currentTransformationAxis != NO_AXIS) ||
+	    (gizmos->currentTransformation == GIZMOS_TRANSFORMATION::CONTEXTUAL_TRANSLATION && gizmos->currentTransformationAxis != NO_AXIS) ||
+	    (gizmos->currentTransformation == GIZMOS_TRANSFORMATION::CONTEXTUAL_SCALING	    && gizmos->currentTransformationAxis != NO_AXIS))
+	{
+		// @note I'm the shit! You know, having a brain is what it is all about :D
+		//
+		Vec3 axis				= Helpers::GetSelectedAxisVector(gizmos);									
+		Vec3 rotatedAxis		= MILA::RotateVectorByQuaternion(axis, gizmos->transform.orientation);									    		
+		Vec3 projectedCamDirect = fPlane::ProjectVectorOntoPlane(cameraDirection, rotatedAxis);				
+		gizmos->p.normal	    = projectedCamDirect;		
+
+		// This is the fallback just in case the camera direction is perfectly aligned with the selected axis
+		// Bit more expensive, but it is just for very specific edge cases
+		//
+		if (projectedCamDirect == Vec3{ 0,0,0 })
+		{			
+			switch (gizmos->currentTransformationAxis)
+			{
+				case X: { gizmos->p.normal = { 0, 1, 0 }; } break;
+				case Y: { gizmos->p.normal = { 1, 0, 0 }; } break;
+				case Z: { gizmos->p.normal = { 0, 1, 0 }; } break;
+			}
+						
+			Vec3 rotatedNorm   = MILA::RotateVectorByQuaternion(gizmos->p.normal, gizmos->transform.orientation);						
+			float angle		   = SignedAngle(projectedCamDirect, rotatedNorm, rotatedAxis);
+			Quat orient		   = CreateQuaternionFromAxisAndAngle(-angle, rotatedAxis.x, rotatedAxis.y, rotatedAxis.z);
+			
+			gizmos->p.normal  = MILA::RotateVectorByQuaternion(rotatedNorm, orient);
+		}
+	}
+		
+	else if ((gizmos->currentTransformation == GIZMOS_TRANSFORMATION::SCALING && gizmos->currentTransformationAxis == NO_AXIS) || // This one is because traditional scaling allows for the equivalent of contextual scaling in all axis 
+			  gizmos->currentTransformation == GIZMOS_TRANSFORMATION::ROTATION												   ||
+			  gizmos->currentTransformation == GIZMOS_TRANSFORMATION::CONTEXTUAL_TRANSLATION								   ||
+			  gizmos->currentTransformation == GIZMOS_TRANSFORMATION::CONTEXTUAL_ROTATION									   ||
+			  gizmos->currentTransformation == GIZMOS_TRANSFORMATION::CONTEXTUAL_SCALING)
+	{				
+		gizmos->p.normal = cameraDirection * -1;
+	}
+}
+
+void fGizmos::Helpers::NASTY_TransformContextuallyByInput(Gizmos *&gizmos)
+{		
+	static bool numsPressed[10]; 	
+	static bool minusPressed;
+	static bool backspacePressed;
+	static bool dotPressed;
+
+	if (Input::Key_Backspace && !backspacePressed)
+	{
+		gizmos->transformByInputStr = gizmos->transformByInputStr.substr(0, gizmos->transformByInputStr.length() - 1);
+		
+		if (gizmos->transformByInputStr == "" || !gizmos->transformByInputStr.compare("-") || !gizmos->transformByInputStr.compare(".")) { gizmos->transformByInputValue = 0; }
+		else																															 { gizmos->transformByInputValue = std::stof(gizmos->transformByInputStr); }
+
+		backspacePressed = true;
+	}
+	else if (!Input::Key_Backspace) { backspacePressed = false; }
+
+	if ((Input::Key_Dot || Input::Key_Numpad_Dot) && !dotPressed)
+	{
+		gizmos->transformByInputStr += ".";
+		dotPressed = true;
+	}
+	else if (!Input::Key_Dot && !Input::Key_Numpad_Dot) { dotPressed = false; }
+
+
+	if ((Input::Key_Minus || Input::Key_Numpad_Minus) && !minusPressed && gizmos->transformByInputStr.length() <= 0)
+	{
+		gizmos->transformByInputStr += "-";		
+		minusPressed				 = true;
+	}
+	else if (!Input::Key_Minus && !Input::Key_Numpad_Minus) { minusPressed = false; }
+
+
+
+	for (int inputKey = 0; inputKey <= 9; inputKey++)
+	{		
+		if ((Input::Internal::keys[KEY_0 + inputKey] || Input::Internal::keys[KEY_NUMPAD_0 + inputKey]) && !numsPressed[inputKey])
+		{
+			gizmos->transformByInputStr += std::to_string(inputKey);			
+			gizmos->transformByInputValue = std::stof(gizmos->transformByInputStr);
+			numsPressed[inputKey]		  = true;			
+		}
+
+		if (!Input::Internal::keys[KEY_0 + inputKey] && !Input::Internal::keys[KEY_NUMPAD_0 + inputKey]) { numsPressed[inputKey] = false; }
+	}
+}
+
+
+
+Vec3 fGizmos::Helpers::GetWorldTranslationBasedOnTheCurrentModKeys(Gizmos *&gizmos, Vec3 &selectedAxis, Vec3 &currentIntersectionPoint, Vec3 &inPosition)
+{
+	MDF_KEY currentModKey = fInput::GetCurrentModKey();
+
+	switch (currentModKey)
+	{
+		case MDF_SHIFT: 
+		{
+			Vec3 delta = (currentIntersectionPoint - gizmos->startingIntersectionPoint) / 10.0f;
+			return gizmos->startingActiveObjectPosition + Vec3{ delta.x * selectedAxis.x, delta.y * selectedAxis.y, delta.z * selectedAxis.z };		
+		} break;
+		case MDF_CTRL:  
+		{
+			Vec3 truncPos = { std::truncf(gizmos->startingActiveObjectPosition.x), std::truncf(gizmos->startingActiveObjectPosition.y), std::truncf(gizmos->startingActiveObjectPosition.z) };
+			truncPos = { truncPos.x * selectedAxis.x + gizmos->startingActiveObjectPosition.x * (int)!selectedAxis.x,
+						 truncPos.y * selectedAxis.y + gizmos->startingActiveObjectPosition.y * (int)!selectedAxis.y,
+						 truncPos.z * selectedAxis.z + gizmos->startingActiveObjectPosition.z * (int)!selectedAxis.z, };
+
+			Vec3 delta    = currentIntersectionPoint - gizmos->startingIntersectionPoint;
+			delta		  = { std::truncf(delta.x), std::truncf(delta.y),std::truncf(delta.z) };
+			return truncPos + Vec3{ delta.x * selectedAxis.x, delta.y * selectedAxis.y, delta.z * selectedAxis.z };
+		} break;
+
+		case MDF_CTRL_SHIFT:
+		{
+			Vec3 delta = (currentIntersectionPoint - gizmos->startingIntersectionPoint) * 10.0f;
+			delta      = { std::truncf(delta.x), std::truncf(delta.y), std::truncf(delta.z) };
+			delta	  /= 10.0f;
+
+			Vec3 truncPos = { std::truncf(gizmos->startingActiveObjectPosition.x * 10.0f) / 10.0f, std::truncf(gizmos->startingActiveObjectPosition.y * 10.0f) / 10.0f, std::truncf(gizmos->startingActiveObjectPosition.z * 10.0f) / 10.0f };
+			truncPos = { truncPos.x * selectedAxis.x + gizmos->startingActiveObjectPosition.x * (int)!selectedAxis.x,
+						 truncPos.y * selectedAxis.y + gizmos->startingActiveObjectPosition.y * (int)!selectedAxis.y,
+						 truncPos.z * selectedAxis.z + gizmos->startingActiveObjectPosition.z * (int)!selectedAxis.z, };
+
+
+			return truncPos+ Vec3{ delta.x * selectedAxis.x, delta.y * selectedAxis.y, delta.z * selectedAxis.z };
+		} break;
+	}
+
+	return inPosition;
+}
+
+Vec3 fGizmos::Helpers::GetLocalTranslationBasedOnTheCurrentModKeys(Gizmos *&gizmos, Vec3 &rotatedAxis, float distanceToPlane, Vec3 &inPosition)
+{
+	MDF_KEY currentModKey = fInput::GetCurrentModKey();
+
+	switch (currentModKey)
+	{
+		case MDF_SHIFT: 
+		{
+			distanceToPlane = distanceToPlane / 10.0f;
+			return gizmos->startingActiveObjectPosition + Vec3{ distanceToPlane * rotatedAxis.x, distanceToPlane * rotatedAxis.y, distanceToPlane * rotatedAxis.z };
+		} break;
+		case MDF_CTRL:  
+		{			
+			float  truncDp = std::truncf(distanceToPlane);					
+			return gizmos->startingActiveObjectPosition + Vec3{ truncDp * rotatedAxis.x, truncDp * rotatedAxis.y, truncDp * rotatedAxis.z };
+		} break;
+
+		case MDF_CTRL_SHIFT:
+		{
+			float trunqDp = distanceToPlane * 10.0f;
+			trunqDp       = std::truncf(distanceToPlane);
+			trunqDp      /= 10.0f;
+			
+			return gizmos->startingActiveObjectPosition + Vec3{ trunqDp * rotatedAxis.x, trunqDp * rotatedAxis.y, trunqDp * rotatedAxis.z };
+		} break;
+	}
+
+	return inPosition;
+}
+
+Vec3 fGizmos::Helpers::GetScalingBasedOnTheCurrentModKeys(Gizmos *&gizmos, Vec3 &selectedAxis, float distToPlane, Vec3 &inScale)
+{
+	MDF_KEY currentModKey = fInput::GetCurrentModKey();		
+	
+	switch (currentModKey)
+	{
+		case MDF_SHIFT: 
+		{
+			return gizmos->startingActiveObjectScale + selectedAxis * (distToPlane / 10.0f);
+		} break;
+
+		case MDF_CTRL:  
+		{
+			Vec3 delta = selectedAxis * distToPlane * 2.0f;
+			delta      = { std::truncf(delta.x), std::truncf(delta.y), std::truncf(delta.z) };			
+			delta     /= 2.0f;
+			
+			Vec3 snapped = Vec3{ std::truncf(gizmos->startingActiveObjectScale.x * 10.0f) / 10.0f, std::truncf(gizmos->startingActiveObjectScale.y * 10.0f) / 10.0f, std::truncf(gizmos->startingActiveObjectScale.z * 10.0f) / 10.0f };
+			snapped      = { snapped.x * selectedAxis.x + gizmos->startingActiveObjectScale.x * !(int)(selectedAxis.x),
+							 snapped.y * selectedAxis.y + gizmos->startingActiveObjectScale.y * !(int)(selectedAxis.y),
+							 snapped.z * selectedAxis.z + gizmos->startingActiveObjectScale.z * !(int)(selectedAxis.z) };
+			
+			return snapped + delta;
+		} break;
+
+		case MDF_CTRL_SHIFT:
+		{		
+			Vec3 delta = selectedAxis * distToPlane * 10.0f;
+			delta      = { std::truncf(delta.x), std::truncf(delta.y), std::truncf(delta.z) };
+			delta     /= 10.0f;
+			
+			Vec3 snapped = Vec3{ std::truncf(gizmos->startingActiveObjectScale.x * 10.0f) / 10.0f, std::truncf(gizmos->startingActiveObjectScale.y * 10.0f) / 10.0f, std::truncf(gizmos->startingActiveObjectScale.z * 10.0f) / 10.0f };
+			snapped      = { snapped.x * selectedAxis.x + gizmos->startingActiveObjectScale.x * !(int)(selectedAxis.x),
+							 snapped.y * selectedAxis.y + gizmos->startingActiveObjectScale.y * !(int)(selectedAxis.y),
+							 snapped.z * selectedAxis.z + gizmos->startingActiveObjectScale.z * !(int)(selectedAxis.z) };
+			
+			return snapped + delta;
+
+		} break;
+	}
+
+	return inScale;
+}
+
+float fGizmos::Helpers::GetRotationAngleBasedOnTheCurrentModKeys(Gizmos *&gizmos, float rotationAngle, Vec3 &currentIntersectionPoint)
+{
+	switch (gizmos->previousModKey)
+	{	
+		case MDF_SHIFT: 
+		{
+			if (rotationAngle >= SHIFT_SNAP_ROTATION_DEGREES)
+			{
+				gizmos->startingIntersectionPoint = currentIntersectionPoint;
+				return gizmos->rotationAngle + SHIFT_SNAP_ROTATION_DEGREES;
+			}
+			else if (rotationAngle <= -SHIFT_SNAP_ROTATION_DEGREES)
+			{
+				gizmos->startingIntersectionPoint = currentIntersectionPoint;
+				return gizmos->rotationAngle - SHIFT_SNAP_ROTATION_DEGREES;
+			}
+
+			return gizmos->rotationAngle;
+
+		} break;
+
+		case MDF_CTRL:
+		{
+			if (rotationAngle >= CTRL_SNAP_ROTATION_DEGREES)
+			{
+				gizmos->startingIntersectionPoint = currentIntersectionPoint;
+				return gizmos->rotationAngle + CTRL_SNAP_ROTATION_DEGREES;
+			}
+			else if (rotationAngle <= -CTRL_SNAP_ROTATION_DEGREES)
+			{
+				gizmos->startingIntersectionPoint = currentIntersectionPoint;
+				return gizmos->rotationAngle - CTRL_SNAP_ROTATION_DEGREES;
+			}
+
+			return gizmos->rotationAngle;
+
+		} break;
+
+		case MDF_CTRL_SHIFT:
+		{
+			if (rotationAngle >= CTRL_SHIFT_SNAP_ROTATION_DEGREES)
+			{
+				gizmos->startingIntersectionPoint = currentIntersectionPoint;
+				return gizmos->rotationAngle + CTRL_SHIFT_SNAP_ROTATION_DEGREES;
+			}
+			else if (rotationAngle <= -CTRL_SHIFT_SNAP_ROTATION_DEGREES)
+			{
+				gizmos->startingIntersectionPoint = currentIntersectionPoint;
+				return gizmos->rotationAngle - CTRL_SHIFT_SNAP_ROTATION_DEGREES;
+			}
+
+			return gizmos->rotationAngle;
+
+		} break;
+	}
+	
+	return rotationAngle;
+}
+
+
+void fGizmos::Helpers::StopTransformationsFromBleedIntoEachOther(Gizmos *&gizmos, Transform *& t)
+{
+	// This prevents the scale to bleed to other transformations when the contextual transformation is switched
+	//			
+	if		((gizmos->lastTransformation == CONTEXTUAL_TRANSLATION && (Input::Key_R || Input::Key_C))) { fTransform::UpdatePosition   (t, gizmos->ogObjectPositionForReseting);	   }
+	else if ((gizmos->lastTransformation == CONTEXTUAL_SCALING     && (Input::Key_G || Input::Key_R))) { fTransform::UpdateScale      (t, gizmos->ogObjectScaleForReseting);	   }
+	else if ((gizmos->lastTransformation == CONTEXTUAL_ROTATION    && (Input::Key_G || Input::Key_C))) { fTransform::UpdateOrientation(t, gizmos->ogObjectOrientationForReseting); }
+	
+	// This makes the gizmos behave like Blender, If you press X Y or Z the object snaps to its original position to start moving along the respective axis
+	//			
+	if (gizmos->lastTransformation == CONTEXTUAL_TRANSLATION && ((Input::Key_X && gizmos->previousTransformationAxis != X) ||  (Input::Key_Y && gizmos->previousTransformationAxis != Y) || (Input::Key_Z && gizmos->previousTransformationAxis != Z))) 
+	{ 		
+		fTransform::UpdatePosition(t, gizmos->ogObjectPositionForReseting); 
+	}
+	
+	if (gizmos->lastTransformation == CONTEXTUAL_ROTATION && ((Input::Key_X && gizmos->previousTransformationAxis != X) || (Input::Key_Y && gizmos->previousTransformationAxis != Y) || (Input::Key_Z && gizmos->previousTransformationAxis != Z)))
+	{
+		fTransform::UpdateOrientation(t, gizmos->ogObjectOrientationForReseting);		
+	}
+
+	if (gizmos->lastTransformation == CONTEXTUAL_SCALING && ((Input::Key_X && gizmos->previousTransformationAxis != X) || (Input::Key_Y && gizmos->previousTransformationAxis != Y) || (Input::Key_Z && gizmos->previousTransformationAxis != Z))) 
+	{ 
+		fTransform::UpdateScale(t, gizmos->ogObjectScaleForReseting); 
+	}
+}
+
+
+
+Vec3 fGizmos::Helpers::GetSelectedAxisVector(Gizmos *&gizmos)
+{
+	switch (gizmos->currentTransformationAxis)
+	{
+		case X:  return { 1, 0, 0 };
+		case Y:  return { 0, 1, 0 };
+		case Z:  return { 0, 0, 1 };
+
+		case XY: return { 1, 1, 0 };
+		case XZ: return { 1, 0, 1 };
+		case YZ: return { 0, 1, 1 };
+	}
+
+	return { 1, 1, 1 };
+}
+
+Vec3 fGizmos::Helpers::GetSelectedAxisVector(Gizmos *&gizmos, Vec3 &fallback)
+{
+	switch (gizmos->currentTransformationAxis)
+	{
+		case X:  return { 1, 0, 0 };
+		case Y:  return { 0, 1, 0 };
+		case Z:  return { 0, 0, 1 };
+
+		case XY: return { 1, 1, 0 };
+		case XZ: return { 1, 0, 1 };
+		case YZ: return { 0, 1, 1 };
+	}
+
+	return fallback;
+}
+
+
+
+Transform *fGizmos::Helpers::GetSelectedObjectTransform(PICKER_DATA &dataInfo, CameraSystem *&cameraSystem)
+{
+	switch (dataInfo.objectType)
+	{
+		case ENGINE_TYPE::CAMERA: { return &cameraSystem->cameras[dataInfo.objectIndex].transform; }
+	}
+
+	return nullptr;
+}
+
+//==========================================================================================================================================================================//
+
+void fGizmos::Helpers::ClearGizmosState(Gizmos *&gizmos)
+{
+	gizmos->currentTransformation     = NO_TRANSFORMATION;
+	gizmos->currentTransformationAxis = NO_AXIS;
+	gizmos->performingTransformation  = false;
+	gizmos->storeRelevantDataOnce     = false;
+	gizmos->rotationAngle		      = 0;
+	gizmos->transformByInputStr		  = "";
+	gizmos->transformByInputValue	  = 0;
+
+	ClearGizmosLines(gizmos);
+}
+
+void fGizmos::Helpers::SetGizmosLines(Gizmos *&gizmos, ENGINE_AXIS axis, Vec3 &position, Vec3 &rotationAxis)
+{
+	// gizmos->xLine.mesh.vertices[0].position = position;
+	// gizmos->xLine.mesh.vertices[1].position = gizmos->startingIntersectionPoint;
+	// OGL_Util::UpdateVBO(GL_ARRAY_BUFFER, sizeof(dVertex) * 2, gizmos->xLine.mesh.VBO, gizmos->xLine.mesh.vertices, GL_DYNAMIC_DRAW);
+	// 
+	// gizmos->yLine.mesh.vertices[0].position = position;
+	// gizmos->yLine.mesh.vertices[1].position = rotationAxis;
+	// OGL_Util::UpdateVBO(GL_ARRAY_BUFFER, sizeof(dVertex) * 2, gizmos->yLine.mesh.VBO, gizmos->yLine.mesh.vertices, GL_DYNAMIC_DRAW);
+	// 
+	// gizmos->zLine.mesh.vertices[0].position = {0,0,0};
+	// gizmos->zLine.mesh.vertices[1].position = gizmos->p.normal * 5;
+	// OGL_Util::UpdateVBO(GL_ARRAY_BUFFER, sizeof(dVertex) * 2, gizmos->zLine.mesh.VBO, gizmos->zLine.mesh.vertices, GL_DYNAMIC_DRAW);
+
+
+	switch (axis)
+	{
+		case ENGINE_AXIS::X: 
+		{			
+			gizmos->xLine.mesh.vertices[0].position = position + rotationAxis *  ZFAR;
+			gizmos->xLine.mesh.vertices[1].position = position + rotationAxis * -ZFAR;
+			OGL_Util::UpdateVBO(GL_ARRAY_BUFFER, sizeof(dVertex) * 2, gizmos->xLine.mesh.VBO, gizmos->xLine.mesh.vertices, GL_DYNAMIC_DRAW);
+		} break;
+		
+		case ENGINE_AXIS::Y: 
+		{		
+			gizmos->yLine.mesh.vertices[0].position = position + rotationAxis * ZFAR;
+			gizmos->yLine.mesh.vertices[1].position = position + rotationAxis * -ZFAR;
+			OGL_Util::UpdateVBO(GL_ARRAY_BUFFER, sizeof(dVertex) * 2, gizmos->yLine.mesh.VBO, gizmos->yLine.mesh.vertices, GL_DYNAMIC_DRAW);
+		} break;
+		
+		case ENGINE_AXIS::Z: 
+		{	
+			gizmos->zLine.mesh.vertices[0].position = position + rotationAxis *  ZFAR;
+			gizmos->zLine.mesh.vertices[1].position = position + rotationAxis * -ZFAR;
+			OGL_Util::UpdateVBO(GL_ARRAY_BUFFER, sizeof(dVertex) * 2, gizmos->zLine.mesh.VBO, gizmos->zLine.mesh.vertices, GL_DYNAMIC_DRAW);
+		} break;
+	}
+
+}
+
+void fGizmos::Helpers::ClearGizmosLines(Gizmos *&gizmos)
+{
+	gizmos->xLine.mesh.vertices[0].position = { 0,0,0 };
+	gizmos->xLine.mesh.vertices[1].position = { 0,0,0 };
+
+	gizmos->yLine.mesh.vertices[0].position = { 0,0,0 };
+	gizmos->yLine.mesh.vertices[1].position = { 0,0,0 };
+
+	gizmos->zLine.mesh.vertices[0].position = { 0,0,0 };
+	gizmos->zLine.mesh.vertices[1].position = { 0,0,0 };
+
+	OGL_Util::UpdateVBO(GL_ARRAY_BUFFER, sizeof(dVertex) * 2, gizmos->xLine.mesh.VBO, gizmos->xLine.mesh.vertices, GL_DYNAMIC_DRAW);
+	OGL_Util::UpdateVBO(GL_ARRAY_BUFFER, sizeof(dVertex) * 2, gizmos->yLine.mesh.VBO, gizmos->yLine.mesh.vertices, GL_DYNAMIC_DRAW);
+	OGL_Util::UpdateVBO(GL_ARRAY_BUFFER, sizeof(dVertex) * 2, gizmos->zLine.mesh.VBO, gizmos->zLine.mesh.vertices, GL_DYNAMIC_DRAW);
+}
+
+
+//==========================================================================================================================================================================//
+// Picker
+//==========================================================================================================================================================================//
+
+Picker fGizmos::fPicker::InitializePicker(Vec2 &wDimensions)
+{
+
+#if CURRENT_RENDERING_API == OPENGL
+	Picker picker;
+
+	// Create FBO	
+	glGenFramebuffers(1, &picker.frameBufferObjectID);
+	glBindFramebuffer(GL_FRAMEBUFFER, picker.frameBufferObjectID);
+
+	// Create the texture object for the primitive information buffer
+	glGenTextures(1, &picker.pickingColorTextureID);
+	glBindTexture(GL_TEXTURE_2D, picker.pickingColorTextureID);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32UI, (int)wDimensions.width, (int)wDimensions.height, 0, GL_RGB_INTEGER, GL_UNSIGNED_INT, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, picker.pickingColorTextureID, 0);
+
+	// Create Texture Object for the Depth Buffer
+	glGenTextures(1, &picker.depthTextureID);
+	glBindTexture(GL_TEXTURE_2D, picker.depthTextureID);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, (int)wDimensions.width, (int)wDimensions.height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, picker.depthTextureID, 0);
+
+	// Check if the creation was Successful
+	GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+
+	if (status != GL_FRAMEBUFFER_COMPLETE)
+	{
+		printf("Error - Failed to Create Frame Buffer for the Picker (!!!Returning Empty Picker!!!) [0x%x]\n", status);
+		return Picker{0};
+	}
+
+	// Restore the Default Frame Buffer
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+
+	Internal::PICKER_SHADER = fShader::Create("C:/Midnight/shaders/glsl/picker.shader");
+	Internal::PREVIOUS_DIMENSIONS = wDimensions;
+
+	return picker;
+
+#endif
+
+
+	return Picker{};
+}
+
+ENGINE_TYPE fGizmos::fPicker::GetSelectedObjectType(int retrievedObjectType)
+{
+	switch (retrievedObjectType)
+	{
+	case ENGINE_TYPE::CAMERA: { return ENGINE_TYPE::CAMERA; } break;
+	case ENGINE_TYPE::ANIMATED_ENTITY: { return ENGINE_TYPE::ANIMATED_ENTITY; } break;
+	}
+
+	return NONE;
+}
+
+void fGizmos::fPicker::Update(Gizmos *&gizmos, CameraSystem *&cameraSystem, RenderNodeSystem_OGL *&renderableManager, Vec2 &wDimensions)
+{	
+	// The meshes are drawn just when there's no transformation beign applied, but the gizmos is drawn when it's state is other than no transformation
+	//
+	if (Mouse::BUTTON_LEFT && !gizmos->performingTransformation)
+	{
+		if (wDimensions != Internal::PREVIOUS_DIMENSIONS) { Internal::RedimensionPickerFrameBuffer(gizmos->pickerBuffer, wDimensions); }
+
+		Internal::EnableWritingIntoThePickerFrameBufferTexture(gizmos->pickerBuffer);
+
+		glClearColor(0, 0, 0, 0);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+
+		// ====================================
+		// Cameras
+		// ====================================
+		for (int cameraIdx = 0; cameraIdx < cameraSystem->cameraCount; cameraIdx++)
+		{
+			if (cameraSystem->cameras[cameraIdx].index != cameraSystem->activeCamera->index)
+			{
+				Camera &camera = cameraSystem->cameras[cameraIdx];
+				Internal::Draw(renderableManager->cameras[cameraIdx].VAO, camera.mesh.iCount, ENGINE_TYPE::CAMERA, camera.index, camera.transform.model, cameraSystem->activeCamera);
+			}
+		}
+
+		gizmos->pickerBuffer.retrievedPixelInformation = Internal::ReadPixel(gizmos->pickerBuffer, (unsigned int)Mouse::X, (unsigned int)Mouse::Y, wDimensions);
+
+		Internal::DisableWritingIntoThePickerFrameBufferTexture();
+	}
+
+
+	// Draw Gizmos and Check the pixel
+	//
+	if (gizmos->currentTransformation != GIZMOS_TRANSFORMATION::NO_TRANSFORMATION && gizmos->retrievedDataInformation.objectType != ENGINE_TYPE::NONE && gizmos->retrievedDataInformation.objectType >= 0)
+	{
+		if (wDimensions != Internal::PREVIOUS_DIMENSIONS) { Internal::RedimensionPickerFrameBuffer(gizmos->pickerBuffer, wDimensions); }
+
+		Internal::EnableWritingIntoThePickerFrameBufferTexture(gizmos->pickerBuffer);
+
+		glClearColor(0, 0, 0, 0);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		if (gizmos->currentTransformation == GIZMOS_TRANSFORMATION::TRANSLATION)
+		{
+			Internal::Draw(gizmos->selectableTranslationX.VAO, gizmos->selectableTranslationX.iCount, ENGINE_TYPE::GIZMOS_TRANSLATION, ENGINE_AXIS::X,  gizmos->transform.model, cameraSystem->activeCamera);
+			Internal::Draw(gizmos->selectableTranslationY.VAO, gizmos->selectableTranslationY.iCount, ENGINE_TYPE::GIZMOS_TRANSLATION, ENGINE_AXIS::Y,  gizmos->transform.model, cameraSystem->activeCamera);
+			Internal::Draw(gizmos->selectableTranslationZ.VAO, gizmos->selectableTranslationZ.iCount, ENGINE_TYPE::GIZMOS_TRANSLATION, ENGINE_AXIS::Z,  gizmos->transform.model, cameraSystem->activeCamera);
+
+
+			//Internal::Draw(gizmos->selectablePlaneXY.VAO,	   gizmos->selectablePlaneXY.iCount,	  ENGINE_TYPE::GIZMOS_TRANSLATION, ENGINE_AXIS::XY, gizmos->transform.model, cameraSystem->activeCamera);
+			//Internal::Draw(gizmos->selectablePlaneXZ.VAO,	   gizmos->selectablePlaneXZ.iCount,	  ENGINE_TYPE::GIZMOS_TRANSLATION, ENGINE_AXIS::XZ, gizmos->transform.model, cameraSystem->activeCamera);
+			//Internal::Draw(gizmos->selectablePlaneYZ.VAO,	   gizmos->selectablePlaneYZ.iCount,	  ENGINE_TYPE::GIZMOS_TRANSLATION, ENGINE_AXIS::YZ, gizmos->transform.model, cameraSystem->activeCamera);
+
+		}
+		else if (gizmos->currentTransformation == GIZMOS_TRANSFORMATION::ROTATION)
+		{
+			Internal::Draw(gizmos->selectableRotationX.VAO, gizmos->selectableRotationX.iCount, ENGINE_TYPE::GIZMOS_ROTATION, ENGINE_AXIS::X, gizmos->transform.model, cameraSystem->activeCamera);
+			Internal::Draw(gizmos->selectableRotationY.VAO, gizmos->selectableRotationY.iCount, ENGINE_TYPE::GIZMOS_ROTATION, ENGINE_AXIS::Y, gizmos->transform.model, cameraSystem->activeCamera);
+			Internal::Draw(gizmos->selectableRotationZ.VAO, gizmos->selectableRotationZ.iCount, ENGINE_TYPE::GIZMOS_ROTATION, ENGINE_AXIS::Z, gizmos->transform.model, cameraSystem->activeCamera);
+		}
+		else if (gizmos->currentTransformation == GIZMOS_TRANSFORMATION::SCALING)
+		{
+			Internal::Draw(gizmos->selectableScalingX.VAO, gizmos->selectableScalingX.iCount, ENGINE_TYPE::GIZMOS_SCALING, ENGINE_AXIS::X,  gizmos->transform.model, cameraSystem->activeCamera);
+			Internal::Draw(gizmos->selectableScalingY.VAO, gizmos->selectableScalingY.iCount, ENGINE_TYPE::GIZMOS_SCALING, ENGINE_AXIS::Y,  gizmos->transform.model, cameraSystem->activeCamera);
+			Internal::Draw(gizmos->selectableScalingZ.VAO, gizmos->selectableScalingZ.iCount, ENGINE_TYPE::GIZMOS_SCALING, ENGINE_AXIS::Z,  gizmos->transform.model, cameraSystem->activeCamera);
+
+			//Internal::Draw(gizmos->selectablePlaneXY.VAO,  gizmos->selectablePlaneXY.iCount,  ENGINE_TYPE::GIZMOS_SCALING, ENGINE_AXIS::XY, gizmos->transform.model, cameraSystem->activeCamera);
+			//Internal::Draw(gizmos->selectablePlaneXZ.VAO,  gizmos->selectablePlaneXZ.iCount,  ENGINE_TYPE::GIZMOS_SCALING, ENGINE_AXIS::XZ, gizmos->transform.model, cameraSystem->activeCamera);
+			//Internal::Draw(gizmos->selectablePlaneYZ.VAO,  gizmos->selectablePlaneYZ.iCount,  ENGINE_TYPE::GIZMOS_SCALING, ENGINE_AXIS::YZ, gizmos->transform.model, cameraSystem->activeCamera);
+		}
+
+		gizmos->pickerBuffer.retrievedPixelInformation = Internal::ReadPixel(gizmos->pickerBuffer, (unsigned int)Mouse::X, (unsigned int)Mouse::Y, wDimensions);
+		
+		Internal::DisableWritingIntoThePickerFrameBufferTexture();	
+	}
+}
+
+
+void fGizmos::fPicker::Internal::EnableWritingIntoThePickerFrameBufferTexture(Picker &picker) { glBindFramebuffer(GL_DRAW_FRAMEBUFFER, picker.frameBufferObjectID); }
+
+void fGizmos::fPicker::Internal::DisableWritingIntoThePickerFrameBufferTexture() { glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0); }
+
+void fGizmos::fPicker::Internal::Draw(unsigned int &VAO, int iCount, int objectType, int objectIndex, Mat4 &model, Camera *&activeCamera)
+{
+	glUseProgram(Internal::PICKER_SHADER.program);
+
+	int modIdx = glGetUniformLocation(Internal::PICKER_SHADER.program, "model");
+	int vieIdx = glGetUniformLocation(Internal::PICKER_SHADER.program, "view");
+	int proIdx = glGetUniformLocation(Internal::PICKER_SHADER.program, "projection");
+
+	int typIdx = glGetUniformLocation(Internal::PICKER_SHADER.program, "in_object_type");
+	int objIdx = glGetUniformLocation(Internal::PICKER_SHADER.program, "in_object_idx");
+
+	glUniformMatrix4fv(modIdx, 1, GL_FALSE, &model.data[0]);
+	glUniformMatrix4fv(vieIdx, 1, GL_FALSE, &activeCamera->view.data[0]);
+	glUniformMatrix4fv(proIdx, 1, GL_FALSE, &activeCamera->projection.data[0]);
+
+
+	glUniform1i(typIdx, objectType);
+	glUniform1i(objIdx, objectIndex);
+
+	glBindVertexArray(VAO);
+
+	glDrawElements(GL_TRIANGLES, iCount, GL_UNSIGNED_INT, 0);
+}
+
+PICKER_DATA fGizmos::fPicker::Internal::ReadPixel(Picker &picker, unsigned int x, unsigned int y, Vec2 &wDimensions)
+{
+	// @note OpenGL starts from the bottom left, so the Y coord needs to be flipped
+	//
+	unsigned int nY = (unsigned int)std::abs(y - wDimensions.height);
+	PICKER_DATA pixelInfo{};
+
+	glBindFramebuffer(GL_READ_FRAMEBUFFER, picker.frameBufferObjectID);
+	glReadBuffer(GL_COLOR_ATTACHMENT0);
+
+	glReadPixels(x, nY, 1, 1, GL_RGB_INTEGER, GL_UNSIGNED_INT, &pixelInfo);
+	glReadBuffer(GL_NONE);
+
+	glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
+
+	// @note This is one of the most stupid segways I've ever had. I don't know why but I got obssed with the fact
+	// that I needed to retrieve the screen space position of the clicked pixel when in fact I already had it without
+	// packing the X and Y inside the high and low parts of a 32 variable...
+	// 
+	// Anyways, If I ever need to pack 6 values in a pixel this is the way of unpacking the information
+	// 
+	// pixelInfo.objectIDX  = pixelInfo.objectType		 & 0x0000FFFF;
+	// pixelInfo.objectType = pixelInfo.objectType >> 16 & 0x0000FFFF;
+	// 
+	// pixelInfo.pixelPositionY = (int)std::abs((pixelInfo.pixelPositionX       & 0x0000FFFF) - wDimensions.height);
+	// pixelInfo.pixelPositionX =                pixelInfo.pixelPositionX >> 16 & 0x0000FFFF;
+
+
+	return pixelInfo;
+}
+
+void fGizmos::fPicker::Internal::RedimensionPickerFrameBuffer(Picker &picker, Vec2 &wDimensions)
+{
+	glDeleteFramebuffers(1, &picker.frameBufferObjectID);
+	glDeleteTextures	(1, &picker.pickingColorTextureID);
+	glDeleteTextures	(1, &picker.depthTextureID);
+
+	// Create FBO	
+	glGenFramebuffers(1, &picker.frameBufferObjectID);
+	glBindFramebuffer(GL_FRAMEBUFFER, picker.frameBufferObjectID);
+
+	// Create the texture object for the primitive information buffer
+	glGenTextures(1, &picker.pickingColorTextureID);
+	glBindTexture(GL_TEXTURE_2D, picker.pickingColorTextureID);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32UI, (int)wDimensions.width, (int)wDimensions.height, 0, GL_RGB_INTEGER, GL_UNSIGNED_INT, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, picker.pickingColorTextureID, 0);
+
+	// Create Texture Object for the Depth Buffer
+	glGenTextures(1, &picker.depthTextureID);
+	glBindTexture(GL_TEXTURE_2D, picker.depthTextureID);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, (int)wDimensions.width, (int)wDimensions.height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, picker.depthTextureID, 0);
+
+	// Check if the creation was Successful
+	GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+
+	if (status != GL_FRAMEBUFFER_COMPLETE) { printf("Error - Failed to Create Frame Buffer for the Picker (Returning Empty Picker) [0x%x]\n", status); }
+
+	// Restore the Default Frame Buffer
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+
+	Internal::PREVIOUS_DIMENSIONS = wDimensions;
+}
+
+//==========================================================================================================================================================================//

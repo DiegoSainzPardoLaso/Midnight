@@ -1,0 +1,202 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [
+        {
+          "ruleId": "C6011",
+          "message": {
+            "text": "Dereferencing NULL pointer 'glad_wglGetExtensionsStringEXT'. "
+          },
+          "analysisTarget": {
+            "uri": "file:///c:/midnight/dependencies/glad/src/wgl.c"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Midnight/dependencies/glad/src/wgl.c"
+                },
+                "region": {
+                  "startLine": 62,
+                  "startColumn": 9,
+                  "endLine": 62,
+                  "endColumn": 22
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "glad_wgl_has_extension",
+                  "decoratedName": "glad_wgl_has_extension",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/dependencies/glad/src/wgl.c"
+                          },
+                          "region": {
+                            "startLine": 54,
+                            "startColumn": 17
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/dependencies/glad/src/wgl.c"
+                          },
+                          "region": {
+                            "startLine": 55,
+                            "startColumn": 17
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/dependencies/glad/src/wgl.c"
+                          },
+                          "region": {
+                            "startLine": 56,
+                            "startColumn": 17
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/dependencies/glad/src/wgl.c"
+                          },
+                          "region": {
+                            "startLine": 58,
+                            "startColumn": 42
+                          }
+                        },
+                        "message": {
+                          "text": "'glad_wglGetExtensionsStringEXT' may be NULL (Skip this branch)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ]
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/dependencies/glad/src/wgl.c"
+                          },
+                          "region": {
+                            "startLine": 61,
+                            "startColumn": 42
+                          }
+                        },
+                        "message": {
+                          "text": "Enter this branch, (assume '<branch condition>')"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ]
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/dependencies/glad/src/wgl.c"
+                          },
+                          "region": {
+                            "startLine": 62,
+                            "startColumn": 20
+                          }
+                        },
+                        "message": {
+                          "text": "'glad_wglGetExtensionsStringEXT' is dereferenced, but may still be NULL"
+                        }
+                      },
+                      "kinds": [
+                        "usage"
+                      ],
+                      "importance": "essential"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "MSVC Code Analysis",
+          "version": "14.44.35222.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///c:/midnight/dependencies/glad/src/wgl.c"
+          },
+          "roles": [
+            "analysisTarget",
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "c9b9b8e24a3df0cb430cfde7dc8d4d29f6366abfb400a2542342d1264eae4c55"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/dependencies/glad/include/glad/wgl.h"
+          },
+          "hashes": {
+            "sha-256": "bac0873f64145686080310b4112fa38c79b2786c568a5f7bf19ee8e90d5bd58d"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/dependencies/glad/include/glad/gl.h"
+          },
+          "hashes": {
+            "sha-256": "cc1a5a5ed2aac1a6b5192a9632d4251c648ebba0d865f75514f4f25d959d87d7"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/dependencies/glad/include/khr/khrplatform.h"
+          },
+          "hashes": {
+            "sha-256": "7b1e01aaa7ad8f6fc34b5c7bdf79ebf5189bb09e2c4d2e79fc5d350623d11e83"
+          }
+        }
+      ]
+    }
+  ]
+}

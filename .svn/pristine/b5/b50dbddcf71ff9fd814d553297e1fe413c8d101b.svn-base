@@ -1,0 +1,107 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "MSVC Code Analysis",
+          "version": "14.44.35222.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/rendering/opengl/material.cpp"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "sha-256": "f82c129ccf1ac48a46659b59c1ef155a948e89e6b8f240e2fe5f6007feea5963"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/rendering/opengl/material.h"
+          },
+          "hashes": {
+            "sha-256": "4fbb81db9a4d213b0e2e5ccadf24eacd1c6a55d9f236804d0f1e9a41d56dbeb9"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/rendering/opengl/shader.h"
+          },
+          "hashes": {
+            "sha-256": "70bae5746ea9d489b2737bcd9b48784d779337c430eb19c8c1c953da28c350f4"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/dependencies/glad/include/glad/gl.h"
+          },
+          "hashes": {
+            "sha-256": "cc1a5a5ed2aac1a6b5192a9632d4251c648ebba0d865f75514f4f25d959d87d7"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/dependencies/glad/include/khr/khrplatform.h"
+          },
+          "hashes": {
+            "sha-256": "7b1e01aaa7ad8f6fc34b5c7bdf79ebf5189bb09e2c4d2e79fc5d350623d11e83"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/file/file.h"
+          },
+          "hashes": {
+            "sha-256": "fc97a255ff5ffe2fab0a79fb31ee108754919cdf952394d288e98c197c49cedd"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/utilities/message/messageutils.h"
+          },
+          "hashes": {
+            "sha-256": "90579c520dd0bd5acc631e6a3c1cb844b3594cbd89f52fbad2300bf64f8e32be"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/rendering/opengl/texture.h"
+          },
+          "hashes": {
+            "sha-256": "194d1e47e6d4ae94ec73c78f86d1871aff44168c0b887c78b4866ba3b539b0a4"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/rendering/sharedstructures/texturestructure.h"
+          },
+          "hashes": {
+            "sha-256": "12b27aeed18224906db2963cf3dab5776e0bb099aa01f65823996a11e8abe114"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/utilities/definitions.hpp"
+          },
+          "hashes": {
+            "sha-256": "4869c4bf38f68b8ccd9064ef410764aa4a9845d05e624c5437eabbbbb5fddf4e"
+          }
+        }
+      ]
+    }
+  ]
+}

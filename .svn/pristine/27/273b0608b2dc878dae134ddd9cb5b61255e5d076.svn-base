@@ -1,0 +1,937 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [
+        {
+          "ruleId": "C6387",
+          "message": {
+            "text": "'fSource' could be '0':  this does not adhere to the specification for the function 'strcpy'. "
+          },
+          "analysisTarget": {
+            "uri": "file:///c:/midnight/src/file/file.cpp"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Midnight/src/File/File.cpp"
+                },
+                "region": {
+                  "startLine": 19,
+                  "startColumn": 5,
+                  "endLine": 19,
+                  "endColumn": 32
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "tFile::LoadSpirVShader",
+                  "decoratedName": "?LoadSpirVShader@tFile@@YAPEBDPEBD@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/File/File.cpp"
+                          },
+                          "region": {
+                            "startLine": 5,
+                            "startColumn": 19
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/File/File.cpp"
+                          },
+                          "region": {
+                            "startLine": 7,
+                            "startColumn": 17
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/File/File.cpp"
+                          },
+                          "region": {
+                            "startLine": 8,
+                            "startColumn": 17
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/File/File.cpp"
+                          },
+                          "region": {
+                            "startLine": 10,
+                            "startColumn": 23
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/File/File.cpp"
+                          },
+                          "region": {
+                            "startLine": 15,
+                            "startColumn": 21
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/File/File.cpp"
+                          },
+                          "region": {
+                            "startLine": 16,
+                            "startColumn": 12
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/File/File.cpp"
+                          },
+                          "region": {
+                            "startLine": 18,
+                            "startColumn": 11
+                          }
+                        },
+                        "message": {
+                          "text": "'fSource' may be NULL"
+                        }
+                      },
+                      "kinds": [
+                        "declaration"
+                      ],
+                      "importance": "essential"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/File/File.cpp"
+                          },
+                          "region": {
+                            "startLine": 19,
+                            "startColumn": 11
+                          }
+                        },
+                        "message": {
+                          "text": "'fSource' is an In/Out argument to 'strcpy' (declared at c:\\program files (x86)\\windows kits\\10\\include\\10.0.26100.0\\ucrt\\string.h:130)"
+                        }
+                      },
+                      "kinds": [
+                        "declaration"
+                      ]
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/File/File.cpp"
+                          },
+                          "region": {
+                            "startLine": 19,
+                            "startColumn": 11
+                          }
+                        },
+                        "message": {
+                          "text": "'fSource' should not be NULL, because this is not consistent with the SAL annotation on 'strcpy'"
+                        }
+                      },
+                      "kinds": [
+                        "usage"
+                      ],
+                      "importance": "essential"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C6387",
+          "message": {
+            "text": "'fSource' could be '0':  this does not adhere to the specification for the function 'strcpy'. "
+          },
+          "analysisTarget": {
+            "uri": "file:///c:/midnight/src/file/file.cpp"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Midnight/src/File/File.cpp"
+                },
+                "region": {
+                  "startLine": 70,
+                  "startColumn": 5,
+                  "endLine": 70,
+                  "endColumn": 32
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "tFile::LoadSpirVShader",
+                  "decoratedName": "?LoadSpirVShader@tFile@@YAPEBDPEBDV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/File/File.cpp"
+                          },
+                          "region": {
+                            "startLine": 54,
+                            "startColumn": 66
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/File/File.cpp"
+                          },
+                          "region": {
+                            "startLine": 56,
+                            "startColumn": 19
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/File/File.cpp"
+                          },
+                          "region": {
+                            "startLine": 58,
+                            "startColumn": 17
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/File/File.cpp"
+                          },
+                          "region": {
+                            "startLine": 59,
+                            "startColumn": 17
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/File/File.cpp"
+                          },
+                          "region": {
+                            "startLine": 61,
+                            "startColumn": 36
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/File/File.cpp"
+                          },
+                          "region": {
+                            "startLine": 66,
+                            "startColumn": 15
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/File/File.cpp"
+                          },
+                          "region": {
+                            "startLine": 67,
+                            "startColumn": 12
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/File/File.cpp"
+                          },
+                          "region": {
+                            "startLine": 69,
+                            "startColumn": 11
+                          }
+                        },
+                        "message": {
+                          "text": "'fSource' may be NULL"
+                        }
+                      },
+                      "kinds": [
+                        "declaration"
+                      ],
+                      "importance": "essential"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/File/File.cpp"
+                          },
+                          "region": {
+                            "startLine": 70,
+                            "startColumn": 11
+                          }
+                        },
+                        "message": {
+                          "text": "'fSource' is an In/Out argument to 'strcpy' (declared at c:\\program files (x86)\\windows kits\\10\\include\\10.0.26100.0\\ucrt\\string.h:130)"
+                        }
+                      },
+                      "kinds": [
+                        "declaration"
+                      ]
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/File/File.cpp"
+                          },
+                          "region": {
+                            "startLine": 70,
+                            "startColumn": 11
+                          }
+                        },
+                        "message": {
+                          "text": "'fSource' should not be NULL, because this is not consistent with the SAL annotation on 'strcpy'"
+                        }
+                      },
+                      "kinds": [
+                        "usage"
+                      ],
+                      "importance": "essential"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C6387",
+          "message": {
+            "text": "'fSource' could be '0':  this does not adhere to the specification for the function 'strcpy'. "
+          },
+          "analysisTarget": {
+            "uri": "file:///c:/midnight/src/file/file.cpp"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Midnight/src/File/File.cpp"
+                },
+                "region": {
+                  "startLine": 101,
+                  "startColumn": 5,
+                  "endLine": 101,
+                  "endColumn": 32
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "tFile::LoadSpirVShader",
+                  "decoratedName": "?LoadSpirVShader@tFile@@YAPEBDPEBDV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@1D@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/File/File.cpp"
+                          },
+                          "region": {
+                            "startLine": 76,
+                            "startColumn": 99
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/File/File.cpp"
+                          },
+                          "region": {
+                            "startLine": 76,
+                            "startColumn": 66
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/File/File.cpp"
+                          },
+                          "region": {
+                            "startLine": 78,
+                            "startColumn": 19
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/File/File.cpp"
+                          },
+                          "region": {
+                            "startLine": 80,
+                            "startColumn": 17
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/File/File.cpp"
+                          },
+                          "region": {
+                            "startLine": 81,
+                            "startColumn": 17
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/File/File.cpp"
+                          },
+                          "region": {
+                            "startLine": 83,
+                            "startColumn": 10
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/File/File.cpp"
+                          },
+                          "region": {
+                            "startLine": 85,
+                            "startColumn": 23
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/File/File.cpp"
+                          },
+                          "region": {
+                            "startLine": 96,
+                            "startColumn": 15
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/File/File.cpp"
+                          },
+                          "region": {
+                            "startLine": 97,
+                            "startColumn": 12
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/File/File.cpp"
+                          },
+                          "region": {
+                            "startLine": 100,
+                            "startColumn": 11
+                          }
+                        },
+                        "message": {
+                          "text": "'fSource' may be NULL"
+                        }
+                      },
+                      "kinds": [
+                        "declaration"
+                      ],
+                      "importance": "essential"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/File/File.cpp"
+                          },
+                          "region": {
+                            "startLine": 101,
+                            "startColumn": 11
+                          }
+                        },
+                        "message": {
+                          "text": "'fSource' is an In/Out argument to 'strcpy' (declared at c:\\program files (x86)\\windows kits\\10\\include\\10.0.26100.0\\ucrt\\string.h:130)"
+                        }
+                      },
+                      "kinds": [
+                        "declaration"
+                      ]
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/File/File.cpp"
+                          },
+                          "region": {
+                            "startLine": 101,
+                            "startColumn": 11
+                          }
+                        },
+                        "message": {
+                          "text": "'fSource' should not be NULL, because this is not consistent with the SAL annotation on 'strcpy'"
+                        }
+                      },
+                      "kinds": [
+                        "usage"
+                      ],
+                      "importance": "essential"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C6387",
+          "message": {
+            "text": "'ext' could be '0':  this does not adhere to the specification for the function 'strcpy'. "
+          },
+          "analysisTarget": {
+            "uri": "file:///c:/midnight/src/file/file.cpp"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Midnight/src/File/File.cpp"
+                },
+                "region": {
+                  "startLine": 113,
+                  "startColumn": 5,
+                  "endLine": 113,
+                  "endColumn": 47
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "tFile::GetExtension",
+                  "decoratedName": "?GetExtension@tFile@@YAPEBDPEBD@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/File/File.cpp"
+                          },
+                          "region": {
+                            "startLine": 111,
+                            "startColumn": 27
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/File/File.cpp"
+                          },
+                          "region": {
+                            "startLine": 112,
+                            "startColumn": 48
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/File/File.cpp"
+                          },
+                          "region": {
+                            "startLine": 112,
+                            "startColumn": 60
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/File/File.cpp"
+                          },
+                          "region": {
+                            "startLine": 112,
+                            "startColumn": 11
+                          }
+                        },
+                        "message": {
+                          "text": "'ext' may be NULL"
+                        }
+                      },
+                      "kinds": [
+                        "declaration"
+                      ],
+                      "importance": "essential"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/File/File.cpp"
+                          },
+                          "region": {
+                            "startLine": 113,
+                            "startColumn": 11
+                          }
+                        },
+                        "message": {
+                          "text": "'ext' is an In/Out argument to 'strcpy' (declared at c:\\program files (x86)\\windows kits\\10\\include\\10.0.26100.0\\ucrt\\string.h:130)"
+                        }
+                      },
+                      "kinds": [
+                        "declaration"
+                      ]
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/File/File.cpp"
+                          },
+                          "region": {
+                            "startLine": 113,
+                            "startColumn": 11
+                          }
+                        },
+                        "message": {
+                          "text": "'ext' should not be NULL, because this is not consistent with the SAL annotation on 'strcpy'"
+                        }
+                      },
+                      "kinds": [
+                        "usage"
+                      ],
+                      "importance": "essential"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C6387",
+          "message": {
+            "text": "'ext' could be '0':  this does not adhere to the specification for the function 'strcpy'. "
+          },
+          "analysisTarget": {
+            "uri": "file:///c:/midnight/src/file/file.cpp"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Midnight/src/File/File.cpp"
+                },
+                "region": {
+                  "startLine": 128,
+                  "startColumn": 5,
+                  "endLine": 128,
+                  "endColumn": 46
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "tFile::GetName",
+                  "decoratedName": "?GetName@tFile@@YAPEBDPEBD@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/File/File.cpp"
+                          },
+                          "region": {
+                            "startLine": 126,
+                            "startColumn": 27
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/File/File.cpp"
+                          },
+                          "region": {
+                            "startLine": 127,
+                            "startColumn": 48
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/File/File.cpp"
+                          },
+                          "region": {
+                            "startLine": 127,
+                            "startColumn": 59
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/File/File.cpp"
+                          },
+                          "region": {
+                            "startLine": 127,
+                            "startColumn": 11
+                          }
+                        },
+                        "message": {
+                          "text": "'ext' may be NULL"
+                        }
+                      },
+                      "kinds": [
+                        "declaration"
+                      ],
+                      "importance": "essential"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/File/File.cpp"
+                          },
+                          "region": {
+                            "startLine": 128,
+                            "startColumn": 11
+                          }
+                        },
+                        "message": {
+                          "text": "'ext' is an In/Out argument to 'strcpy' (declared at c:\\program files (x86)\\windows kits\\10\\include\\10.0.26100.0\\ucrt\\string.h:130)"
+                        }
+                      },
+                      "kinds": [
+                        "declaration"
+                      ]
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/File/File.cpp"
+                          },
+                          "region": {
+                            "startLine": 128,
+                            "startColumn": 11
+                          }
+                        },
+                        "message": {
+                          "text": "'ext' should not be NULL, because this is not consistent with the SAL annotation on 'strcpy'"
+                        }
+                      },
+                      "kinds": [
+                        "usage"
+                      ],
+                      "importance": "essential"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "MSVC Code Analysis",
+          "version": "14.44.35222.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/file/file.cpp"
+          },
+          "roles": [
+            "analysisTarget",
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "5b73d9e60a846e78e286280df167378d9bd6f08f0346a5ada9321d4d00321681"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/file/file.h"
+          },
+          "hashes": {
+            "sha-256": "fc97a255ff5ffe2fab0a79fb31ee108754919cdf952394d288e98c197c49cedd"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+#include "DepthBuffer.h"
+
+
+DepthBuffer fDepthBuffer::Create(vk::raii::PhysicalDevice &physicalDevice, vk::raii::Device &logicalDevice, vk::Extent2D extent, std::vector<vk::Format> &possibleSupportedFormats, vk::ImageTiling tiling)
+{
+    vk::Format supportedDepthFormat = Internal::FindSupportedDepthBufferFormat(physicalDevice, logicalDevice, possibleSupportedFormats, tiling, vk::FormatFeatureFlagBits::eDepthStencilAttachment);
+    
+    Image_VK image = fImage::Create(physicalDevice, logicalDevice, extent.width, extent.height, supportedDepthFormat, tiling, vk::ImageUsageFlagBits::eDepthStencilAttachment, vk::MemoryPropertyFlagBits::eDeviceLocal, vk::ImageAspectFlagBits::eDepth);
+
+    return 
+    {
+        std::move(image),         
+        supportedDepthFormat
+    };
+}
+
+
+void fDepthBuffer::Recreate(vk::raii::PhysicalDevice &physicalDevice, vk::raii::Device &logicalDevice, DepthBuffer &depthBuffer, vk::Extent2D extent, vk::ImageTiling tiling)
+{    
+    logicalDevice.waitIdle();
+
+    vk::Format format = depthBuffer.format;
+
+    Clear(depthBuffer);
+
+    depthBuffer.image = fImage::Create(physicalDevice, logicalDevice, extent.width, extent.height, format, tiling, vk::ImageUsageFlagBits::eDepthStencilAttachment, vk::MemoryPropertyFlagBits::eDeviceLocal, vk::ImageAspectFlagBits::eDepth);    
+}
+
+
+void fDepthBuffer::Clear(DepthBuffer &depthBuffer)
+{
+    depthBuffer.image.image.clear();
+    depthBuffer.image.memory.clear();    
+    depthBuffer.image.imageView.clear();    
+}
+
+
+vk::Format fDepthBuffer::Internal::FindSupportedDepthBufferFormat(vk::raii::PhysicalDevice &physicalDevice, vk::raii::Device &logicalDevice, std::vector<vk::Format> &possibleSupportedFormats, vk::ImageTiling tiling, vk::FormatFeatureFlags features)
+{
+    for (vk::Format &format : possibleSupportedFormats)
+    {
+        vk::FormatProperties properties = physicalDevice.getFormatProperties(format);
+
+        if (tiling == vk::ImageTiling::eLinear  && (properties.linearTilingFeatures & features) == features) 
+        {
+            return format; 
+        }
+        if (tiling == vk::ImageTiling::eOptimal && (properties.optimalTilingFeatures & features) == features) 
+        {
+            return format; 
+        }
+    }
+
+    std::cout << "[ERROR] - Function Name: <FindSupportedDepthBufferFormat> - Failed To Find a Supported Depth Buffer Format\n";
+    abort();
+
+    return vk::Format::eUndefined;
+}
+
+
+bool fDepthBuffer::Internal::HasStencilComponent(vk::Format depthBufferFormat) { return depthBufferFormat == vk::Format::eD32SfloatS8Uint || depthBufferFormat == vk::Format::eD24UnormS8Uint; }
+
+

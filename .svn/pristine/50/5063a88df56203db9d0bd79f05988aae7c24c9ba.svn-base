@@ -1,0 +1,553 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [
+        {
+          "ruleId": "C26819",
+          "message": {
+            "text": "Unannotated fallthrough between switch labels (es.78)."
+          },
+          "analysisTarget": {
+            "uri": "file:///c:/midnight/src/rendering/opengl/texture.cpp"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Midnight/dependencies/stb/stb_image.h"
+                },
+                "region": {
+                  "startLine": 5747,
+                  "startColumn": 12
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "stbi__tga_get_comp",
+                  "decoratedName": "?stbi__tga_get_comp@@YAHHHPEAH@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C6262",
+          "message": {
+            "text": "Function uses '35036' bytes of stack.  Consider moving some data to heap."
+          },
+          "analysisTarget": {
+            "uri": "file:///c:/midnight/src/rendering/opengl/texture.cpp"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Midnight/dependencies/stb/stb_image.h"
+                },
+                "region": {
+                  "startLine": 6963,
+                  "startColumn": 14
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "stbi__load_gif_main",
+                  "decoratedName": "?stbi__load_gif_main@@YAPEAXPEAUstbi__context@@PEAPEAHPEAH222H@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C6262",
+          "message": {
+            "text": "Function uses '34980' bytes of stack.  Consider moving some data to heap."
+          },
+          "analysisTarget": {
+            "uri": "file:///c:/midnight/src/rendering/opengl/texture.cpp"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Midnight/dependencies/stb/stb_image.h"
+                },
+                "region": {
+                  "startLine": 7048,
+                  "startColumn": 14
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "stbi__gif_load",
+                  "decoratedName": "?stbi__gif_load@@YAPEAXPEAUstbi__context@@PEAH11HPEAUstbi__result_info@@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26819",
+          "message": {
+            "text": "Unannotated fallthrough between switch labels (es.78)."
+          },
+          "analysisTarget": {
+            "uri": "file:///c:/midnight/src/rendering/opengl/texture.cpp"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Midnight/dependencies/stb/stb_image.h"
+                },
+                "region": {
+                  "startLine": 7149,
+                  "startColumn": 15
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "stbi__hdr_convert",
+                  "decoratedName": "?stbi__hdr_convert@@YAXPEAMPEAEH@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26819",
+          "message": {
+            "text": "Unannotated fallthrough between switch labels (es.78)."
+          },
+          "analysisTarget": {
+            "uri": "file:///c:/midnight/src/rendering/opengl/texture.cpp"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Midnight/dependencies/stb/stb_image.h"
+                },
+                "region": {
+                  "startLine": 7152,
+                  "startColumn": 15
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "stbi__hdr_convert",
+                  "decoratedName": "?stbi__hdr_convert@@YAXPEAMPEAEH@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C6385",
+          "message": {
+            "text": "Reading invalid data from 'textures':  the readable size is 'paths.public: unsigned __int64 __cdecl std::vector<char const *,class std::allocator<char const *> >::size(void)const ()*20' bytes, but '40' bytes may be read."
+          },
+          "analysisTarget": {
+            "uri": "file:///c:/midnight/src/rendering/opengl/texture.cpp"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Midnight/src/Rendering/OpenGL/Texture.cpp"
+                },
+                "region": {
+                  "startLine": 15,
+                  "startColumn": 18,
+                  "endLine": 15,
+                  "endColumn": 129
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "fTextureOpenGL::Load",
+                  "decoratedName": "?Load@fTextureOpenGL@@YAPEAUTexture@@AEAV?$vector@PEBDV?$allocator@PEBD@std@@@std@@_N@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/Rendering/OpenGL/Texture.cpp"
+                          },
+                          "region": {
+                            "startLine": 8,
+                            "startColumn": 11
+                          }
+                        },
+                        "message": {
+                          "text": "'textures' is an array of 1 elements (20 bytes)"
+                        }
+                      },
+                      "kinds": [
+                        "declaration"
+                      ],
+                      "importance": "essential"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/Rendering/OpenGL/Texture.cpp"
+                          },
+                          "region": {
+                            "startLine": 10,
+                            "startColumn": 34
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/Rendering/OpenGL/Texture.cpp"
+                          },
+                          "region": {
+                            "startLine": 12,
+                            "startColumn": 14
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/Rendering/OpenGL/Texture.cpp"
+                          },
+                          "region": {
+                            "startLine": 12,
+                            "startColumn": 23
+                          }
+                        },
+                        "message": {
+                          "text": "Enter this loop, (assume 'i<paths.size()')"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ]
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/Rendering/OpenGL/Texture.cpp"
+                          },
+                          "region": {
+                            "startLine": 15,
+                            "startColumn": 18
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/Rendering/OpenGL/Texture.cpp"
+                          },
+                          "region": {
+                            "startLine": 17,
+                            "startColumn": 7
+                          }
+                        },
+                        "message": {
+                          "text": "Skip this branch, (assume 'data' is false)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ]
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/Rendering/OpenGL/Texture.cpp"
+                          },
+                          "region": {
+                            "startLine": 41,
+                            "startColumn": 68
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/Rendering/OpenGL/Texture.cpp"
+                          },
+                          "region": {
+                            "startLine": 12,
+                            "startColumn": 40
+                          }
+                        },
+                        "message": {
+                          "text": "'i' may equal 1"
+                        }
+                      },
+                      "kinds": [
+                        "declaration"
+                      ],
+                      "importance": "essential"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/Rendering/OpenGL/Texture.cpp"
+                          },
+                          "region": {
+                            "startLine": 12,
+                            "startColumn": 23
+                          }
+                        },
+                        "message": {
+                          "text": "Continue this loop, (assume 'i<paths.size()')"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ]
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/Rendering/OpenGL/Texture.cpp"
+                          },
+                          "region": {
+                            "startLine": 15,
+                            "startColumn": 18
+                          }
+                        },
+                        "message": {
+                          "text": "'i' is an In/Out argument to 'std::vector<char const *,std::allocator<char const *> >::at' (declared at c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.44.35207\\include\\vector:1947)"
+                        }
+                      },
+                      "kinds": [
+                        "declaration"
+                      ]
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/Rendering/OpenGL/Texture.cpp"
+                          },
+                          "region": {
+                            "startLine": 15,
+                            "startColumn": 18
+                          }
+                        },
+                        "message": {
+                          "text": "Invalid read from 'textures[1]', (readable range is 0 to 0)"
+                        }
+                      },
+                      "kinds": [
+                        "usage"
+                      ],
+                      "importance": "essential"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C6011",
+          "message": {
+            "text": "Dereferencing NULL pointer 'texture'. "
+          },
+          "analysisTarget": {
+            "uri": "file:///c:/midnight/src/rendering/opengl/texture.cpp"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Midnight/src/Rendering/OpenGL/Texture.cpp"
+                },
+                "region": {
+                  "startLine": 56,
+                  "startColumn": 17,
+                  "endLine": 56,
+                  "endColumn": 112
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "fTextureOpenGL::Load",
+                  "decoratedName": "?Load@fTextureOpenGL@@YAPEAUTexture@@PEBD_N@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/Rendering/OpenGL/Texture.cpp"
+                          },
+                          "region": {
+                            "startLine": 51,
+                            "startColumn": 11
+                          }
+                        },
+                        "message": {
+                          "text": "'texture' may be NULL"
+                        }
+                      },
+                      "kinds": [
+                        "declaration"
+                      ],
+                      "importance": "essential"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/Rendering/OpenGL/Texture.cpp"
+                          },
+                          "region": {
+                            "startLine": 53,
+                            "startColumn": 34
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Midnight/src/Rendering/OpenGL/Texture.cpp"
+                          },
+                          "region": {
+                            "startLine": 56,
+                            "startColumn": 17
+                          }
+                        },
+                        "message": {
+                          "text": "'texture' is dereferenced, but may still be NULL"
+                        }
+                      },
+                      "kinds": [
+                        "usage"
+                      ],
+                      "importance": "essential"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "MSVC Code Analysis",
+          "version": "14.44.35222.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/rendering/opengl/texture.cpp"
+          },
+          "roles": [
+            "analysisTarget",
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "f658fe412865f84c9b4be0aa126d0e93d8ae4515b64a71cf2c09d4632971403b"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///C:/Midnight/dependencies/stb/stb_image.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "594c2fe35d49488b4382dbfaec8f98366defca819d916ac95becf3e75f4200b3"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/rendering/opengl/texture.h"
+          },
+          "hashes": {
+            "sha-256": "194d1e47e6d4ae94ec73c78f86d1871aff44168c0b887c78b4866ba3b539b0a4"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/dependencies/glad/include/glad/gl.h"
+          },
+          "hashes": {
+            "sha-256": "cc1a5a5ed2aac1a6b5192a9632d4251c648ebba0d865f75514f4f25d959d87d7"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/dependencies/glad/include/khr/khrplatform.h"
+          },
+          "hashes": {
+            "sha-256": "7b1e01aaa7ad8f6fc34b5c7bdf79ebf5189bb09e2c4d2e79fc5d350623d11e83"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/midnight/src/rendering/sharedstructures/texturestructure.h"
+          },
+          "hashes": {
+            "sha-256": "12b27aeed18224906db2963cf3dab5776e0bb099aa01f65823996a11e8abe114"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+#pragma once
+
+
+#include "../../Inputs/Inputs.h"
+#include "../../Math/Vector.h"
+
+// @note Found this inside the Geometric Tools for Computer Graphics book
+// This is actually a segment, not a ray.
+// A ray would use the following notation => R(t) = P0 + t * dir; 
+// t   = length;
+// dir = p1 - p0;
+//
+struct Ray
+{
+	Vec3  p0;
+	Vec3  dir;
+	float rayLength;
+};
+namespace fRay
+{
+	Ray CastRayFromCamera(Vec3 &cameraPosition, Vec3 &cameraDirection, Vec3 &cameraRight, Vec2 &clientAreaDimensions, float rayLength);
+}

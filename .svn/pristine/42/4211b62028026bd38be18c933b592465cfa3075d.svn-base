@@ -1,0 +1,41 @@
+#include "GridVK.hpp"
+
+
+
+void Grid_VK::Initialize(const vk::raii::PhysicalDevice &physicalDevice, const vk::raii::Device &logicalDevice, const std::vector<uint32_t> familyQueueIndices, const vk::raii::DescriptorPool &descriptorPool, vk::Format colorFormat, vk::Format depthFormat)
+{
+	// Create Buffer
+	//
+	this->mvpUBO = { fBuffer::Create(physicalDevice, logicalDevice, familyQueueIndices, sizeof(ModelViewProjectionUBO), vk::BufferUsageFlagBits::eUniformBuffer, vk::MemoryPropertyFlagBits::eHostCoherent | vk::MemoryPropertyFlagBits::eHostVisible) };
+
+	// Compile Shader
+	//
+	this->shader = fShader_vk::Load(logicalDevice, "C:/Midnight/shaders/slang/grid.slang");
+
+	// D-set layout
+	//
+	std::vector<Binding> bindings =
+	{
+		Binding
+		{
+			.binding		 = 0,
+			.descriptorType  = vk::DescriptorType::eUniformBuffer,
+			.descriptorCount = 1,
+			.shaderStage	 = vk::ShaderStageFlagBits::eVertex
+		}
+	};
+	
+	// Descriptor Set
+	//
+	this->layout		= fDescriptor::CreateDescriptorSetLayout(logicalDevice, bindings);
+	this->descriptorSet = fDescriptor::CreateDescriptorSets(logicalDevice, descriptorPool, MAX_FRAMES_IN_FLIGHT, this->layout, this->mvpUBO, { sizeof(ModelViewProjectionUBO) });
+	this->pipeline      = fPipeline_VK::Create(logicalDevice, RENDERING_MODE::FILL_MODE, VERTEX_TYPE::HARDCODED_INSIDE_SHADER, shader, this->layout, colorFormat, depthFormat);	
+}
+
+void Grid_VK::Draw(vk::raii::CommandBuffer &commandBuffer, uint32_t currentFrameIdx)
+{
+	// commandBuffer.bindVertexBuffers(0, .vertexBuffer.buffer, { 0 });
+	// commandBuffer.bindIndexBuffer(*node.indexBuffer.buffer, 0, vk::IndexType::eUint32);
+	commandBuffer.bindDescriptorSets(vk::PipelineBindPoint::eGraphics, this->pipeline.layout, 0, *this->descriptorSet[currentFrameIdx], nullptr);
+	commandBuffer.draw(4, 1, 0, 0);
+}

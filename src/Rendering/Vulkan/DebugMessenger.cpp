@@ -1,0 +1,25 @@
+#include "DebugMessenger.h"
+
+
+vk::DebugUtilsMessengerEXT fDebug_Messenger::Create(vk::raii::Instance &vulkanInstance, bool enableValidationLayers)
+{
+	if (!enableValidationLayers) { return {}; }
+
+	vk::DebugUtilsMessengerCreateInfoEXT createInfo
+	{
+		.messageSeverity = vk::DebugUtilsMessageSeverityFlagBitsEXT::eError | vk::DebugUtilsMessageSeverityFlagBitsEXT::eWarning | vk::DebugUtilsMessageSeverityFlagBitsEXT::eVerbose,
+		.messageType     = vk::DebugUtilsMessageTypeFlagBitsEXT::eGeneral | vk::DebugUtilsMessageTypeFlagBitsEXT::ePerformance | vk::DebugUtilsMessageTypeFlagBitsEXT::eValidation,
+		.pfnUserCallback = &debugCallback,
+		.pUserData		 = nullptr
+	};
+
+	return vulkanInstance.createDebugUtilsMessengerEXT(createInfo, nullptr);
+}
+
+
+static VKAPI_ATTR vk::Bool32 VKAPI_CALL
+fDebug_Messenger::debugCallback(vk::DebugUtilsMessageSeverityFlagBitsEXT messageSeverity, vk::DebugUtilsMessageTypeFlagsEXT messageType, const vk::DebugUtilsMessengerCallbackDataEXT *pCallbackData, void *pUserData)
+{
+	std::cout << "Validation layer: " << pCallbackData->pMessage << std::endl;
+	return VK_FALSE;
+}

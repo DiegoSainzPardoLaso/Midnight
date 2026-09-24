@@ -1,0 +1,38 @@
+#pragma once
+
+#include <vector>
+
+#define VULKAN_HPP_NO_COSNTRUCTORS
+#include <vulkan/vulkan_raii.hpp>
+
+#include "Buffer.h"
+#include "RenderNodesManager.h"
+
+
+// @note I should Have a max of 4-7 desciptor sets per Node
+//
+// @important !!! REMOVE !!!
+//
+struct Descriptor
+{
+	vk::raii::DescriptorPool	 *pool;			// Pointer to the descriptor Pool
+	vk::raii::DescriptorSetLayout layout; 
+	vk::raii::DescriptorSet		  set;
+};
+
+namespace fDescriptor
+{
+	Descriptor Create(vk::raii::Device &logicalDevice, vk::raii::DescriptorPool &descriptorPool, const std::vector<vk::DescriptorSetLayoutBinding> &bindings);
+	
+	vk::raii::DescriptorSetLayout		 CreateDescriptorSetLayout(const vk::raii::Device &logicalDevice, const std::vector<vk::DescriptorSetLayoutBinding> &bindings);
+	std::vector<vk::raii::DescriptorSet> CreateDescriptorSets(const vk::raii::Device &logicalDevice, const vk::raii::DescriptorPool &descriptorPool, const uint32_t descriptorSetCount, const vk::raii::DescriptorSetLayout &inLayout, const std::vector<Buffer> &buffers, const std::vector<uint32_t> buffersSizeOfUBOInBytes);
+}
+
+
+//
+// [ 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1]
+//
+//
+//
+//
+//

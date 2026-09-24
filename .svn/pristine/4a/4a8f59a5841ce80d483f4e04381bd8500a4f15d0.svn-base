@@ -1,0 +1,52 @@
+#pragma once
+
+//#define VULKAN_HPP_NO_CONSTRUCTORS
+#include <vulkan/vulkan_raii.hpp>
+
+#include "Buffer.h"
+#include "RenderNodesManager.h"
+
+#include "../../Grid/GridVK.hpp"
+
+
+namespace fCommand_Buffers
+{
+	vk::raii::CommandBuffer				 Create(vk::raii::Device &LOGICAL_DEVICE, vk::raii::CommandPool &COMMAND_POOL);
+	std::vector<vk::raii::CommandBuffer> Create(vk::raii::Device &LOGICAL_DEVICE, vk::raii::CommandPool &COMMAND_POOL, uint32_t commandBuffersCount);	
+		
+	void Record
+	(
+		vk::raii::CommandBuffer			 &commandBuffer, 
+	
+		vk::Image						 &image,
+		vk::raii::ImageView				 &imageView,
+		vk::Extent2D					 &imageExtent,
+			
+		vk::Image						  depthImage,
+		vk::raii::ImageView				 &depthImageView,
+
+		vk::raii::Pipeline				 &bindPipeline,
+		vk::raii::PipelineLayout		 &pipelineLayout,
+
+		RenderNodeSystem_VK				*&renderableManager,
+		uint32_t						  activeCameraIndex,
+		uint32_t						  currentFrameIndex,
+
+
+
+		Grid_VK							  *grid
+	);
+
+	void TRANSITION_IMAGE_LAYOUT
+	(
+		vk::Image				&image,		
+		vk::raii::CommandBuffer &commandBuffer,		
+		vk::ImageAspectFlagBits  imageAspect,
+		vk::ImageLayout		     oldLayout,
+		vk::ImageLayout		     newLayout,
+		vk::AccessFlags2	 	 srcAccessMask,
+		vk::AccessFlags2 		 dstAccessMask,
+		vk::PipelineStageFlags2  srcStageMask,
+		vk::PipelineStageFlags2  dstStageMask
+	);
+}

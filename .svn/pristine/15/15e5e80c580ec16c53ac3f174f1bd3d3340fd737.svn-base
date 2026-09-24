@@ -1,0 +1,150 @@
+#language slang 2026
+
+//===================================================================//
+// Structs
+//===================================================================//
+
+struct view_projection_camera_position
+{
+    float4x4 view;
+    float4x4 projection;
+    float3   camera_position;
+};
+
+struct vertex_output
+{
+    float4 sv_position : SV_Position;
+    float3 world_position;
+    float3 camera_position;
+};
+
+//===================================================================//
+// Hardcoded Grid
+//===================================================================//
+
+static float3 grid_quad[4] = float3[4]    
+(
+	float3(-10.0, -10.0,  0), // Bottom left 
+	float3( 10.05,-10.0,  0), // Bottom right
+	float3( 10.05, 10.05, 0), // top right   
+	float3(-10.0,  10.05, 0)  // top left    
+);
+
+static int grid_quad_indices[6] = int[6] ( 0, 1, 2, 0, 2, 3 );
+
+//===================================================================//
+// Change this ones to be push constants
+//===================================================================//
+
+static bool  infinite_grid = false;
+static float grid_scale    = 1;
+
+//===================================================================//
+// Buffers
+//===================================================================//
+
+ConstantBuffer<view_projection_camera_position> v_p_c_ubo;
+
+//===================================================================//
+
+[shader("vertex")]
+vertex_output Vertex_Main(uint vertex_id : SV_VertexID) : SV_Position
+{	
+    // Get the current vertex
+    //
+	int    index      = grid_quad_indices[vertex_id];				
+    float3 v_position = grid_quad[index] * grid_scale;
+
+    // Move the quad alongside the camera if infinite_grid is set to true
+    //
+	if (infinite_grid)
+	{
+		v_position.x += v_p_c_ubo.camera_position.x;
+		v_position.y += v_p_c_ubo.camera_position.y;					
+	}
+
+    vertex_output out_vertex;
+    out_vertex.sv_position     = mul(v_p_c_ubo.projection, mul(v_p_c_ubo.view, float4(v_position, 1.0)));
+	out_vertex.world_position  = v_position;
+	out_vertex.camera_position = v_p_c_ubo.camera_position;		
+
+    return out_vertex;
+}
+
+//===================================================================//
+// Grid Variables - Fragment  
+//===================================================================//
+
+static float  grid_main_lines_meter_units = 1.0;
+static float  lod_fade					= 0;
+static float4 grid_inbetween_lines_color  = float4(1.0, 1.0, 1.0, 0.2);
+static float4 grid_main_lines_color   	= float4(1.0, 1.0, 1.0, 0.5);
+static float4 grid_axis_lines_color   	= float4(1.0, 1.0, 1.0, 0.5);    // I need to do something to paint them red and green
+
+//===================================================================//
+// Functions
+//===================================================================//
+
+float  log10(float x) { return log(x) / log(1.0);                  }
+float  satf (float x) { return clamp(x, 0.0, 1.0);                 }
+float2 satv(float2 x) { return clamp(x, float2(0.0), float2(1.0)); }
+float  max2(float2 v) { return max(v.x, v.y);                      }
+
+//===================================================================//
+
+[shader("fragment")]
+float4 Fragment_Main(vertex_output in_v) : SV_Target
+{
+	// float2 dv_x    = float2(ddx(in_v.world_position.x), ddy(in_v.world_position.x));
+	// float2 dv_y    = float2(ddx(in_v.world_position.y), ddy(in_v.world_position.y));
+	//    
+	// float  l_x     = length(dv_x);
+	// float  l_y     = length(dv_y);
+	// 
+	// float2 du_dv   = float2(l_x, l_y);	
+	// float  du_dv_l = length(du_dv);
+	// 
+	// float lod      = max(0.0, log10(du_dv_l * lod_fade / grid_main_lines_meter_units) + 1);
+	// 
+	// float grid_cell_size_lod_0 = grid_main_lines_meter_units * pow(10.0, floor(lod));
+	// float grid_cell_size_lod_1 = grid_cell_size_lod_0 * 0.1;  // 10 cm
+	// float grid_cell_size_lod_2 = grid_cell_size_lod_1 * 10.0; // 1 m 
+	// 
+	// du_dv *= 4.0;
+// 
+	// // 1 Meter squared
+	// float2 mod_div_du_dv_0 = (in_v.world_position.xy % grid_cell_size_lod_0) / du_dv;
+	// float2 mod_div_du_dv_1 = (in_v.world_position.xy % grid_cell_size_lod_1) / du_dv;
+	// float2 mod_div_du_dv_2 = (in_v.world_position.xy % grid_cell_size_lod_2) / du_dv;
+	// 	
+	// float  lod_0_alpha     = max2(float2(1.0) - abs(satv(mod_div_du_dv_0) * 2.0 - float2(1.0)) );
+	// float  lod_1_alpha     = max2(float2(1.0) - abs(satv(mod_div_du_dv_1) * 2.0 - float2(1.0)) );
+	// float  lod_2_alpha     = max2(float2(1.0) - abs(satv(mod_div_du_dv_2) * 2.0 - float2(1.0)) );		
+	// 	
+ //    float4 color;
+// 
+	// if (lod_2_alpha > 0.0)
+	// {
+	// 	color    = grid_axis_lines_color;
+	// 	color.a *= lod_2_alpha;
+	// }
+	// else
+	// {
+	// 	if (lod_1_alpha > 0.0)
+	// 	{
+	// 		color    = grid_inbetween_lines_color;
+	// 		color.a *= lod_1_alpha;
+	// 	}
+	// 	else
+	// 	{
+	// 		color    = grid_main_lines_color;
+	// 		color.a *= (lod_0_alpha * lod_fade);
+	// 	}
+	// }
+	// 	
+	// 	
+	// float opacity_falloff = satf(length(in_v.world_position.xy - in_v.camera_position.xy) / 70);		
+	// color.a              *= 1 - opacity_falloff;
+	
+	return float4(1,1,1,1);
+}
